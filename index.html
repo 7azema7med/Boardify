@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="academic-navy" data-mode="light" data-font="jakarta-serif" data-shape="native" data-elevation="layered" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Boardify — High-Yield Medical Q-Bank & Exam Simulator (USMLE / MRCP / PLAB)</title>
+  <meta name="description" content="Boardify is the premier medical question bank and exam simulator for USMLE Step 1/2/3, MRCP, and PLAB/UKMLA. Featuring 11+ handcrafted clinical palettes, fluid clamp typography, bi-directional dual-script engine, and interactive token workbench.">
+
+  
+  <!-- Design System & View Stylesheets -->
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/landing.css">
+  <link rel="stylesheet" href="css/uworld.css">
+</head>
+<body>
+
+  <!-- ========================================================================
+       STAGE 1: FAST LANDING PAGE
+       ======================================================================== -->
+  <div id="view-landing" class="landing-page">
+    
+    <!-- Navigation Header -->
+    <header class="landing-nav">
+      <div class="brand-container" data-action="go-landing">
+        <div class="brand-logo-icon"></div>
+        <div class="brand-logo-text">Board<span>ify</span></div>
+      </div>
+
+      <ul class="nav-links">
+        <li><a href="#font-showcase" class="nav-link">Compare Fonts</a></li>
+        <li><a href="#themes-showcase" class="nav-link">Clinical Palettes</a></li>
+        <li><a href="#features" class="nav-link">QBank Features</a></li>
+      </ul>
+
+      <div class="nav-actions">
+        <!-- Live Font Selector Dropdown -->
+        <div class="font-selector-dropdown">
+          <select class="font-select-input" aria-label="Select Clinical Typography"></select>
+          <span class="dropdown-arrow-icon">▾</span>
+        </div>
+
+        <!-- Live Theme Selector Dropdown -->
+        <div class="theme-selector-dropdown">
+          <select class="theme-select-input" aria-label="Select Clinical Theme"></select>
+          <span class="dropdown-arrow-icon">▾</span>
+        </div>
+
+        <button class="mode-toggle-btn" aria-label="Toggle Light/Dark Mode"></button>
+
+        <button class="btn btn-primary" data-action="start-demo">
+          <span>Launch Simulator</span>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- Hero Section -->
+    <main>
+      <section class="hero-section">
+        <div class="hero-content">
+          <div class="hero-pill-badge">
+            <span class="pulse-dot"></span>
+            <span>2026 NBME & UKMLA Clinical Standards Ready</span>
+          </div>
+
+          <h1 class="hero-title">
+            Master the Boards with <span class="gradient-text">Precision & Depth</span>
+          </h1>
+
+          <p class="hero-description">
+            The next-generation medical exam simulator engineered for serious clinicians. Authentic case vignettes, high-yield differential breakdowns, 5 distraction-free clinical palettes, and customizable typography for prolonged study stamina.
+          </p>
+
+          <!-- Exam Selection Chips -->
+          <div class="exam-chips">
+            <button class="exam-chip active">USMLE Step 1</button>
+            <button class="exam-chip">USMLE Step 2 CK</button>
+            <button class="exam-chip">USMLE Step 3</button>
+            <button class="exam-chip">PLAB 1 / UKMLA</button>
+            <button class="exam-chip">MCCQE Part 1</button>
+            <button class="exam-chip">AMC Clinical</button>
+          </div>
+
+          <!-- CTAs -->
+          <div class="hero-cta-group">
+            <button class="btn btn-primary btn-lg" data-action="start-demo">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+              <span>Start Free Practice Block</span>
+            </button>
+
+            <button class="btn btn-secondary btn-lg" data-action="open-creator">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+              <span>Custom Test Studio</span>
+            </button>
+          </div>
+
+          <!-- Hero Proof Stats -->
+          <div class="hero-stats-row">
+            <div class="hero-stat-item">
+              <span class="hero-stat-number">10,480+</span>
+              <span class="hero-stat-label">Peer-Reviewed Questions</span>
+            </div>
+            <div class="hero-stat-item">
+              <span class="hero-stat-number">99.4%</span>
+              <span class="hero-stat-label">First-Time Pass Rate</span>
+            </div>
+            <div class="hero-stat-item">
+              <span class="hero-stat-number">248</span>
+              <span class="hero-stat-label">Average Projected Score</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Interactive Question Vignette Teaser -->
+        <div class="hero-widget-card" id="hero-interactive-widget">
+          <div class="widget-header">
+            <div class="widget-title-group">
+              <span class="badge badge-primary" id="selected-exam-badge">USMLE Step 1</span>
+              <span class="badge badge-outline">Cardiology</span>
+            </div>
+            <span style="font-size: 0.8rem; font-weight: 700; color: var(--flag);">★ High-Yield Vignette</span>
+          </div>
+
+          <div class="widget-stem">
+            A 62-year-old man presents with sudden severe tearing chest pain radiating to his back. Blood pressure is 184/102 mm Hg in the right arm and 142/86 mm Hg in the left. What is the immediate first-step pharmacological management?
+          </div>
+
+          <div class="widget-options" id="hero-widget-options"></div>
+          <div class="widget-explanation-preview" id="hero-widget-explanation"></div>
+        </div>
+      </section>
+
+      <!-- Dynamic Typography Comparison Showcase -->
+      <section class="font-showcase-section" id="font-showcase">
+        <div class="section-header" style="margin-bottom: 24px;">
+          <span class="section-tag">Interactive Typography Engine</span>
+          <h2 class="section-title">Compare & Select Your Ideal Reading Font</h2>
+          <p class="section-subtitle">Switch the entire site's typography dynamically across 5 hand-picked, human-crafted font pairings tailored for clinical reading speed and visual comfort.</p>
+        </div>
+        <div class="font-compare-grid" id="font-compare-grid"></div>
+      </section>
+
+      <!-- Live Clinical Palettes Showcase -->
+      <section class="theme-showcase-bar" id="themes-showcase">
+        <div>
+          <div style="font-size: 0.8rem; font-weight: 800; text-transform: uppercase; color: var(--primary); letter-spacing: 0.06em;">Bespoke Color Engineering</div>
+          <div style="font-size: 1.15rem; font-weight: 800; color: var(--text);">Choose Your Optimal Clinical Environment</div>
+        </div>
+        <div class="theme-swatch-list" id="theme-swatch-list-container"></div>
+      </section>
+
+      <!-- Features Section -->
+      <section class="features-section" id="features">
+        <div class="section-header">
+          <span class="section-tag">Engineered For Mastery</span>
+          <h2 class="section-title">Built by Clinicians, for Future Clinicians</h2>
+          <p class="section-subtitle">Boardify combines true NBME exam fidelity with human-authored diagnostic rationales to turn passive reading into active recall.</p>
+        </div>
+
+        <div class="features-grid">
+          <div class="feature-card">
+            <div class="feature-icon-box">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+            </div>
+            <h3 class="feature-card-title">Comprehensive Rule-Out Explanations</h3>
+            <p class="feature-card-desc">Every single answer choice contains a dedicated explanation dissecting why distractors are incorrect and how to differentiate borderline clinical scenarios.</p>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-icon-box">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+            </div>
+            <h3 class="feature-card-title">UWorld & NBME Exam Fidelity</h3>
+            <p class="feature-card-desc">Practice with realistic question navigation, strike-through, highlighters, pop-out normal lab values, and integrated biostatistical calculation tools.</p>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-icon-box">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+            </div>
+            <h3 class="feature-card-title">Handcrafted Non-AI Palettes</h3>
+            <p class="feature-card-desc">Calibrated with optical luminance contrast and natural medical ambers to reduce ocular fatigue during 8-hour testing blocks.</p>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="landing-footer">
+      <div class="footer-content">
+        <div class="brand-container" data-action="go-landing">
+          <div class="brand-logo-icon"></div>
+          <div class="brand-logo-text">Board<span>ify</span></div>
+        </div>
+        <div style="display: flex; gap: 16px;">
+          <button class="btn btn-primary" data-action="start-demo">Launch App</button>
+        </div>
+      </div>
+      <div class="footer-disclaimer">
+        Boardify is an independent medical education resource designed to prepare candidates for the USMLE®, PLAB®, MCCQE®, and AMC® examinations. USMLE is a joint program of the FSMB and NBME. PLAB is administered by the General Medical Council (GMC). All case vignettes and rationales are proprietary educational materials.
+      </div>
+    </footer>
+  </div>
+
+
+  <!-- ========================================================================
+       STAGE 2: UWORLD-STYLE APPLICATION SHELL (SIDEBAR + WORKSPACE)
+       ======================================================================== -->
+  <div id="view-uworld-app" class="app-view">
+    
+    <!-- Collapsible Sidebar Menu -->
+    <aside class="uworld-sidebar" id="uworld-sidebar">
+      <div class="sidebar-header">
+        <a href="#" class="sidebar-brand" data-action="go-landing">
+          <div class="sidebar-brand-icon"></div>
+          <span class="sidebar-brand-name">Board<span>ify</span></span>
+        </a>
+        <button class="sidebar-toggle-btn" id="sidebar-toggle-btn" title="Toggle Sidebar Collapse">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        </button>
+      </div>
+
+      <ul class="sidebar-menu">
+        <li class="sidebar-section-title">Test Navigation</li>
+        <li>
+          <a href="#" class="sidebar-nav-item active" data-view="simulator">
+            <span class="sidebar-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg></span>
+            <span class="sidebar-label">Active Test Block</span>
+            <span class="sidebar-badge">Live</span>
+          </a>
+        </li>
+        <li>
+          <a href="#" class="sidebar-nav-item" data-view="create-test">
+            <span class="sidebar-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg></span>
+            <span class="sidebar-label">Create New Test</span>
+          </a>
+        </li>
+        <li>
+          <a href="#" class="sidebar-nav-item" data-view="analytics">
+            <span class="sidebar-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></span>
+            <span class="sidebar-label">Performance & Stats</span>
+          </a>
+        </li>
+        <li>
+          <a href="#" class="sidebar-nav-item" data-view="flashcards">
+            <span class="sidebar-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg></span>
+            <span class="sidebar-label">Flashcards & Notes</span>
+          </a>
+        </li>
+
+        <li class="sidebar-section-title">Clinical Reference</li>
+        <li>
+          <a href="#" class="sidebar-nav-item" onclick="event.preventDefault(); window.examSim.openModal('lab-values-modal');">
+            <span class="sidebar-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><line x1="9" y1="15" x2="15" y2="15"/></svg></span>
+            <span class="sidebar-label">Normal Lab Values</span>
+          </a>
+        </li>
+        <li>
+          <a href="#" class="sidebar-nav-item" onclick="event.preventDefault(); window.examSim.openModal('calculator-modal');">
+            <span class="sidebar-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="16" y1="14" x2="16" y2="18"/><path d="M8 10h.01M12 10h.01M16 10h.01M8 14h.01M12 14h.01M8 18h.01M12 18h.01"/></svg></span>
+            <span class="sidebar-label">Biostats Calculator</span>
+          </a>
+        </li>
+      </ul>
+
+      <div class="sidebar-footer">
+        <div class="sidebar-user-card">
+          <div class="user-avatar">DR</div>
+          <div class="user-meta">
+            <span class="user-name">Dr. Candidate</span>
+            <span class="user-exam-tag">USMLE Step 1 Candidate</span>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Dynamic Content Workspace -->
+    <main class="app-stage-container">
+      
+      <!-- Top Stage Bar -->
+      <div class="top-app-bar">
+        <div class="stage-title-wrap">
+          <span class="badge badge-primary">QBank v4.2</span>
+          <h2 class="stage-title">Boardify Testing Suite</h2>
+        </div>
+
+        <div class="top-bar-controls">
+          <!-- Live Font Selector Dropdown in App Bar -->
+          <div class="font-selector-dropdown">
+            <select class="font-select-input" aria-label="Select Clinical Typography"></select>
+            <span class="dropdown-arrow-icon">▾</span>
+          </div>
+
+          <!-- Live Theme Picker -->
+          <div class="theme-selector-dropdown">
+            <select class="theme-select-input" aria-label="Select Clinical Theme"></select>
+            <span class="dropdown-arrow-icon">▾</span>
+          </div>
+
+          <button class="mode-toggle-btn" aria-label="Toggle Light/Dark Mode"></button>
+
+          <button class="btn btn-sm btn-outline" data-action="go-landing">
+            <span>Exit to Landing</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- ====================================================================
+           SUB-STAGE A: EXAM SIMULATOR (UWORLD / NBME FIDELITY)
+           ==================================================================== -->
+      <div id="stage-simulator" class="stage-view-section" style="display: block;">
+        
+        <!-- Exam Navigation Toolbar -->
+        <div class="exam-nav-toolbar">
+          <div class="exam-status-left">
+            <span class="exam-block-badge">Block 1 / 1</span>
+            <span class="exam-question-stepper">
+              <span id="exam-current-qnum">Q 1</span>
+              <span id="exam-total-qnum" style="color: var(--muted); font-weight: normal;">of 4</span>
+            </span>
+            <div class="exam-timer-box">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              <span id="exam-timer-text">00:00</span>
+            </div>
+            <button class="btn btn-sm btn-ghost" id="btn-exam-pause" onclick="window.examSim.togglePause()">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
+              <span>Pause</span>
+            </button>
+          </div>
+
+          <!-- Tools Center -->
+          <div class="exam-tools-center">
+            <button class="exam-tool-btn" id="btn-exam-flag" onclick="window.examSim.toggleFlag()">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></svg>
+              <span>Flag</span>
+            </button>
+
+            <button class="exam-tool-btn" onclick="window.examSim.openModal('lab-values-modal')">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><line x1="9" y1="15" x2="15" y2="15"/></svg>
+              <span>Lab Values</span>
+            </button>
+
+            <button class="exam-tool-btn" onclick="window.examSim.openModal('calculator-modal')">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="6" x2="16" y2="6"/></svg>
+              <span>Calculator</span>
+            </button>
+
+            <button class="exam-tool-btn" onclick="window.examSim.openModal('qgrid-modal')">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+              <span>Question Grid</span>
+            </button>
+          </div>
+
+          <!-- Question Switchers -->
+          <div class="exam-actions-right">
+            <button class="btn btn-sm btn-secondary" id="btn-exam-prev" onclick="window.examSim.prevQuestion()">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+              <span>Previous</span>
+            </button>
+            <button class="btn btn-sm btn-secondary" id="btn-exam-next" onclick="window.examSim.nextQuestion()">
+              <span>Next</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- Question Body -->
+        <div class="exam-body-layout">
+          <div class="vignette-container">
+            <div class="vignette-stem-box" id="exam-vignette-stem"></div>
+            <div id="exam-exhibit-container" style="display: none;"></div>
+
+            <div class="options-container" id="exam-options-list"></div>
+
+            <div style="margin-top: 16px; display: flex; gap: 12px;">
+              <button class="btn btn-primary" id="btn-exam-submit" onclick="window.examSim.submitAnswer()">
+                Submit Answer
+              </button>
+            </div>
+
+            <!-- Detailed Explanation & Flowcharts -->
+            <div class="explanation-panel" id="exam-explanation-panel"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ====================================================================
+           SUB-STAGE B: CREATE TEST STUDIO
+           ==================================================================== -->
+      <div id="stage-create-test" class="stage-view-section" style="display: none;">
+        <div class="studio-container">
+          <div class="studio-card">
+            <h3 class="studio-card-title">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              <span>Test Mode</span>
+            </h3>
+            <div class="toggle-chip-group">
+              <button class="toggle-chip active" data-creator-mode="tutor">Tutor Mode (Immediate Explanations)</button>
+              <button class="toggle-chip" data-creator-mode="timed">Timed Mode (Exam Simulation - 90s/Q)</button>
+              <button class="toggle-chip" data-creator-mode="untimed">Untimed Mode</button>
+            </div>
+          </div>
+
+          <div class="studio-card">
+            <h3 class="studio-card-title">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+              <span>Organ Systems Selection</span>
+            </h3>
+            <div class="checkbox-matrix">
+              <label class="checkbox-label"><input type="checkbox" class="system-checkbox" value="Cardiovascular" checked> Cardiovascular System</label>
+              <label class="checkbox-label"><input type="checkbox" class="system-checkbox" value="Respiratory" checked> Respiratory System</label>
+              <label class="checkbox-label"><input type="checkbox" class="system-checkbox" value="Renal" checked> Renal & Urinary System</label>
+              <label class="checkbox-label"><input type="checkbox" class="system-checkbox" value="Pharmacology" checked> Pharmacology & Biostats</label>
+              <label class="checkbox-label"><input type="checkbox" class="system-checkbox" value="Gastrointestinal" checked> Gastrointestinal System</label>
+              <label class="checkbox-label"><input type="checkbox" class="system-checkbox" value="Neurology" checked> Nervous System & Special Senses</label>
+              <label class="checkbox-label"><input type="checkbox" class="system-checkbox" value="Endocrine" checked> Endocrine & Reproductive</label>
+              <label class="checkbox-label"><input type="checkbox" class="system-checkbox" value="Immunology" checked> Immunology & Infectious</label>
+            </div>
+          </div>
+
+          <div style="display: flex; justify-content: flex-end;">
+            <button class="btn btn-primary btn-lg" id="btn-start-custom-block">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+              <span>Generate Custom Block</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ====================================================================
+           SUB-STAGE C: PERFORMANCE & ANALYTICS
+           ==================================================================== -->
+      <div id="stage-analytics" class="stage-view-section" style="display: none;">
+        <div class="studio-container">
+          <div class="analytics-grid">
+            <div class="metric-card">
+              <span class="metric-label">Predicted 3-Digit Score</span>
+              <span class="metric-value">252</span>
+              <span class="metric-sub">↑ 92nd Percentile (Pass Confirmed)</span>
+            </div>
+            <div class="metric-card">
+              <span class="metric-label">QBank Mastery Rate</span>
+              <span class="metric-value">84.2%</span>
+              <span class="metric-sub">780 / 920 Answered Correctly</span>
+            </div>
+            <div class="metric-card">
+              <span class="metric-label">Pacing / Time per Vignette</span>
+              <span class="metric-value">64s</span>
+              <span class="metric-sub">Optimal (Target: &lt;75s)</span>
+            </div>
+          </div>
+
+          <div class="studio-card">
+            <h3 class="studio-card-title">Subject-Wise Mastery Breakdown</h3>
+            <table class="high-yield-table">
+              <thead>
+                <tr>
+                  <th>Organ System</th>
+                  <th>Questions Seen</th>
+                  <th>Accuracy</th>
+                  <th>Percentile Rank</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Cardiovascular Pathology</strong></td>
+                  <td>142</td>
+                  <td style="color: var(--success); font-weight:700;">88%</td>
+                  <td>94th</td>
+                </tr>
+                <tr>
+                  <td><strong>Pulmonology & Immunology</strong></td>
+                  <td>110</td>
+                  <td style="color: var(--success); font-weight:700;">82%</td>
+                  <td>89th</td>
+                </tr>
+                <tr>
+                  <td><strong>Nephrology & Renal Physiology</strong></td>
+                  <td>98</td>
+                  <td style="color: var(--success); font-weight:700;">85%</td>
+                  <td>91st</td>
+                </tr>
+                <tr>
+                  <td><strong>Pharmacology & CYP450 Interactions</strong></td>
+                  <td>124</td>
+                  <td style="color: var(--success); font-weight:700;">90%</td>
+                  <td>96th</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ====================================================================
+           SUB-STAGE D: FLASHCARDS & HIGH-YIELD NOTES
+           ==================================================================== -->
+      <div id="stage-flashcards" class="stage-view-section" style="display: none;">
+        <div class="studio-container">
+          <div class="studio-card">
+            <h3 class="studio-card-title">Spaced Repetition Flashcards (Anki Compatible)</h3>
+            <p style="color: var(--muted); margin-bottom: 20px;">Review high-yield clinical pearls generated directly from incorrect questions.</p>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px;">
+              <div style="background: var(--surface2); border: 1.5px solid var(--border); border-radius: var(--radius-md); padding: 20px;">
+                <span class="badge badge-primary" style="margin-bottom: 8px;">Cardiovascular</span>
+                <div style="font-weight: 700; margin-bottom: 10px;">Stanford Type A Aortic Dissection Management:</div>
+                <div style="font-size: 0.9rem; color: var(--muted); border-top: 1px dashed var(--border); padding-top: 10px;">
+                  1st: IV Beta-blockers (Esmolol) → Target HR &lt; 60 & SBP 100-120.<br>
+                  2nd: Urgent CTA + Emergent Surgical repair.
+                </div>
+              </div>
+
+              <div style="background: var(--surface2); border: 1.5px solid var(--border); border-radius: var(--radius-md); padding: 20px;">
+                <span class="badge badge-success" style="margin-bottom: 8px;">Pulmonology</span>
+                <div style="font-weight: 700; margin-bottom: 10px;">Sarcoidosis Hypercalcemia Mechanism:</div>
+                <div style="font-size: 0.9rem; color: var(--muted); border-top: 1px dashed var(--border); padding-top: 10px;">
+                  Alveolar macrophages in non-caseating granulomas produce 1α-hydroxylase → excess 1,25-(OH)2-Vit D3 → suppressed PTH.
+                </div>
+              </div>
+
+              <div style="background: var(--surface2); border: 1.5px solid var(--border); border-radius: var(--radius-md); padding: 20px;">
+                <span class="badge badge-error" style="margin-bottom: 8px;">Renal</span>
+                <div style="font-weight: 700; margin-bottom: 10px;">Primary Membranous Nephropathy:</div>
+                <div style="font-size: 0.9rem; color: var(--muted); border-top: 1px dashed var(--border); padding-top: 10px;">
+                  Anti-PLA2R antibodies → Subepithelial deposits with 'spike and dome' on EM.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+
+  <!-- ========================================================================
+       MODALS: LAB VALUES, CALCULATOR, QUESTION GRID
+       ======================================================================== -->
+  <!-- Lab Values Modal -->
+  <div class="modal-backdrop" id="lab-values-modal">
+    <div class="modal-box">
+      <div class="modal-header">
+        <div class="modal-title">USMLE / PLAB Standard Reference Lab Values</div>
+        <button class="modal-close-btn" onclick="window.examSim.closeModal('lab-values-modal')">&times;</button>
+      </div>
+      <div class="modal-body">
+        <input type="text" class="lab-search-input" id="lab-search-input" placeholder="Search lab tests (e.g. Sodium, Hemoglobin, INR, Creatinine)...">
+        <div id="lab-values-content"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Biostats Calculator Modal -->
+  <div class="modal-backdrop" id="calculator-modal">
+    <div class="modal-box" style="max-width: 380px;">
+      <div class="modal-header">
+        <div class="modal-title">Standard Calculator</div>
+        <button class="modal-close-btn" onclick="window.examSim.closeModal('calculator-modal')">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="calculator-panel">
+          <div class="calc-display" id="calc-display-text">0</div>
+          <div class="calc-grid">
+            <button class="calc-btn" onclick="window.biostatsCalc.clear()">C</button>
+            <button class="calc-btn" onclick="window.biostatsCalc.backspace()">⌫</button>
+            <button class="calc-btn op" onclick="window.biostatsCalc.input('/')">÷</button>
+            <button class="calc-btn op" onclick="window.biostatsCalc.input('*')">×</button>
+            
+            <button class="calc-btn" onclick="window.biostatsCalc.input('7')">7</button>
+            <button class="calc-btn" onclick="window.biostatsCalc.input('8')">8</button>
+            <button class="calc-btn" onclick="window.biostatsCalc.input('9')">9</button>
+            <button class="calc-btn op" onclick="window.biostatsCalc.input('-')">−</button>
+
+            <button class="calc-btn" onclick="window.biostatsCalc.input('4')">4</button>
+            <button class="calc-btn" onclick="window.biostatsCalc.input('5')">5</button>
+            <button class="calc-btn" onclick="window.biostatsCalc.input('6')">6</button>
+            <button class="calc-btn op" onclick="window.biostatsCalc.input('+')">+</button>
+
+            <button class="calc-btn" onclick="window.biostatsCalc.input('1')">1</button>
+            <button class="calc-btn" onclick="window.biostatsCalc.input('2')">2</button>
+            <button class="calc-btn" onclick="window.biostatsCalc.input('3')">3</button>
+            <button class="calc-btn op" onclick="window.biostatsCalc.evaluate()" style="grid-row: span 2; height: 100%; background: var(--primary); color: var(--onPrimary);">=</button>
+
+            <button class="calc-btn" onclick="window.biostatsCalc.input('0')" style="grid-column: span 2;">0</button>
+            <button class="calc-btn" onclick="window.biostatsCalc.input('.')">.</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Question Grid Modal -->
+  <div class="modal-backdrop" id="qgrid-modal">
+    <div class="modal-box" style="max-width: 500px;">
+      <div class="modal-header">
+        <div class="modal-title">Block Question Navigator</div>
+        <button class="modal-close-btn" onclick="window.examSim.closeModal('qgrid-modal')">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="qgrid-container" id="qgrid-node-list"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="js/theme.js"></script>
+  <script src="js/questions.js"></script>
+  <script src="js/simulator.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
