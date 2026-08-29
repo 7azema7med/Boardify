@@ -1,336 +1,600 @@
 <!DOCTYPE html>
-<html lang="en" data-mode="light" data-font="sans" dir="ltr">
+<html lang="en" data-theme="light" dir="ltr">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Boardify: Medical Question Bank and Exam Simulator</title>
-  <meta name="description" content="Boardify provides 3,420 peer-reviewed clinical vignettes for USMLE Step 1, Step 2 CK, and MRCP Part 1 with timed exam simulation and performance metrics.">
+  <meta name="description" content="High-density clinical question bank and exam simulator for USMLE Step 1, Step 2 CK, and MRCP Part 1.">
   <link rel="stylesheet" href="css/main.css">
 </head>
 <body>
 
   <!-- ========================================================================
-       SITE HEADER
+       APPLICATION SHELL LAYOUT
        ======================================================================== -->
-  <header class="site-header">
-    <div class="container nav-container">
-      
-      <!-- Brand -->
-      <a href="#home" class="brand-link" id="nav-brand">
-        <svg class="icon brand-accent" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-          <rect x="3" y="3" width="18" height="18" rx="2"></rect>
-          <path d="M7 17V13"></path>
-          <path d="M12 17V9"></path>
-          <path d="M17 17V7"></path>
-        </svg>
-        <span>BOARD<span class="brand-accent">IFY</span></span>
-      </a>
+  <div class="app-layout">
 
-      <!-- Main Navigation -->
-      <nav aria-label="Main Navigation">
-        <ul class="nav-links">
-          <li><a href="#vignettes" class="nav-item-link">Question bank</a></li>
-          <li><a href="#curriculum" class="nav-item-link">Curriculum</a></li>
-          <li><a href="#simulator" class="nav-item-link" id="nav-open-simulator">Exam simulator</a></li>
-        </ul>
+    <!-- ----------------------------------------------------------------------
+         LEFT SIDEBAR (240px Fixed)
+         ---------------------------------------------------------------------- -->
+    <aside class="sidebar" aria-label="Sidebar Navigation">
+      
+      <!-- Brand Logomark -->
+      <div class="sidebar-header">
+        <a href="#dashboard" class="sidebar-brand" id="brand-link">
+          <svg class="icon brand-accent" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <rect x="3" y="3" width="18" height="18" rx="2"></rect>
+            <path d="M7 17V13"></path>
+            <path d="M12 17V9"></path>
+            <path d="M17 17V7"></path>
+          </svg>
+          <span>BOARD<span class="brand-accent">IFY</span></span>
+        </a>
+      </div>
+
+      <!-- Categorized Navigation -->
+      <nav class="sidebar-nav">
+        
+        <!-- Group 1: Overview -->
+        <div>
+          <div class="nav-group-title" id="lbl-nav-overview">Overview</div>
+          <ul class="nav-list">
+            <li>
+              <button class="nav-item-btn active" id="nav-btn-dashboard">
+                <span class="nav-left">
+                  <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <rect x="3" y="3" width="7" height="7"></rect>
+                    <rect x="14" y="3" width="7" height="7"></rect>
+                    <rect x="14" y="14" width="7" height="7"></rect>
+                    <rect x="3" y="14" width="7" height="7"></rect>
+                  </svg>
+                  <span id="txt-nav-dashboard">Dashboard</span>
+                </span>
+              </button>
+            </li>
+            <li>
+              <button class="nav-item-btn" id="nav-btn-analytics">
+                <span class="nav-left">
+                  <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <line x1="18" y1="20" x2="18" y2="10"></line>
+                    <line x1="12" y1="20" x2="12" y2="4"></line>
+                    <line x1="6" y1="20" x2="6" y2="14"></line>
+                  </svg>
+                  <span id="txt-nav-analytics">Performance</span>
+                </span>
+              </button>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Group 2: Question Bank Modules -->
+        <div>
+          <div class="nav-group-title" id="lbl-nav-qbank">Question Bank</div>
+          <ul class="nav-list">
+            <li>
+              <button class="nav-item-btn" id="nav-btn-step2">
+                <span class="nav-left">
+                  <span class="status-dot dot-success"></span>
+                  <span>USMLE Step 2 CK</span>
+                </span>
+                <span class="key-badge">2,140</span>
+              </button>
+            </li>
+            <li>
+              <button class="nav-item-btn" id="nav-btn-step1">
+                <span class="nav-left">
+                  <span class="status-dot dot-info"></span>
+                  <span>USMLE Step 1</span>
+                </span>
+                <span class="key-badge">1,850</span>
+              </button>
+            </li>
+            <li>
+              <button class="nav-item-btn" id="nav-btn-mrcp">
+                <span class="nav-left">
+                  <span class="status-dot dot-warning"></span>
+                  <span>MRCP Part 1</span>
+                </span>
+                <span class="key-badge">940</span>
+              </button>
+            </li>
+            <li>
+              <button class="nav-item-btn" id="nav-btn-flagged">
+                <span class="nav-left">
+                  <span class="status-dot dot-danger"></span>
+                  <span id="txt-nav-flagged">Flagged Items</span>
+                </span>
+                <span class="key-badge">42</span>
+              </button>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Group 3: Exam Sessions -->
+        <div>
+          <div class="nav-group-title" id="lbl-nav-sessions">Exam Sessions</div>
+          <ul class="nav-list">
+            <li>
+              <button class="nav-item-btn" id="nav-btn-sim-timed">
+                <span class="nav-left">
+                  <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <polyline points="12 6 12 12 16 14"></polyline>
+                  </svg>
+                  <span id="txt-nav-timed">Timed Exam Block</span>
+                </span>
+              </button>
+            </li>
+            <li>
+              <button class="nav-item-btn" id="nav-btn-sim-tutor">
+                <span class="nav-left">
+                  <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                    <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+                  </svg>
+                  <span id="txt-nav-tutor">Tutor Mode</span>
+                </span>
+              </button>
+            </li>
+          </ul>
+        </div>
+
       </nav>
 
-      <!-- Options: Appearance, Font, Language, and Launch -->
-      <div class="nav-actions">
-        
-        <!-- Appearance Option (Light / Dark) -->
-        <select class="control-select" id="appearance-select" aria-label="Select appearance theme">
-          <option value="light">Appearance: Light</option>
-          <option value="dark">Appearance: Dark</option>
-        </select>
-
-        <!-- Font Option (UI Sans / Monospace) -->
-        <select class="control-select" id="font-select" aria-label="Select typography font">
-          <option value="sans">Font: UI Sans</option>
-          <option value="mono">Font: Monospace</option>
-          <option value="arabic">Font: Arabic Sans</option>
-        </select>
-
-        <!-- Language Option (EN / AR) -->
-        <button class="btn btn-secondary" id="lang-toggle-btn" aria-label="Toggle language">
-          <span id="lang-label">AR</span>
+      <!-- Bottom Shortcut Utility -->
+      <div class="sidebar-footer">
+        <button class="cmd-shortcut-trigger" id="sidebar-cmd-trigger" aria-label="Open Command Palette">
+          <span>Command menu</span>
+          <span class="key-badge">Ctrl + K</span>
         </button>
-
-        <!-- Start Practice Button -->
-        <button class="btn btn-primary" id="btn-start-simulator">
-          <span>Start practice block</span>
-        </button>
-
       </div>
 
+    </aside>
+
+    <!-- ----------------------------------------------------------------------
+         MAIN VIEWPORT CANVAS
+         ---------------------------------------------------------------------- -->
+    <div class="main-wrapper">
+
+      <!-- Sticky Topbar (56px) -->
+      <header class="topbar">
+        
+        <!-- Search Trigger -->
+        <div class="topbar-left">
+          <div class="search-input-box" id="topbar-search-box">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+            <input type="text" placeholder="Search clinical vignettes, diseases..." readonly id="global-search-input">
+            <span class="key-badge">Ctrl + K</span>
+          </div>
+        </div>
+
+        <!-- Right Utilities -->
+        <div class="topbar-right">
+          
+          <!-- Readiness Metric Tag -->
+          <div class="readiness-pill">
+            <span>Score: 248</span>
+            <span class="status-dot dot-success"></span>
+          </div>
+
+          <!-- Language Selector Button (EN / AR) -->
+          <button class="btn-icon" id="btn-lang-toggle" title="Toggle Language (AR / EN)" aria-label="Toggle language">
+            <span class="mono" style="font-size:12px; font-weight:700;" id="lang-btn-text">AR</span>
+          </button>
+
+          <!-- Light / Dark Mode Toggle Button -->
+          <button class="btn-icon" id="btn-theme-toggle" title="Toggle Theme (Light / Dark)" aria-label="Toggle theme">
+            <svg class="icon" id="theme-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+            </svg>
+          </button>
+
+          <!-- Notifications Bell -->
+          <button class="btn-icon" id="btn-notifications" aria-label="Notifications">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+              <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+            </svg>
+          </button>
+
+          <!-- User Avatar -->
+          <div class="user-avatar" title="Dr. Hazem Ahmed">
+            <span>DR</span>
+          </div>
+
+        </div>
+
+      </header>
+
+      <!-- --------------------------------------------------------------------
+           VIEW 1: COMMAND DASHBOARD (High Density SaaS Grid)
+           -------------------------------------------------------------------- -->
+      <main class="view-container" id="view-dashboard">
+        
+        <!-- Top 4-Metric Grid Row -->
+        <div class="stat-grid-4">
+          
+          <!-- Stat 1: Questions Solved -->
+          <div class="stat-card">
+            <div class="stat-card-header">
+              <span class="stat-card-title" id="lbl-stat-solved">Questions Solved</span>
+              <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                <polyline points="22 4 12 14.01 9 11.01"></polyline>
+              </svg>
+            </div>
+            <div class="stat-card-value">3,420 <span style="font-size:14px; font-weight:500; color:var(--text-secondary);">/ 4,000</span></div>
+            <div class="stat-card-footer">
+              <span class="status-dot dot-success"></span>
+              <span>85.5% bank completed</span>
+            </div>
+          </div>
+
+          <!-- Stat 2: Average Score / Accuracy -->
+          <div class="stat-card">
+            <div class="stat-card-header">
+              <span class="stat-card-title" id="lbl-stat-accuracy">Average Accuracy</span>
+              <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <line x1="18" y1="20" x2="18" y2="10"></line>
+                <line x1="12" y1="20" x2="12" y2="4"></line>
+                <line x1="6" y1="20" x2="6" y2="14"></line>
+              </svg>
+            </div>
+            <div class="stat-card-value">78.4%</div>
+            <div class="stat-card-footer">
+              <span class="status-dot dot-success"></span>
+              <span>92nd percentile rank</span>
+            </div>
+          </div>
+
+          <!-- Stat 3: Study Target / Exam Countdown (FEATURED GOLD ACCENT CARD) -->
+          <div class="stat-card featured-accent">
+            <div class="stat-card-header">
+              <span class="stat-card-title" id="lbl-stat-countdown">Exam Countdown</span>
+              <svg class="icon brand-accent" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <circle cx="12" cy="12" r="10"></circle>
+                <polyline points="12 6 12 12 16 14"></polyline>
+              </svg>
+            </div>
+            <div class="stat-card-value brand-accent">18 Days</div>
+            <div class="stat-card-footer">
+              <span>USMLE Step 2 CK official date</span>
+            </div>
+          </div>
+
+          <!-- Stat 4: Flagged for Review -->
+          <div class="stat-card">
+            <div class="stat-card-header">
+              <span class="stat-card-title" id="lbl-stat-flagged">Flagged Items</span>
+              <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"></path>
+                <line x1="4" y1="22" x2="4" y2="15"></line>
+              </svg>
+            </div>
+            <div class="stat-card-value">42</div>
+            <div class="stat-card-footer">
+              <span class="status-dot dot-danger"></span>
+              <span>Requires differential review</span>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Main Content Row: 60% Left / 40% Right Split -->
+        <div class="dashboard-split-grid">
+          
+          <!-- 60% Left: Active Subject Modules (DataListCard) -->
+          <div class="data-panel-card">
+            <div class="panel-header">
+              <span class="panel-title" id="lbl-modules-title">Active Subject Modules</span>
+              <button class="btn-primary" id="btn-quick-start-block" style="height:28px; padding:0 10px; font-size:12px;">
+                <span>Start Practice Block</span>
+              </button>
+            </div>
+
+            <div class="data-list-rows">
+              
+              <!-- Module Row 1 -->
+              <div class="data-row-item">
+                <div class="data-row-left">
+                  <span class="status-dot dot-success"></span>
+                  <div>
+                    <div class="data-row-name">Cardiovascular System</div>
+                    <div class="data-row-meta">Ischemic heart disease, arrhythmias, aortic pathology</div>
+                  </div>
+                </div>
+                <div class="data-row-right">
+                  <div class="mini-progress-bar"><div class="mini-progress-fill" style="width: 88%;"></div></div>
+                  <span class="key-badge">88%</span>
+                </div>
+              </div>
+
+              <!-- Module Row 2 -->
+              <div class="data-row-item">
+                <div class="data-row-left">
+                  <span class="status-dot dot-success"></span>
+                  <div>
+                    <div class="data-row-name">General Pathology & Oncology</div>
+                    <div class="data-row-meta">Cellular injury, neoplasia markers, immunodeficiency</div>
+                  </div>
+                </div>
+                <div class="data-row-right">
+                  <div class="mini-progress-bar"><div class="mini-progress-fill" style="width: 82%;"></div></div>
+                  <span class="key-badge">82%</span>
+                </div>
+              </div>
+
+              <!-- Module Row 3 -->
+              <div class="data-row-item">
+                <div class="data-row-left">
+                  <span class="status-dot dot-info"></span>
+                  <div>
+                    <div class="data-row-name">Pharmacology & Toxicology</div>
+                    <div class="data-row-meta">Autonomic agents, antimicrobials, antidote protocols</div>
+                  </div>
+                </div>
+                <div class="data-row-right">
+                  <div class="mini-progress-bar"><div class="mini-progress-fill" style="width: 74%;"></div></div>
+                  <span class="key-badge">74%</span>
+                </div>
+              </div>
+
+              <!-- Module Row 4 -->
+              <div class="data-row-item">
+                <div class="data-row-left">
+                  <span class="status-dot dot-info"></span>
+                  <div>
+                    <div class="data-row-name">Pulmonology & Critical Care</div>
+                    <div class="data-row-meta">ARDS, restrictive diseases, mechanical ventilation</div>
+                  </div>
+                </div>
+                <div class="data-row-right">
+                  <div class="mini-progress-bar"><div class="mini-progress-fill" style="width: 69%;"></div></div>
+                  <span class="key-badge">69%</span>
+                </div>
+              </div>
+
+              <!-- Module Row 5 -->
+              <div class="data-row-item">
+                <div class="data-row-left">
+                  <span class="status-dot dot-danger"></span>
+                  <div>
+                    <div class="data-row-name">Renal & Electrolyte Disorders</div>
+                    <div class="data-row-meta">Acid-base disturbances, glomerulopathies, AKI</div>
+                  </div>
+                </div>
+                <div class="data-row-right">
+                  <div class="mini-progress-bar"><div class="mini-progress-fill" style="width: 58%; background-color:var(--status-danger);"></div></div>
+                  <span class="key-badge">58%</span>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- 40% Right: Recent Sessions & Performance Breakdown -->
+          <div class="data-panel-card">
+            <div class="panel-header">
+              <span class="panel-title" id="lbl-performance-title">Performance Analytics</span>
+              <span class="key-badge">Live Sync</span>
+            </div>
+
+            <div>
+              
+              <div class="performance-metric-item">
+                <div class="perf-header">
+                  <span>USMLE Step 2 CK Simulator</span>
+                  <span class="mono brand-accent">84%</span>
+                </div>
+                <div class="perf-sub">Block #14 (40 Questions Timed) • Completed 2 hrs ago</div>
+                <div class="mini-progress-bar" style="width:100%;"><div class="mini-progress-fill" style="width: 84%;"></div></div>
+              </div>
+
+              <div class="performance-metric-item">
+                <div class="perf-header">
+                  <span>MRCP Part 1 Clinical Blitz</span>
+                  <span class="mono brand-accent">76%</span>
+                </div>
+                <div class="perf-sub">Block #09 (25 Questions Tutor) • Completed Yesterday</div>
+                <div class="mini-progress-bar" style="width:100%;"><div class="mini-progress-fill" style="width: 76%;"></div></div>
+              </div>
+
+              <div class="performance-metric-item">
+                <div class="perf-header">
+                  <span>Diagnostic Speed Index</span>
+                  <span class="mono">58s / item</span>
+                </div>
+                <div class="perf-sub">Target pacing: Under 72 seconds per clinical vignette</div>
+                <div class="mini-progress-bar" style="width:100%;"><div class="mini-progress-fill" style="width: 90%; background-color:var(--status-success);"></div></div>
+              </div>
+
+              <div style="padding: 16px 18px;">
+                <button class="btn-secondary" id="btn-custom-test-modal" style="width:100%;">
+                  <span>Create Custom Examination Block</span>
+                </button>
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </main>
+
+      <!-- --------------------------------------------------------------------
+           VIEW 2: CLINICAL EXAM SIMULATOR (UWorld / NBME Technical Specs)
+           -------------------------------------------------------------------- -->
+      <section class="simulator-view" id="view-simulator" aria-label="Exam Simulator">
+        
+        <!-- Header Bar -->
+        <div class="sim-header-bar">
+          <div style="display:flex; align-items:center; gap:10px;">
+            <button class="btn-secondary" id="sim-btn-exit" style="height:30px; font-size:12px; padding:0 10px;">
+              <span>Exit Block</span>
+            </button>
+            <span class="sim-chip accent-chip" id="sim-item-counter">Item 1 of 10</span>
+            <span class="sim-chip" id="sim-exam-badge">USMLE Step 2 CK</span>
+          </div>
+
+          <div style="display:flex; align-items:center; gap:10px;">
+            <span class="sim-chip accent-chip" id="sim-timer-display">59:42</span>
+            <button class="btn-secondary" id="sim-btn-labs" style="height:30px; font-size:12px; padding:0 10px;">
+              <span>Lab Values</span>
+            </button>
+            <button class="btn-secondary" id="sim-btn-calc" style="height:30px; font-size:12px; padding:0 10px;">
+              <span>Calculator</span>
+            </button>
+            <button class="btn-icon" id="sim-btn-flag" title="Flag Question" style="height:30px; width:30px;">
+              <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"></path>
+                <line x1="4" y1="22" x2="4" y2="15"></line>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- Content Split: Stem Card (Left) / Jump Matrix (Right) -->
+        <div class="sim-content-split">
+          
+          <!-- Main Scrollable Stem & MCQ Area -->
+          <div class="sim-main-scroll">
+            
+            <div class="sim-question-card">
+              <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:12px;">
+                <span class="key-badge" id="sim-q-system">Cardiovascular System</span>
+                <span class="key-badge" id="sim-q-id">Item Q-10482</span>
+              </div>
+
+              <!-- Vitals Readout Box -->
+              <div class="vitals-grid" id="sim-vitals-box">
+                <div class="vitals-item"><span>Blood Pressure</span><strong id="vit-bp">184/102 mm Hg</strong></div>
+                <div class="vitals-item"><span>Heart Rate</span><strong id="vit-hr">108 bpm</strong></div>
+                <div class="vitals-item"><span>Respiratory</span><strong id="vit-rr">22 /min</strong></div>
+                <div class="vitals-item"><span>Oxygen Sat</span><strong id="vit-spo2">98% Room Air</strong></div>
+              </div>
+
+              <!-- Clinical Stem -->
+              <div class="vignette-text" id="sim-stem-text">
+                A 62-year-old male is brought to the emergency department due to sudden-onset, severe tearing chest pain radiating directly to his back between the scapulae. Blood pressure is 184/102 mm Hg in the right arm and 142/86 mm Hg in the left arm. A grade 2/6 early diastolic decrescendo murmur is heard along the right sternal border.
+              </div>
+
+              <!-- Lead-in Question -->
+              <div class="lead-prompt" id="sim-lead-prompt">
+                Which of the following is the most appropriate next step in management for this patient?
+              </div>
+
+              <!-- Options Stack -->
+              <div class="mcq-options-stack" id="sim-options-container">
+                <!-- Dynamically populated -->
+              </div>
+
+              <!-- Structured Technical Explanation Panel -->
+              <div class="explanation-panel" id="sim-explanation-panel">
+                <div class="explanation-header">
+                  <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <line x1="12" y1="16" x2="12" y2="12"></line>
+                    <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                  </svg>
+                  <span>Educational Objective & Clinical Rationale</span>
+                </div>
+                <div id="sim-explanation-body" style="font-size:13px; line-height:1.65; color:var(--text-secondary);">
+                  <!-- Explanation text -->
+                </div>
+                <div id="sim-differential-table-container">
+                  <!-- Differential table -->
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+
+          <!-- Right Sidebar: Question Matrix Grid -->
+          <div class="sim-sidebar-matrix">
+            <div style="font-size:11px; font-weight:700; text-transform:uppercase; color:var(--text-secondary); margin-bottom:4px;">Question Index</div>
+            <div style="font-size:11px; color:var(--text-muted); margin-bottom:12px;">Jump to any question in the block:</div>
+            
+            <div class="matrix-grid" id="sim-matrix-container">
+              <!-- Matrix items 1-10 populated by JS -->
+            </div>
+
+            <div style="margin-top:20px; padding-top:14px; border-top:1px solid var(--border-subtle);">
+              <div style="font-size:11px; color:var(--text-secondary); margin-bottom:6px;">Current Score: <strong class="mono brand-accent" id="sim-live-score">0 / 0 (0%)</strong></div>
+              <div style="font-size:11px; color:var(--text-muted);">Session Type: Tutor with Real-time Differential</div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Sticky Footer Action Bar -->
+        <footer class="sim-footer-bar">
+          <div style="display:flex; align-items:center; gap:8px;">
+            <button class="btn-secondary" id="sim-btn-prev" style="height:32px; font-size:12px;">
+              <span>Previous Question</span>
+            </button>
+          </div>
+          <div style="display:flex; align-items:center; gap:8px;">
+            <button class="btn-primary" id="sim-btn-next" style="height:32px; font-size:12px;">
+              <span>Next Question</span>
+            </button>
+          </div>
+        </footer>
+
+      </section>
+
     </div>
-  </header>
+
+  </div>
 
   <!-- ========================================================================
-       STAGE 1: LANDING & DASHBOARD VIEW
+       COMMAND PALETTE MODAL (Ctrl + K)
        ======================================================================== -->
-  <div id="view-landing">
-    
-    <!-- Hero Section -->
-    <section class="hero-section" id="home">
-      <div class="container hero-grid">
-        
-        <!-- Hero Text -->
-        <div>
-          <h1 class="hero-title">
-            Clinical question bank for medical board examinations
-          </h1>
-          <p class="hero-description">
-            Boardify contains 3,420 peer-reviewed clinical vignettes mapped to the USMLE Step 1, Step 2 CK, and MRCP Part 1 content outlines. Practice in standard, timed, and tutor modes with differential diagnosis breakdowns.
-          </p>
-
-          <div class="hero-actions">
-            <button class="btn btn-primary" id="hero-btn-start">
-              <span>Start 10-question block</span>
-            </button>
-            <button class="btn btn-secondary" id="hero-btn-custom">
-              <span>Configure custom test</span>
-            </button>
-          </div>
-
-          <!-- Proof Metrics -->
-          <div class="stats-summary">
-            <div>
-              <span class="stat-number">3,420</span>
-              <span class="stat-label">Clinical vignettes</span>
-            </div>
-            <div>
-              <span class="stat-number">99.4%</span>
-              <span class="stat-label">First-attempt pass rate</span>
-            </div>
-            <div>
-              <span class="stat-number">248</span>
-              <span class="stat-label">Median user score</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- Hero Question Preview Widget -->
-        <div class="card" id="hero-question-card">
-          <div class="card-header">
-            <div style="display:flex; gap:8px;">
-              <span class="badge badge-accent" id="preview-exam-tag">USMLE Step 2 CK</span>
-              <span class="badge">Cardiovascular</span>
-            </div>
-            <span class="badge" style="font-family:var(--font-mono);">Item 1 of 3,420</span>
-          </div>
-
-          <div class="vignette-text">
-            A 62-year-old male presents to the emergency department with sudden, severe chest pain radiating to his interscapular region. Blood pressure is 185/105 mmHg in the right arm and 138/82 mmHg in the left arm. A grade 2/6 early diastolic murmur is heard along the right sternal border.
-          </div>
-
-          <div class="question-lead">
-            Which initial diagnostic test is most appropriate for this stable patient?
-          </div>
-
-          <div class="options-group" id="preview-options">
-            <button class="option-row" data-correct="false">
-              <span class="option-letter">A</span>
-              <span>Transthoracic echocardiogram</span>
-            </button>
-            <button class="option-row" data-correct="true">
-              <span class="option-letter">B</span>
-              <span>Contrast-enhanced computed tomography angiography of the chest</span>
-            </button>
-            <button class="option-row" data-correct="false">
-              <span class="option-letter">C</span>
-              <span>Intravenous thrombolysis with tissue plasminogen activator</span>
-            </button>
-            <button class="option-row" data-correct="false">
-              <span class="option-letter">D</span>
-              <span>Emergent coronary catheterization</span>
-            </button>
-          </div>
-
-          <div class="rationale-block" id="preview-rationale">
-            <strong>Key clinical takeaway:</strong> CT angiography of the chest is the initial diagnostic test of choice for suspected acute aortic dissection in hemodynamically stable patients. Blood pressure differential between arms and new aortic regurgitation murmur strongly support the diagnosis.
-          </div>
-        </div>
-
+  <div class="modal-backdrop" id="cmd-palette-modal">
+    <div class="command-palette-card">
+      <div class="cmd-input-row">
+        <svg class="icon brand-accent" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+          <polyline points="4 17 10 11 4 5"></polyline>
+          <line x1="12" y1="19" x2="20" y2="19"></line>
+        </svg>
+        <input type="text" placeholder="Type a command, subject, or question ID..." id="cmd-input" autofocus>
+        <span class="key-badge">ESC</span>
       </div>
-    </section>
-
-    <!-- Question Bank Curriculum -->
-    <section class="section" id="curriculum">
-      <div class="container">
-        
-        <div class="section-header">
-          <h2 class="section-title">Examination curriculum coverage</h2>
-          <p class="section-desc">Every question includes verified laboratory values, diagnostic images, and referenced rationales.</p>
+      <div class="cmd-results-list" id="cmd-results">
+        <div class="cmd-result-item" data-action="start-block">
+          <span>Start 10-question practice block</span>
+          <span class="key-badge">↵ Enter</span>
         </div>
-
-        <div class="grid-3">
-          
-          <div class="feature-item">
-            <h3 class="feature-title">USMLE Step 1 and Step 2 CK</h3>
-            <p class="feature-desc">1,850 questions covering organ systems, pathology, pharmacology mechanisms, and clinical management pathways.</p>
-          </div>
-
-          <div class="feature-item">
-            <h3 class="feature-title">MRCP Part 1 and Part 2</h3>
-            <p class="feature-desc">940 best-of-five questions focused on clinical medicine, acute presentations, and Royal College guidelines.</p>
-          </div>
-
-          <div class="feature-item">
-            <h3 class="feature-title">PLAB 1 and UKMLA</h3>
-            <p class="feature-desc">630 single-best-answer items reflecting current NHS clinical practice, prescription safety, and ethical scenarios.</p>
-          </div>
-
+        <div class="cmd-result-item" data-action="toggle-theme">
+          <span>Toggle Light / Dark mode</span>
+          <span class="key-badge">T</span>
         </div>
-
-      </div>
-    </section>
-
-    <!-- Simulator Features -->
-    <section class="section" id="vignettes">
-      <div class="container">
-        
-        <div class="section-header">
-          <h2 class="section-title">Examination interface features</h2>
-          <p class="section-desc">Designed to replicate standard computer-based testing environments.</p>
+        <div class="cmd-result-item" data-action="toggle-lang">
+          <span>Toggle English / Arabic (AR / EN)</span>
+          <span class="key-badge">L</span>
         </div>
-
-        <div class="grid-2">
-          
-          <div class="feature-item">
-            <h3 class="feature-title">Standard and timed test conditions</h3>
-            <p class="feature-desc">Practice at your own pace with immediate explanations in tutor mode, or simulate actual 60-minute blocks with strict countdown timers.</p>
-          </div>
-
-          <div class="feature-item">
-            <h3 class="feature-title">Diagnostic tools and reference tables</h3>
-            <p class="feature-desc">Search normal laboratory values by category, use the integrated medical calculator, and strike through unlikely differential diagnoses.</p>
-          </div>
-
+        <div class="cmd-result-item" data-action="filter-step2">
+          <span>Filter USMLE Step 2 CK questions</span>
+          <span class="key-badge">Step 2</span>
         </div>
-
-      </div>
-    </section>
-
-  </div>
-
-  <!-- ========================================================================
-       STAGE 2: FULL CLINICAL EXAM SIMULATOR (UWorld / NBME Interface)
-       ======================================================================== -->
-  <div class="simulator-wrapper" id="view-simulator">
-    
-    <!-- Simulator Topbar -->
-    <div class="sim-topbar">
-      <div style="display:flex; align-items:center; gap:12px;">
-        <button class="btn btn-secondary" id="sim-btn-exit" style="height:32px; font-size:12px;">
-          <span>Exit block</span>
-        </button>
-        <span style="font-family:var(--font-mono); font-size:13px; font-weight:600;" id="sim-item-counter">Item 1 of 10</span>
-      </div>
-
-      <div style="display:flex; align-items:center; gap:16px;">
-        <span style="font-family:var(--font-mono); font-size:13px; color:var(--text-secondary);" id="sim-timer">Time remaining: 59:40</span>
-        <button class="btn btn-secondary" id="sim-btn-lab" style="height:32px; font-size:12px;">
-          <span>Lab values</span>
-        </button>
-        <button class="btn btn-primary" id="sim-btn-submit" style="height:32px; font-size:12px;">
-          <span>Submit answer</span>
-        </button>
-      </div>
-    </div>
-
-    <!-- Simulator Body -->
-    <div class="sim-body">
-      
-      <!-- Question Vignette Area -->
-      <div class="sim-question-area">
-        <div style="margin-bottom:12px; display:flex; gap:8px;">
-          <span class="badge badge-accent" id="sim-vignette-exam">USMLE Step 1</span>
-          <span class="badge" id="sim-vignette-system">General Pathology</span>
+        <div class="cmd-result-item" data-action="filter-mrcp">
+          <span>Filter MRCP Part 1 questions</span>
+          <span class="key-badge">MRCP</span>
         </div>
-
-        <div class="vignette-text" id="sim-vignette-stem" style="font-size:15px; line-height:1.7;">
-          Loading clinical vignette...
-        </div>
-
-        <div class="question-lead" id="sim-vignette-question" style="font-size:15px; margin-top:16px;">
-          Question prompt...
-        </div>
-
-        <div class="options-group" id="sim-options-list" style="margin-top:16px;">
-          <!-- Populated by JS -->
-        </div>
-
-        <div class="rationale-block" id="sim-rationale-box" style="margin-top:20px;">
-          <!-- Rationale populated after answer -->
+        <div class="cmd-result-item" data-action="view-dashboard">
+          <span>Go to Overview Dashboard</span>
+          <span class="key-badge">D</span>
         </div>
       </div>
-
-      <!-- Simulator Sidebar (Matrix Grid) -->
-      <div class="sim-sidebar">
-        <h4 style="font-size:13px; font-weight:600; margin-bottom:8px;">Question list</h4>
-        <p style="font-size:12px; color:var(--text-muted); margin-bottom:12px;">Click an item number to navigate.</p>
-
-        <div class="grid-matrix" id="sim-matrix-grid">
-          <!-- 10 Question items generated by JS -->
-        </div>
-
-        <div style="margin-top:24px; padding-top:16px; border-top:1px solid var(--border);">
-          <div style="font-size:12px; color:var(--text-secondary); margin-bottom:4px;">Score: <strong id="sim-score-text">0 / 0 (0%)</strong></div>
-          <div style="font-size:12px; color:var(--text-muted);">Mode: Tutor with immediate rationale</div>
-        </div>
-      </div>
-
-    </div>
-
-  </div>
-
-  <!-- Custom Test Configuration Modal -->
-  <div class="modal-overlay" id="config-modal">
-    <div class="modal-box">
-      <div class="modal-header">
-        <h3 class="modal-title">Configure practice block</h3>
-        <button id="config-modal-close" style="font-size:18px; color:var(--text-muted);">&times;</button>
-      </div>
-
-      <form id="config-form">
-        <div style="margin-bottom:12px;">
-          <label style="display:block; font-size:12px; font-weight:600; margin-bottom:4px;" for="config-exam-select">Target examination</label>
-          <select id="config-exam-select" class="control-select" style="width:100%;">
-            <option value="USMLE Step 1">USMLE Step 1</option>
-            <option value="USMLE Step 2 CK">USMLE Step 2 CK</option>
-            <option value="MRCP Part 1">MRCP Part 1</option>
-            <option value="PLAB 1 / UKMLA">PLAB 1 / UKMLA</option>
-          </select>
-        </div>
-
-        <div style="margin-bottom:12px;">
-          <label style="display:block; font-size:12px; font-weight:600; margin-bottom:4px;" for="config-count-select">Number of questions</label>
-          <select id="config-count-select" class="control-select" style="width:100%;">
-            <option value="5">5 questions (Quick review)</option>
-            <option value="10" selected>10 questions (Standard block)</option>
-            <option value="20">20 questions (Comprehensive block)</option>
-          </select>
-        </div>
-
-        <div style="margin-bottom:16px;">
-          <label style="display:block; font-size:12px; font-weight:600; margin-bottom:4px;" for="config-mode-select">Test timing</label>
-          <select id="config-mode-select" class="control-select" style="width:100%;">
-            <option value="tutor" selected>Tutor mode (Immediate explanations)</option>
-            <option value="timed">Timed mode (60 seconds per item)</option>
-          </select>
-        </div>
-
-        <div style="display:flex; justify-content:flex-end; gap:8px;">
-          <button type="button" class="btn btn-secondary" id="config-modal-cancel">Cancel</button>
-          <button type="submit" class="btn btn-primary">Start test</button>
-        </div>
-      </form>
     </div>
   </div>
 
-  <!-- Toast Stack -->
-  <div class="toast-stack" id="toast-stack"></div>
+  <!-- Toast Notification Stack -->
+  <div class="toast-container" id="toast-container"></div>
 
   <script src="js/questions.js"></script>
   <script src="js/app.js"></script>

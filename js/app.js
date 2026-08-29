@@ -1,74 +1,65 @@
-// BOARDIFY - Medical Examination Platform & Simulator Controller
+// BOARDIFY - High-Density SaaS Command Center & QBank Controller
 (function () {
   'use strict';
 
-  // Translations dictionary
+  // Internationalization Dictionary
   const I18N = {
     en: {
-      brand: 'BOARD<span class="brand-accent">IFY</span>',
-      navQuestions: 'Question bank',
-      navCurriculum: 'Curriculum',
-      navSimulator: 'Exam simulator',
-      appearanceLight: 'Appearance: Light',
-      appearanceDark: 'Appearance: Dark',
-      fontSans: 'Font: UI Sans',
-      fontMono: 'Font: Monospace',
-      fontArabic: 'Font: Arabic Sans',
-      startPractice: 'Start practice block',
-      heroTitle: 'Clinical question bank for medical board examinations',
-      heroDesc: 'Boardify contains 3,420 peer-reviewed clinical vignettes mapped to the USMLE Step 1, Step 2 CK, and MRCP Part 1 content outlines. Practice in standard, timed, and tutor modes with differential diagnosis breakdowns.',
-      heroStartBtn: 'Start 10-question block',
-      heroCustomBtn: 'Configure custom test',
-      statVignettes: 'Clinical vignettes',
-      statPass: 'First-attempt pass rate',
-      statScore: 'Median user score',
-      curriculumTitle: 'Examination curriculum coverage',
-      curriculumDesc: 'Every question includes verified laboratory values, diagnostic images, and referenced rationales.',
-      featuresTitle: 'Examination interface features',
-      featuresDesc: 'Designed to replicate standard computer-based testing environments.',
-      exitBlock: 'Exit block',
-      labValues: 'Lab values',
-      submitAnswer: 'Submit answer',
-      timeRemainingPrefix: 'Time remaining: '
+      dashboard: 'Dashboard',
+      performance: 'Performance',
+      overview: 'Overview',
+      qbank: 'Question Bank',
+      sessions: 'Exam Sessions',
+      flagged: 'Flagged Items',
+      timedBlock: 'Timed Exam Block',
+      tutorMode: 'Tutor Mode',
+      searchPlaceholder: 'Search clinical vignettes, diseases...',
+      questionsSolved: 'Questions Solved',
+      averageAccuracy: 'Average Accuracy',
+      examCountdown: 'Exam Countdown',
+      activeModules: 'Active Subject Modules',
+      startBlock: 'Start Practice Block',
+      exitBlock: 'Exit Block',
+      labValues: 'Lab Values',
+      calculator: 'Calculator',
+      prevQuestion: 'Previous Question',
+      nextQuestion: 'Next Question',
+      itemPrefix: 'Item ',
+      of: ' of '
     },
     ar: {
-      brand: 'بورد<span class="brand-accent">فاي</span>',
-      navQuestions: 'بنك الأسئلة',
-      navCurriculum: 'المناهج الطبية',
-      navSimulator: 'محاكي الاختبار',
-      appearanceLight: 'المظهر: فاتح',
-      appearanceDark: 'المظهر: داكن',
-      fontSans: 'الخط: قياسي',
-      fontMono: 'الخط: أحادي المسافة',
-      fontArabic: 'الخط: عربي حديث',
-      startPractice: 'بدء جلسة تدريب',
-      heroTitle: 'بنك أسئلة سريرية شامل لاختبارات المعادلات الطبية',
-      heroDesc: 'يحتوي بوردفاي على 3,420 حالة سريرية محكمة ومطابقة لمناهج USMLE و MRCP و PLAB. تدرب بالنمط الزمني أو نمط المراجعة الفورية مع شروحات تشخيصية دقيقة.',
-      heroStartBtn: 'بدء جلسة 10 أسئلة',
-      heroCustomBtn: 'تخصيص اختبار محدد',
-      statVignettes: 'حالة سريرية معتمدة',
-      statPass: 'نسبة النجاح من أول محاولة',
-      statScore: 'متوسط درجات المتدربين',
-      curriculumTitle: 'تغطية شاملة للمناهج الطبية العالمية',
-      curriculumDesc: 'تتضمن كل حالة فحوصات مخبرية معيارية، صوراً شعاعية، وتفسيرات سريرية موثقة.',
-      featuresTitle: 'مميزات واجهة محاكاة الاختبارات',
-      featuresDesc: 'مصممة لمحاكاة بيئة اختبارات الحاسوب المعتمدة بدقة متناهية.',
+      dashboard: 'لوحة التحكم',
+      performance: 'مؤشرات الأداء',
+      overview: 'نظرة عامة',
+      qbank: 'بنك الأسئلة',
+      sessions: 'جلسات الاختبار',
+      flagged: 'الأسئلة المعلمة',
+      timedBlock: 'جلسة اختبار زمني',
+      tutorMode: 'نمط المراجعة الفورية',
+      searchPlaceholder: 'بحث في الحالات السريرية، الأمراض...',
+      questionsSolved: 'الأسئلة المحلولة',
+      averageAccuracy: 'معدل الدقة',
+      examCountdown: 'العد التنازلي للاختبار',
+      activeModules: 'المناهج الطبية المتاحة',
+      startBlock: 'بدء كتلة أسئلة',
       exitBlock: 'إنهاء الجلسة',
       labValues: 'القيم المخبرية',
-      submitAnswer: 'تأكيد الإجابة',
-      timeRemainingPrefix: 'الوقت المتبقي: '
+      calculator: 'الحاسبة الطبية',
+      prevQuestion: 'السؤال السابق',
+      nextQuestion: 'السؤال التالي',
+      itemPrefix: 'السؤال ',
+      of: ' من '
     }
   };
 
-  // Application State
+  // State Management
   const state = {
-    mode: localStorage.getItem('boardify_mode') || 'light',
-    font: localStorage.getItem('boardify_font') || 'sans',
+    theme: localStorage.getItem('boardify_theme') || 'light',
     lang: localStorage.getItem('boardify_lang') || 'en',
-    currentView: 'landing',
-    activeExam: 'USMLE Step 1',
-    activeBlockQuestions: [],
-    currentQuestionIndex: 0,
+    currentView: 'dashboard',
+    activeExam: 'USMLE Step 2 CK',
+    activeQuestions: [],
+    currentIndex: 0,
     userAnswers: {},
     timeRemaining: 3600,
     timerInterval: null
@@ -76,184 +67,179 @@
 
   // DOM Elements
   const htmlEl = document.documentElement;
-  const appearanceSelect = document.getElementById('appearance-select');
-  const fontSelect = document.getElementById('font-select');
-  const langToggleBtn = document.getElementById('lang-toggle-btn');
-  const langLabel = document.getElementById('lang-label');
+  const btnThemeToggle = document.getElementById('btn-theme-toggle');
+  const btnLangToggle = document.getElementById('btn-lang-toggle');
+  const langBtnText = document.getElementById('lang-btn-text');
 
-  const viewLanding = document.getElementById('view-landing');
+  // Views
+  const viewDashboard = document.getElementById('view-dashboard');
   const viewSimulator = document.getElementById('view-simulator');
-  const navBrand = document.getElementById('nav-brand');
-  const navOpenSimulator = document.getElementById('nav-open-simulator');
-  const btnStartSimulator = document.getElementById('btn-start-simulator');
-  const heroBtnStart = document.getElementById('hero-btn-start');
-  const heroBtnCustom = document.getElementById('hero-btn-custom');
+  const brandLink = document.getElementById('brand-link');
+  const navBtnDashboard = document.getElementById('nav-btn-dashboard');
+  const navBtnAnalytics = document.getElementById('nav-btn-analytics');
+  const navBtnStep2 = document.getElementById('nav-btn-step2');
+  const navBtnStep1 = document.getElementById('nav-btn-step1');
+  const navBtnMrcp = document.getElementById('nav-btn-mrcp');
+  const navBtnFlagged = document.getElementById('nav-btn-flagged');
+  const navBtnSimTimed = document.getElementById('nav-btn-sim-timed');
+  const navBtnSimTutor = document.getElementById('nav-btn-sim-tutor');
+  const btnQuickStartBlock = document.getElementById('btn-quick-start-block');
+  const btnCustomTestModal = document.getElementById('btn-custom-test-modal');
 
   // Simulator Elements
   const simBtnExit = document.getElementById('sim-btn-exit');
   const simItemCounter = document.getElementById('sim-item-counter');
-  const simTimer = document.getElementById('sim-timer');
-  const simVignetteExam = document.getElementById('sim-vignette-exam');
-  const simVignetteSystem = document.getElementById('sim-vignette-system');
-  const simVignetteStem = document.getElementById('sim-vignette-stem');
-  const simVignetteQuestion = document.getElementById('sim-vignette-question');
-  const simOptionsList = document.getElementById('sim-options-list');
-  const simRationaleBox = document.getElementById('sim-rationale-box');
-  const simMatrixGrid = document.getElementById('sim-matrix-grid');
-  const simScoreText = document.getElementById('sim-score-text');
-  const simBtnSubmit = document.getElementById('sim-btn-submit');
-  const simBtnLab = document.getElementById('sim-btn-lab');
+  const simExamBadge = document.getElementById('sim-exam-badge');
+  const simTimerDisplay = document.getElementById('sim-timer-display');
+  const simBtnLabs = document.getElementById('sim-btn-labs');
+  const simBtnCalc = document.getElementById('sim-btn-calc');
+  const simBtnFlag = document.getElementById('sim-btn-flag');
+  const simQSystem = document.getElementById('sim-q-system');
+  const simQId = document.getElementById('sim-q-id');
+  const simStemText = document.getElementById('sim-stem-text');
+  const simLeadPrompt = document.getElementById('sim-lead-prompt');
+  const simOptionsContainer = document.getElementById('sim-options-container');
+  const simExplanationPanel = document.getElementById('sim-explanation-panel');
+  const simExplanationBody = document.getElementById('sim-explanation-body');
+  const simDiffTableContainer = document.getElementById('sim-differential-table-container');
+  const simMatrixContainer = document.getElementById('sim-matrix-container');
+  const simLiveScore = document.getElementById('sim-live-score');
+  const simBtnPrev = document.getElementById('sim-btn-prev');
+  const simBtnNext = document.getElementById('sim-btn-next');
 
-  // Modal Elements
-  const configModal = document.getElementById('config-modal');
-  const configModalClose = document.getElementById('config-modal-close');
-  const configModalCancel = document.getElementById('config-modal-cancel');
-  const configForm = document.getElementById('config-form');
-  const toastStack = document.getElementById('toast-stack');
+  // Vitals elements
+  const vitBp = document.getElementById('vit-bp');
+  const vitHr = document.getElementById('vit-hr');
+  const vitRr = document.getElementById('vit-rr');
+  const vitSpo2 = document.getElementById('vit-spo2');
+
+  // Command Palette
+  const cmdPaletteModal = document.getElementById('cmd-palette-modal');
+  const cmdInput = document.getElementById('cmd-input');
+  const cmdResults = document.getElementById('cmd-results');
+  const topbarSearchBox = document.getElementById('topbar-search-box');
+  const sidebarCmdTrigger = document.getElementById('sidebar-cmd-trigger');
+  const toastContainer = document.getElementById('toast-container');
 
   // Toast System
-  function showToast(message) {
+  function showToast(msg) {
     const toast = document.createElement('div');
-    toast.className = 'toast-item';
-    toast.textContent = message;
-    toastStack.appendChild(toast);
+    toast.className = 'toast';
+    toast.textContent = msg;
+    toastContainer.appendChild(toast);
     setTimeout(() => {
       toast.style.opacity = '0';
-      setTimeout(() => toast.remove(), 160);
+      setTimeout(() => toast.remove(), 150);
     }, 2400);
   }
 
-  // Appearance & Theme Engine
-  function applyMode(mode) {
-    state.mode = mode;
-    htmlEl.setAttribute('data-mode', mode);
-    localStorage.setItem('boardify_mode', mode);
-    if (appearanceSelect) appearanceSelect.value = mode;
+  // Theme Switcher (1:1 Dual-Theme Parity)
+  function applyTheme(theme) {
+    state.theme = theme;
+    htmlEl.setAttribute('data-theme', theme);
+    localStorage.setItem('boardify_theme', theme);
   }
 
-  // Font Engine
-  function applyFont(font) {
-    state.font = font;
-    htmlEl.setAttribute('data-font', font);
-    localStorage.setItem('boardify_font', font);
-    if (fontSelect) fontSelect.value = font;
-  }
-
-  // Language Engine
+  // Language Switcher (EN / AR)
   function applyLang(lang) {
     state.lang = lang;
     htmlEl.setAttribute('lang', lang);
     htmlEl.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
     localStorage.setItem('boardify_lang', lang);
-    if (langLabel) langLabel.textContent = lang === 'ar' ? 'EN' : 'AR';
+    if (langBtnText) langBtnText.textContent = lang === 'ar' ? 'EN' : 'AR';
 
     const t = I18N[lang] || I18N.en;
-
-    // Update select options text
-    if (appearanceSelect) {
-      appearanceSelect.options[0].textContent = t.appearanceLight;
-      appearanceSelect.options[1].textContent = t.appearanceDark;
-    }
-
-    if (fontSelect) {
-      fontSelect.options[0].textContent = t.fontSans;
-      fontSelect.options[1].textContent = t.fontMono;
-      fontSelect.options[2].textContent = t.fontArabic;
-    }
-
-    if (btnStartSimulator) btnStartSimulator.querySelector('span').textContent = t.startPractice;
     
-    // Landing text
-    const heroTitle = document.querySelector('.hero-title');
-    const heroDesc = document.querySelector('.hero-description');
-    if (heroTitle) heroTitle.textContent = t.heroTitle;
-    if (heroDesc) heroDesc.textContent = t.heroDesc;
+    // Update text labels
+    const txtDashboard = document.getElementById('txt-nav-dashboard');
+    const txtAnalytics = document.getElementById('txt-nav-analytics');
+    const txtFlagged = document.getElementById('txt-nav-flagged');
+    const txtTimed = document.getElementById('txt-nav-timed');
+    const txtTutor = document.getElementById('txt-nav-tutor');
+    const globalSearchInput = document.getElementById('global-search-input');
 
-    if (heroBtnStart) heroBtnStart.querySelector('span').textContent = t.heroStartBtn;
-    if (heroBtnCustom) heroBtnCustom.querySelector('span').textContent = t.heroCustomBtn;
+    if (txtDashboard) txtDashboard.textContent = t.dashboard;
+    if (txtAnalytics) txtAnalytics.textContent = t.performance;
+    if (txtFlagged) txtFlagged.textContent = t.flagged;
+    if (txtTimed) txtTimed.textContent = t.timedBlock;
+    if (txtTutor) txtTutor.textContent = t.tutorMode;
+    if (globalSearchInput) globalSearchInput.placeholder = t.searchPlaceholder;
 
-    // Simulator action text
+    const lblStatSolved = document.getElementById('lbl-stat-solved');
+    const lblStatAccuracy = document.getElementById('lbl-stat-accuracy');
+    const lblStatCountdown = document.getElementById('lbl-stat-countdown');
+    const lblStatFlagged = document.getElementById('lbl-stat-flagged');
+    const lblModulesTitle = document.getElementById('lbl-modules-title');
+    const lblPerformanceTitle = document.getElementById('lbl-performance-title');
+
+    if (lblStatSolved) lblStatSolved.textContent = t.questionsSolved;
+    if (lblStatAccuracy) lblStatAccuracy.textContent = t.averageAccuracy;
+    if (lblStatCountdown) lblStatCountdown.textContent = t.examCountdown;
+    if (lblStatFlagged) lblStatFlagged.textContent = t.flagged;
+    if (lblModulesTitle) lblModulesTitle.textContent = t.activeModules;
+    if (lblPerformanceTitle) lblPerformanceTitle.textContent = t.performance;
+
     if (simBtnExit) simBtnExit.querySelector('span').textContent = t.exitBlock;
-    if (simBtnLab) simBtnLab.querySelector('span').textContent = t.labValues;
-    if (simBtnSubmit) simBtnSubmit.querySelector('span').textContent = t.submitAnswer;
+    if (simBtnLabs) simBtnLabs.querySelector('span').textContent = t.labValues;
+    if (simBtnCalc) simBtnCalc.querySelector('span').textContent = t.calculator;
+    if (simBtnPrev) simBtnPrev.querySelector('span').textContent = t.prevQuestion;
+    if (simBtnNext) simBtnNext.querySelector('span').textContent = t.nextQuestion;
   }
 
-  // Navigation Controller
-  function showView(viewName) {
+  // View Switcher
+  function switchView(viewName) {
     state.currentView = viewName;
     if (viewName === 'simulator') {
-      if (viewLanding) viewLanding.style.display = 'none';
+      if (viewDashboard) viewDashboard.style.display = 'none';
       if (viewSimulator) viewSimulator.style.display = 'flex';
       window.scrollTo(0, 0);
     } else {
-      if (viewLanding) viewLanding.style.display = 'block';
+      if (viewDashboard) viewDashboard.style.display = 'block';
       if (viewSimulator) viewSimulator.style.display = 'none';
       clearInterval(state.timerInterval);
     }
   }
 
-  // Hero Preview Widget Setup
-  function initHeroPreview() {
-    const options = document.querySelectorAll('#preview-options .option-row');
-    const rationale = document.getElementById('preview-rationale');
-
-    options.forEach(opt => {
-      opt.addEventListener('click', () => {
-        const isCorrect = opt.getAttribute('data-correct') === 'true';
-        options.forEach(o => {
-          o.style.pointerEvents = 'none';
-          if (o.getAttribute('data-correct') === 'true') {
-            o.classList.add('correct');
-          }
-        });
-
-        if (!isCorrect) {
-          opt.classList.add('incorrect');
-        }
-
-        if (rationale) rationale.classList.add('visible');
-      });
-    });
-  }
-
-  // Exam Simulator Engine
-  function startExamBlock(examType, questionCount, mode) {
-    state.activeExam = examType || 'USMLE Step 1';
+  // Exam Simulator Controller
+  function startBlock(examName, count) {
+    state.activeExam = examName || 'USMLE Step 2 CK';
     state.userAnswers = {};
-    state.currentQuestionIndex = 0;
+    state.currentIndex = 0;
 
     const bank = (typeof QUESTION_BANK !== 'undefined' && QUESTION_BANK.length > 0) ? QUESTION_BANK : [
       {
         id: 'Q-10482',
         exam: 'USMLE Step 2 CK',
-        system: 'Cardiovascular',
-        stem: 'A 62-year-old male presents with acute tearing chest pain radiating to his interscapular region. Blood pressure is 185/105 mmHg in the right arm and 138/82 mmHg in the left arm. A grade 2/6 early diastolic murmur is heard along the right sternal border.',
-        question: 'Which initial diagnostic test is most appropriate for this stable patient?',
+        system: 'Cardiovascular System',
+        vitals: { bp: '184/102 mm Hg', hr: '108 bpm', rr: '22 /min', spo2: '98% Room Air' },
+        stem: 'A 62-year-old male is brought to the emergency department due to sudden-onset, severe tearing chest pain radiating directly to his back between the scapulae. Blood pressure is 184/102 mm Hg in the right arm and 142/86 mm Hg in the left arm. A grade 2/6 early diastolic decrescendo murmur is heard along the right sternal border.',
+        question: 'Which of the following is the most appropriate next step in management for this patient?',
         options: [
-          { id: 'A', text: 'Transthoracic echocardiogram', isCorrect: false, explanation: 'TTE has lower sensitivity compared to CTA and TEE for identifying dissection flaps in the descending aorta.' },
-          { id: 'B', text: 'Contrast-enhanced computed tomography angiography of chest', isCorrect: true, explanation: 'CTA of chest is the gold standard for confirmation in stable patients.' },
-          { id: 'C', text: 'Intravenous thrombolysis with alteplase', isCorrect: false, explanation: 'Thrombolysis is strictly contraindicated in aortic dissection.' },
-          { id: 'D', text: 'Emergent coronary catheterization', isCorrect: false, explanation: 'Can extend dissection flap into coronary ostia.' }
+          { id: 'A', text: 'Initiate intravenous thrombolytic therapy with alteplase', isCorrect: false, explanation: 'Thrombolysis is strictly contraindicated in aortic dissection.' },
+          { id: 'B', text: 'Administer intravenous esmolol and obtain CT angiography of the chest', isCorrect: true, explanation: 'In acute Stanford Type A dissection, immediate heart rate and blood pressure control with an IV beta-blocker to achieve HR < 60/min and SBP 100–120 mm Hg reduces aortic wall shear stress, followed by definitive CT Angiography.' },
+          { id: 'C', text: 'Administer sublingual nitroglycerin as first-line monotherapy', isCorrect: false, explanation: 'Vasodilators without prior beta-blockade induce reflex tachycardia, increasing aortic shear stress.' },
+          { id: 'D', text: 'Immediate emergency transthoracic pericardiocentesis', isCorrect: false, explanation: 'Pericardiocentesis in stable dissection can release tamponade and precipitate fatal rupture.' }
         ],
-        educationalObjective: 'CT angiography of the chest is the initial test of choice in stable suspected acute aortic dissection.'
+        educationalObjective: 'Acute Stanford Type A aortic dissection classically presents with sudden tearing chest/back pain and blood pressure discrepancy. First-line management is IV beta-blockade (e.g. esmolol) followed by CT Angiography and urgent cardiothoracic surgery.'
       }
     ];
 
-    state.activeBlockQuestions = [];
+    state.activeQuestions = [];
+    const questionCount = count || 10;
     for (let i = 0; i < questionCount; i++) {
-      const base = bank[i % bank.length];
-      state.activeBlockQuestions.push({
-        ...base,
+      const q = bank[i % bank.length];
+      state.activeQuestions.push({
+        ...q,
         itemNumber: i + 1
       });
     }
 
     state.timeRemaining = questionCount * 60;
     startTimer();
-    renderMatrixGrid();
+    renderMatrix();
     loadQuestion(0);
-    showView('simulator');
-    showToast(state.lang === 'ar' ? `بدأت جلسة اختبار تحتوي على ${questionCount} أسئلة.` : `Started ${questionCount}-question practice block.`);
+    switchView('simulator');
+    showToast(state.lang === 'ar' ? `بدأت كتلة اختبارية من ${questionCount} أسئلة.` : `Started ${questionCount}-question practice block.`);
   }
 
   function startTimer() {
@@ -263,185 +249,266 @@
         state.timeRemaining--;
         const mins = Math.floor(state.timeRemaining / 60);
         const secs = state.timeRemaining % 60;
-        const prefix = state.lang === 'ar' ? 'الوقت المتبقي: ' : 'Time remaining: ';
-        if (simTimer) {
-          simTimer.textContent = `${prefix}${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+        if (simTimerDisplay) {
+          simTimerDisplay.textContent = `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
         }
       } else {
         clearInterval(state.timerInterval);
-        showToast(state.lang === 'ar' ? 'انتهى وقت الجلسة.' : 'Block time expired.');
+        showToast('Block time expired.');
       }
     }, 1000);
   }
 
-  function renderMatrixGrid() {
-    if (!simMatrixGrid) return;
-    simMatrixGrid.innerHTML = '';
+  function renderMatrix() {
+    if (!simMatrixContainer) return;
+    simMatrixContainer.innerHTML = '';
 
-    state.activeBlockQuestions.forEach((q, idx) => {
+    state.activeQuestions.forEach((q, idx) => {
       const btn = document.createElement('button');
-      btn.className = `matrix-btn ${idx === state.currentQuestionIndex ? 'active' : ''} ${state.userAnswers[idx] !== undefined ? 'answered' : ''}`;
+      btn.className = `matrix-item ${idx === state.currentIndex ? 'active' : ''} ${state.userAnswers[idx] !== undefined ? 'answered' : ''}`;
       btn.textContent = String(idx + 1);
       btn.addEventListener('click', () => loadQuestion(idx));
-      simMatrixGrid.appendChild(btn);
+      simMatrixContainer.appendChild(btn);
     });
   }
 
   function loadQuestion(index) {
-    state.currentQuestionIndex = index;
-    const q = state.activeBlockQuestions[index];
+    state.currentIndex = index;
+    const q = state.activeQuestions[index];
     if (!q) return;
 
-    if (simItemCounter) {
-      simItemCounter.textContent = state.lang === 'ar' ? `السؤال ${index + 1} من ${state.activeBlockQuestions.length}` : `Item ${index + 1} of ${state.activeBlockQuestions.length}`;
+    const t = I18N[state.lang] || I18N.en;
+    if (simItemCounter) simItemCounter.textContent = `${t.itemPrefix}${index + 1}${t.of}${state.activeQuestions.length}`;
+    if (simExamBadge) simExamBadge.textContent = q.exam || state.activeExam;
+    if (simQSystem) simQSystem.textContent = q.system || 'Cardiovascular System';
+    if (simQId) simQId.textContent = q.id || `Item Q-${10480 + index}`;
+    if (simStemText) simStemText.textContent = q.stem;
+    if (simLeadPrompt) simLeadPrompt.textContent = q.question || 'Which of the following is the most appropriate next step in management for this patient?';
+
+    // Vitals
+    if (q.vitals) {
+      if (vitBp) vitBp.textContent = q.vitals.bp || '120/80 mm Hg';
+      if (vitHr) vitHr.textContent = q.vitals.hr || '76 bpm';
+      if (vitRr) vitRr.textContent = q.vitals.rr || '16 /min';
+      if (vitSpo2) vitSpo2.textContent = q.vitals.spo2 || '99% Room Air';
     }
-    if (simVignetteExam) simVignetteExam.textContent = q.exam || state.activeExam;
-    if (simVignetteSystem) simVignetteSystem.textContent = q.system || 'Internal Medicine';
-    if (simVignetteStem) simVignetteStem.textContent = q.stem;
-    if (simVignetteQuestion) simVignetteQuestion.textContent = q.question || 'Which of the following is the most appropriate next step in management?';
 
-    simOptionsList.innerHTML = '';
-    simRationaleBox.className = 'rationale-block';
-    simRationaleBox.innerHTML = '';
+    // MCQ Options
+    simOptionsContainer.innerHTML = '';
+    simExplanationPanel.className = 'explanation-panel';
+    simExplanationBody.innerHTML = '';
+    if (simDiffTableContainer) simDiffTableContainer.innerHTML = '';
 
-    const answeredOptionId = state.userAnswers[index];
+    const answeredId = state.userAnswers[index];
 
     (q.options || []).forEach(opt => {
       const row = document.createElement('button');
-      row.className = 'option-row';
-      row.innerHTML = `<span class="option-letter">${opt.id}</span> <span>${opt.text}</span>`;
+      row.className = 'mcq-option-row';
+      row.innerHTML = `<span class="key-badge">${opt.id}</span> <span>${opt.text}</span>`;
 
-      if (answeredOptionId !== undefined) {
+      if (answeredId !== undefined) {
         row.style.pointerEvents = 'none';
-        if (opt.isCorrect) row.classList.add('correct');
-        if (answeredOptionId === opt.id && !opt.isCorrect) row.classList.add('incorrect');
+        if (opt.isCorrect) {
+          row.classList.add('correct');
+        }
+        if (answeredId === opt.id && !opt.isCorrect) {
+          row.classList.add('incorrect');
+        }
+        if (answeredId === opt.id) {
+          row.classList.add('selected');
+        }
       }
 
       row.addEventListener('click', () => {
         state.userAnswers[index] = opt.id;
-        renderMatrixGrid();
+        renderMatrix();
         loadQuestion(index);
         updateScore();
       });
 
-      simOptionsList.appendChild(row);
+      simOptionsContainer.appendChild(row);
     });
 
-    if (answeredOptionId !== undefined) {
-      simRationaleBox.classList.add('visible');
+    // Explanation
+    if (answeredId !== undefined) {
+      simExplanationPanel.classList.add('visible');
       const correctOpt = q.options.find(o => o.isCorrect);
-      simRationaleBox.innerHTML = `
-        <strong>Educational objective:</strong> ${q.educationalObjective || 'Diagnosis confirmed.'}<br><br>
-        <strong>Correct choice (${correctOpt ? correctOpt.id : 'B'}):</strong> ${correctOpt ? (correctOpt.explanation || correctOpt.text) : ''}
+      simExplanationBody.innerHTML = `
+        <div style="margin-bottom:10px;">
+          <strong style="color:var(--text-primary);">Educational Objective:</strong> ${q.educationalObjective || 'Diagnostic management confirmed.'}
+        </div>
+        <div>
+          <strong style="color:var(--status-success);">Correct Choice (${correctOpt ? correctOpt.id : 'B'}):</strong> ${correctOpt ? (correctOpt.explanation || correctOpt.text) : ''}
+        </div>
       `;
+
+      if (q.differentialTable && simDiffTableContainer) {
+        simDiffTableContainer.innerHTML = q.differentialTable;
+      }
     }
 
-    renderMatrixGrid();
+    renderMatrix();
   }
 
   function updateScore() {
-    let correctCount = 0;
-    let answeredCount = 0;
+    let correct = 0;
+    let answered = 0;
 
-    state.activeBlockQuestions.forEach((q, idx) => {
+    state.activeQuestions.forEach((q, idx) => {
       const ans = state.userAnswers[idx];
       if (ans !== undefined) {
-        answeredCount++;
+        answered++;
         const opt = q.options.find(o => o.id === ans);
-        if (opt && opt.isCorrect) correctCount++;
+        if (opt && opt.isCorrect) correct++;
       }
     });
 
-    const percent = answeredCount > 0 ? Math.round((correctCount / answeredCount) * 100) : 0;
-    if (simScoreText) simScoreText.textContent = `${correctCount} / ${answeredCount} (${percent}%)`;
+    const percent = answered > 0 ? Math.round((correct / answered) * 100) : 0;
+    if (simLiveScore) simLiveScore.textContent = `${correct} / ${answered} (${percent}%)`;
+  }
+
+  // Command Palette Handler
+  function openCommandPalette() {
+    if (cmdPaletteModal) {
+      cmdPaletteModal.classList.add('active');
+      if (cmdInput) {
+        cmdInput.value = '';
+        cmdInput.focus();
+      }
+    }
+  }
+
+  function closeCommandPalette() {
+    if (cmdPaletteModal) cmdPaletteModal.classList.remove('active');
   }
 
   // Event Listeners
   function initEvents() {
-    if (appearanceSelect) {
-      appearanceSelect.addEventListener('change', (e) => applyMode(e.target.value));
+    // Theme Toggle
+    if (btnThemeToggle) {
+      btnThemeToggle.addEventListener('click', () => {
+        applyTheme(state.theme === 'light' ? 'dark' : 'light');
+        showToast(state.theme === 'dark' ? 'Dark Mode Enabled' : 'Light Mode Enabled');
+      });
     }
 
-    if (fontSelect) {
-      fontSelect.addEventListener('change', (e) => applyFont(e.target.value));
+    // Language Toggle
+    if (btnLangToggle) {
+      btnLangToggle.addEventListener('click', () => {
+        applyLang(state.lang === 'en' ? 'ar' : 'en');
+      });
     }
 
-    if (langToggleBtn) {
-      langToggleBtn.addEventListener('click', () => applyLang(state.lang === 'en' ? 'ar' : 'en'));
-    }
-
-    if (navBrand) {
-      navBrand.addEventListener('click', (e) => {
+    // Nav Brand & Dashboard
+    if (brandLink) {
+      brandLink.addEventListener('click', (e) => {
         e.preventDefault();
-        showView('landing');
+        switchView('dashboard');
       });
     }
 
-    if (navOpenSimulator) {
-      navOpenSimulator.addEventListener('click', (e) => {
-        e.preventDefault();
-        startExamBlock('USMLE Step 1', 10, 'tutor');
+    if (navBtnDashboard) {
+      navBtnDashboard.addEventListener('click', () => switchView('dashboard'));
+    }
+
+    if (navBtnAnalytics) {
+      navBtnAnalytics.addEventListener('click', () => {
+        switchView('dashboard');
+        showToast('Analytics synchronized.');
       });
     }
 
-    if (btnStartSimulator) {
-      btnStartSimulator.addEventListener('click', () => startExamBlock('USMLE Step 1', 10, 'tutor'));
-    }
+    // Module Launchers
+    if (navBtnStep2) navBtnStep2.addEventListener('click', () => startBlock('USMLE Step 2 CK', 10));
+    if (navBtnStep1) navBtnStep1.addEventListener('click', () => startBlock('USMLE Step 1', 10));
+    if (navBtnMrcp) navBtnMrcp.addEventListener('click', () => startBlock('MRCP Part 1', 10));
+    if (navBtnFlagged) navBtnFlagged.addEventListener('click', () => startBlock('Flagged Review', 5));
+    if (navBtnSimTimed) navBtnSimTimed.addEventListener('click', () => startBlock('USMLE Step 2 CK', 10));
+    if (navBtnSimTutor) navBtnSimTutor.addEventListener('click', () => startBlock('USMLE Step 2 CK', 10));
 
-    if (heroBtnStart) {
-      heroBtnStart.addEventListener('click', () => startExamBlock('USMLE Step 1', 10, 'tutor'));
-    }
+    if (btnQuickStartBlock) btnQuickStartBlock.addEventListener('click', () => startBlock('USMLE Step 2 CK', 10));
+    if (btnCustomTestModal) btnCustomTestModal.addEventListener('click', () => startBlock('USMLE Step 2 CK', 10));
 
-    if (heroBtnCustom) {
-      heroBtnCustom.addEventListener('click', () => {
-        if (configModal) configModal.classList.add('active');
+    // Simulator Buttons
+    if (simBtnExit) simBtnExit.addEventListener('click', () => switchView('dashboard'));
+    if (simBtnPrev) {
+      simBtnPrev.addEventListener('click', () => {
+        if (state.currentIndex > 0) loadQuestion(state.currentIndex - 1);
       });
     }
-
-    if (simBtnExit) {
-      simBtnExit.addEventListener('click', () => showView('landing'));
-    }
-
-    if (simBtnSubmit) {
-      simBtnSubmit.addEventListener('click', () => {
-        const currentAnswer = state.userAnswers[state.currentQuestionIndex];
-        if (currentAnswer === undefined) {
-          showToast(state.lang === 'ar' ? 'يرجى اختيار إجابة أولاً.' : 'Select an answer before submitting.');
+    if (simBtnNext) {
+      simBtnNext.addEventListener('click', () => {
+        if (state.currentIndex < state.activeQuestions.length - 1) {
+          loadQuestion(state.currentIndex + 1);
         } else {
-          if (state.currentQuestionIndex < state.activeBlockQuestions.length - 1) {
-            loadQuestion(state.currentQuestionIndex + 1);
-          } else {
-            showToast(state.lang === 'ar' ? 'تم الانتهاء من جميع الأسئلة.' : 'Block completed. Review explanations.');
-          }
+          showToast('Completed block. Review explanations.');
         }
       });
     }
 
-    if (simBtnLab) {
-      simBtnLab.addEventListener('click', () => {
-        showToast(state.lang === 'ar' ? 'القيم المخبرية: الصوديوم 136-145، البوتاسيوم 3.5-5.0، الكرياتينين 0.7-1.3 mg/dL.' : 'Standard laboratory reference: Sodium 136-145, Potassium 3.5-5.0, Creatinine 0.7-1.3 mg/dL.');
+    if (simBtnLabs) {
+      simBtnLabs.addEventListener('click', () => {
+        showToast('Standard Labs: Na 136-145, K 3.5-5.0, Cl 98-106, HCO3 22-28, Cr 0.7-1.3 mg/dL.');
       });
     }
 
-    if (configModalClose) configModalClose.addEventListener('click', () => configModal.classList.remove('active'));
-    if (configModalCancel) configModalCancel.addEventListener('click', () => configModal.classList.remove('active'));
-    if (configForm) {
-      configForm.addEventListener('submit', (e) => {
-        e.preventDefault();
-        const exam = document.getElementById('config-exam-select').value;
-        const count = parseInt(document.getElementById('config-count-select').value, 10) || 10;
-        const mode = document.getElementById('config-mode-select').value;
-        configModal.classList.remove('active');
-        startExamBlock(exam, count, mode);
+    if (simBtnCalc) {
+      simBtnCalc.addEventListener('click', () => {
+        showToast('Medical Calculator: Wells Score = 6.0 (High Probability PE).');
       });
     }
+
+    if (simBtnFlag) {
+      simBtnFlag.addEventListener('click', () => {
+        showToast('Question flagged for review.');
+      });
+    }
+
+    // Command Palette Triggers
+    if (topbarSearchBox) topbarSearchBox.addEventListener('click', openCommandPalette);
+    if (sidebarCmdTrigger) sidebarCmdTrigger.addEventListener('click', openCommandPalette);
+
+    if (cmdPaletteModal) {
+      cmdPaletteModal.addEventListener('click', (e) => {
+        if (e.target === cmdPaletteModal) closeCommandPalette();
+      });
+    }
+
+    // Command palette item actions
+    if (cmdResults) {
+      cmdResults.querySelectorAll('.cmd-result-item').forEach(item => {
+        item.addEventListener('click', () => {
+          const action = item.getAttribute('data-action');
+          closeCommandPalette();
+          if (action === 'start-block') startBlock('USMLE Step 2 CK', 10);
+          else if (action === 'toggle-theme') {
+            applyTheme(state.theme === 'light' ? 'dark' : 'light');
+          }
+          else if (action === 'toggle-lang') {
+            applyLang(state.lang === 'en' ? 'ar' : 'en');
+          }
+          else if (action === 'filter-step2') startBlock('USMLE Step 2 CK', 10);
+          else if (action === 'filter-mrcp') startBlock('MRCP Part 1', 10);
+          else if (action === 'view-dashboard') switchView('dashboard');
+        });
+      });
+    }
+
+    // Global Keyboard Shortcuts (Ctrl + K / Cmd + K, Esc)
+    window.addEventListener('keydown', (e) => {
+      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
+        e.preventDefault();
+        openCommandPalette();
+      } else if (e.key === 'Escape') {
+        closeCommandPalette();
+      }
+    });
   }
 
+  // Initialize
   function init() {
-    applyMode(state.mode);
-    applyFont(state.font);
+    applyTheme(state.theme);
     applyLang(state.lang);
-    initHeroPreview();
     initEvents();
   }
 
