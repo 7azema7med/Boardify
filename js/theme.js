@@ -220,6 +220,29 @@ const THEMES = {
         </svg>
       `;
     }
+  },
+  'task-os-amber': {
+    id: 'task-os-amber',
+    name: 'Task OS Amber & Cyber Gold',
+    accentColor: '#A16207',
+    darkPrimary: '#F59E0B',
+    description: 'High-contrast minimalist workspace with amber gold accents and deep dark slate mode.',
+    badge: 'Task OS Cyber Gold',
+    category: 'High-Tech SaaS',
+    wcag: 'AAA',
+    getLogoSvg: (isDark) => {
+      const pColor = isDark ? '#F59E0B' : '#A16207';
+      const aColor = isDark ? '#FBBF24' : '#D97706';
+      return `
+        <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" class="boardify-animated-logo">
+          <rect width="40" height="40" rx="8" stroke="${pColor}" stroke-width="1.8" fill="${pColor}" fill-opacity="${isDark ? '0.2' : '0.08'}" class="logo-shield-border"/>
+          <path d="M10 24V16" stroke="${aColor}" stroke-width="3" stroke-linecap="round"/>
+          <path d="M16 24V12" stroke="${pColor}" stroke-width="3" stroke-linecap="round"/>
+          <path d="M22 24V8" stroke="${aColor}" stroke-width="3" stroke-linecap="round"/>
+          <circle cx="30" cy="12" r="3" fill="${aColor}" class="logo-pulse-dot"/>
+        </svg>
+      `;
+    }
   }
 };
 
@@ -230,6 +253,20 @@ const FONT_PAIRINGS = {
     tag: 'Modern Clinical Standard',
     script: 'English',
     description: 'High-contrast neo-grotesque UI with authoritative serif vignettes for NBME readability.'
+  },
+  'taskos-mono': {
+    id: 'taskos-mono',
+    name: 'Fira Code + Space Grotesk',
+    tag: 'Task OS Monospace Precision',
+    script: 'English',
+    description: 'Terminal-grade monospace precision typography with modern geometric sans for peak focus.'
+  },
+  'arabic-taskos': {
+    id: 'arabic-taskos',
+    name: 'IBM Plex Sans Arabic + Inter',
+    tag: 'Task OS Arabic Clean',
+    script: 'Arabic / Dual',
+    description: 'Crisp bilingual Arabic interface typography engineered for technical clarity.'
   },
   'inter-lora': {
     id: 'inter-lora',
@@ -300,9 +337,9 @@ const ELEVATIONS = {
 
 class ThemeEngine {
   constructor() {
-    this.currentTheme = localStorage.getItem('boardify_theme') || 'academic-navy';
+    this.currentTheme = localStorage.getItem('boardify_theme') || 'task-os-amber';
     this.currentMode = localStorage.getItem('boardify_mode') || 'light';
-    this.currentFont = localStorage.getItem('boardify_font') || 'jakarta-serif';
+    this.currentFont = localStorage.getItem('boardify_font') || 'taskos-mono';
     this.currentShape = localStorage.getItem('boardify_shape') || 'native';
     this.currentElevation = localStorage.getItem('boardify_elevation') || 'layered';
     this.currentDirection = 'ltr';

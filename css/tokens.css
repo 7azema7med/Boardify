@@ -300,6 +300,21 @@
   --font-display: 'Readex Pro', sans-serif;
 }
 
+/* 9. Task OS Mono & Space Grotesk (High-Yield Technical Diagnostic) */
+[data-font="taskos-mono"],
+[data-font="fira-space"] {
+  --font-sans: 'Space Grotesk', 'Inter', -apple-system, sans-serif;
+  --font-serif: 'Fira Code', 'JetBrains Mono', monospace;
+  --font-display: 'Space Grotesk', sans-serif;
+}
+
+/* 10. Task OS Arabic Modern (High-Precision Arabic) */
+[data-font="arabic-taskos"] {
+  --font-sans: 'IBM Plex Sans Arabic', 'Inter', sans-serif;
+  --font-serif: 'IBM Plex Sans Arabic', 'Source Serif 4', serif;
+  --font-display: 'IBM Plex Sans Arabic', sans-serif;
+}
+
 /* ==========================================================================
    THEME PALETTE 1: ACADEMIC NAVY / ROYAL (Clinical Authority)
    ========================================================================== */
@@ -783,6 +798,54 @@
   --flag: #EBCB8B;
   --info: #81A1C1;
   --accent: #88C0D0;
+  --card-shadow: 0 8px 24px -4px rgba(0, 0, 0, 0.6);
+}
+
+/* ==========================================================================
+   THEME PALETTE 11: TASK OS AMBER & CYBER GOLD (Screenshot Match)
+   ========================================================================== */
+[data-theme="task-os-amber"] {
+  --primary: #A16207;
+  --primary-hover: #854D0E;
+  --primary-light: #D97706;
+  --primary-subtle: rgba(217, 119, 6, 0.08);
+  --onPrimary: #FFFFFF;
+  --bg: #F4F6F8;
+  --surface: #FFFFFF;
+  --surface2: #F1F5F9;
+  --surface3: #E2E8F0;
+  --border: #E2E8F0;
+  --border-focus: #D97706;
+  --text: #0F172A;
+  --muted: #475569;
+  --subtle-text: #8896A6;
+  --success: #10B981;
+  --error: #EF4444;
+  --flag: #F59E0B;
+  --info: #3B82F6;
+  --accent: #D97706;
+}
+
+[data-theme="task-os-amber"][data-mode="dark"] {
+  --primary: #F59E0B;
+  --primary-hover: #FBBF24;
+  --primary-light: #FDE68A;
+  --primary-subtle: rgba(245, 158, 11, 0.12);
+  --onPrimary: #07090E;
+  --bg: #07090E;
+  --surface: #0D1117;
+  --surface2: #121822;
+  --surface3: #192230;
+  --border: #192230;
+  --border-focus: #F59E0B;
+  --text: #F8FAFC;
+  --muted: #94A3B8;
+  --subtle-text: #5E6F84;
+  --success: #10B981;
+  --error: #EF4444;
+  --flag: #F59E0B;
+  --info: #3B82F6;
+  --accent: #F59E0B;
   --card-shadow: 0 8px 24px -4px rgba(0, 0, 0, 0.6);
 }
 
