@@ -226,7 +226,7 @@ const THEMES = {
     name: 'Task OS Amber & Cyber Gold',
     accentColor: '#A16207',
     darkPrimary: '#F59E0B',
-    description: 'High-contrast minimalist workspace with amber gold accents and deep dark slate mode.',
+    description: 'High-contrast clinical workspace with amber gold accents and deep dark slate mode.',
     badge: 'Task OS Cyber Gold',
     category: 'High-Tech SaaS',
     wcag: 'AAA',
@@ -247,26 +247,26 @@ const THEMES = {
 };
 
 const FONT_PAIRINGS = {
+  'taskos-mono': {
+    id: 'taskos-mono',
+    name: 'Fira Code + Space Grotesk',
+    tag: 'Task OS Monospace Precision',
+    script: 'English',
+    description: 'Terminal-grade monospace precision typography with modern geometric sans for peak diagnostic focus.'
+  },
+  'arabic-taskos': {
+    id: 'arabic-taskos',
+    name: 'IBM Plex Sans Arabic + Space Grotesk',
+    tag: 'Task OS Arabic Clean',
+    script: 'Arabic / Dual',
+    description: 'Crisp bilingual Arabic interface typography engineered for high-yield diagnostic clarity.'
+  },
   'jakarta-serif': {
     id: 'jakarta-serif',
     name: 'Plus Jakarta Sans + Source Serif 4',
     tag: 'Modern Clinical Standard',
     script: 'English',
     description: 'High-contrast neo-grotesque UI with authoritative serif vignettes for NBME readability.'
-  },
-  'taskos-mono': {
-    id: 'taskos-mono',
-    name: 'Fira Code + Space Grotesk',
-    tag: 'Task OS Monospace Precision',
-    script: 'English',
-    description: 'Terminal-grade monospace precision typography with modern geometric sans for peak focus.'
-  },
-  'arabic-taskos': {
-    id: 'arabic-taskos',
-    name: 'IBM Plex Sans Arabic + Inter',
-    tag: 'Task OS Arabic Clean',
-    script: 'Arabic / Dual',
-    description: 'Crisp bilingual Arabic interface typography engineered for technical clarity.'
   },
   'inter-lora': {
     id: 'inter-lora',
