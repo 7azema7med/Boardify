@@ -1,10 +1,37 @@
-// BOARDIFY - High-Density SaaS Command Center & QBank Controller
+// BOARDIFY - Landing Page, SaaS QBank Command Center & Simulator Controller
 (function () {
   'use strict';
 
-  // Internationalization Dictionary
+  // Internationalization Dictionary (Landing Page + App Shell)
   const I18N = {
     en: {
+      brand: 'BOARD<span class="brand-accent">IFY</span>',
+      navFeatures: 'Features',
+      navCurriculum: 'Curriculum',
+      navCompare: 'Comparison',
+      navPricing: 'Pricing',
+      launchApp: 'Launch QBank App',
+      heroBadge: '2026 Examination Curriculum Released',
+      heroHeading: 'The high-yield medical question bank engineered for board mastery.',
+      heroSubtext: '3,420 peer-reviewed clinical vignettes, real-time differential diagnosis algorithms, and authentic NBME-style exam blocks for USMLE Step 1, Step 2 CK, and MRCP Part 1.',
+      heroStartBtn: 'Launch Exam Simulator',
+      heroExploreBtn: 'Explore Curriculum',
+      metricQ: 'Clinical Vignettes',
+      metricPass: 'First-Attempt Pass',
+      metricScore: 'Median Step 2 Score',
+      metricLat: 'UI Latency',
+      tagFeatures: 'Developer-Grade QBank Platform',
+      titleFeatures: 'Engineered for maximum cognitive throughput',
+      subFeatures: 'Every interface interaction is optimized for high-density review without cognitive friction.',
+      tagCurriculum: 'Medical Curriculum Coverage',
+      titleCurriculum: 'Full alignment with international board examinations',
+      subCurriculum: 'Peer-reviewed clinical vignettes verified by certified medical boards and academic clinicians.',
+      tagCompare: 'Benchmarked Performance',
+      titleCompare: 'Why medical students choose Boardify',
+      subCompare: 'Built with modern developer infrastructure for zero lag, zero clutter, and higher recall.',
+      tagPricing: 'Transparent Pricing',
+      titlePricing: 'Simple, predictable examination access',
+      subPricing: 'Unlimited practice blocks, performance analytics, and curriculum updates included.',
       dashboard: 'Dashboard',
       performance: 'Performance',
       overview: 'Overview',
@@ -28,6 +55,33 @@
       of: ' of '
     },
     ar: {
+      brand: 'بورد<span class="brand-accent">فاي</span>',
+      navFeatures: 'المميزات',
+      navCurriculum: 'المناهج الطبية',
+      navCompare: 'المقارنة',
+      navPricing: 'الأسعار',
+      launchApp: 'دخول المنصة',
+      heroBadge: 'إطلاق منهج الاختبارات المحدث لعام 2026',
+      heroHeading: 'بنك الأسئلة السريرية عالي الكفاءة لاجتياز الاختبارات الطبية العالمية.',
+      heroSubtext: '3,420 حالة سريرية محكمة، خوارزميات التشخيص المقارن الفوري، وجلسات اختبار واقعية مطابقة لمعايير NBME لاختبارات USMLE و MRCP و PLAB.',
+      heroStartBtn: 'تشغيل محاكي الاختبارات',
+      heroExploreBtn: 'استعراض المناهج',
+      metricQ: 'حالة سريرية معتمدة',
+      metricPass: 'نسبة النجاح من أول مرة',
+      metricScore: 'متوسط درجات Step 2',
+      metricLat: 'زمن الاستجابة',
+      tagFeatures: 'منصة سريرية متقدمة',
+      titleFeatures: 'مصممة لتحقيق أقصى درجات التركيز وسرعة الاستيعاب',
+      subFeatures: 'تمت هندسة كل تفاعل في الواجهة لتقديم مراجعة مكثفة وخالية من التشتيت.',
+      tagCurriculum: 'تغطية المناهج الطبية',
+      titleCurriculum: 'توافق كامل مع معايير البوردات والزمالات الدولية',
+      subCurriculum: 'حالات سريرية مراجعة وموثقة من لجان طبية معتمدة وأطباء استشاريين.',
+      tagCompare: 'مقارنة الأداء والسرعة',
+      titleCompare: 'لماذا يفضل الأطباء منصة Boardify',
+      subCompare: 'مبنية بأحدث تقنيات الويب السحابية لانعدام التأخير وسرعة الاسترجاع الذهني.',
+      tagPricing: 'أسعار واضحة ومباشرة',
+      titlePricing: 'اشتراكات سنوية وفصلية بدون رسوم خفية',
+      subPricing: 'تشمل جميع بنوك الأسئلة، جلسات المحاكاة اللامحدودة، ومؤشرات الأداء.',
       dashboard: 'لوحة التحكم',
       performance: 'مؤشرات الأداء',
       overview: 'نظرة عامة',
@@ -56,7 +110,8 @@
   const state = {
     theme: localStorage.getItem('boardify_theme') || 'light',
     lang: localStorage.getItem('boardify_lang') || 'en',
-    currentView: 'dashboard',
+    currentStage: 'landing', // 'landing' | 'app'
+    currentAppView: 'dashboard', // 'dashboard' | 'simulator'
     activeExam: 'USMLE Step 2 CK',
     activeQuestions: [],
     currentIndex: 0,
@@ -67,17 +122,25 @@
 
   // DOM Elements
   const htmlEl = document.documentElement;
+  const viewLanding = document.getElementById('view-landing');
+  const viewAppShell = document.getElementById('view-app-shell');
   const appLayout = document.querySelector('.app-layout');
+
+  // Landing Elements
+  const landingLangToggle = document.getElementById('landing-lang-toggle');
+  const landingLangText = document.getElementById('landing-lang-text');
+  const landingThemeToggle = document.getElementById('landing-theme-toggle');
+  const landingBtnLaunchApp = document.getElementById('landing-btn-launch-app');
+  const heroBtnStartSimulator = document.getElementById('hero-btn-start-simulator');
+  const heroBtnExploreCurriculum = document.getElementById('hero-btn-explore-curriculum');
+
+  // App Shell Elements
   const btnThemeToggle = document.getElementById('btn-theme-toggle');
   const btnLangToggle = document.getElementById('btn-lang-toggle');
   const langBtnText = document.getElementById('lang-btn-text');
-
-  // Views
-  const viewDashboard = document.getElementById('view-dashboard');
-  const viewSimulator = document.getElementById('view-simulator');
   const brandLink = document.getElementById('brand-link');
   const navBtnDashboard = document.getElementById('nav-btn-dashboard');
-  const navBtnAnalytics = document.getElementById('nav-btn-analytics');
+  const navBtnLandingReturn = document.getElementById('nav-btn-landing-return');
   const navBtnStep2 = document.getElementById('nav-btn-step2');
   const navBtnStep1 = document.getElementById('nav-btn-step1');
   const navBtnMrcp = document.getElementById('nav-btn-mrcp');
@@ -86,6 +149,10 @@
   const navBtnSimTutor = document.getElementById('nav-btn-sim-tutor');
   const btnQuickStartBlock = document.getElementById('btn-quick-start-block');
   const btnCustomTestModal = document.getElementById('btn-custom-test-modal');
+
+  // Views inside App Shell
+  const viewDashboard = document.getElementById('view-dashboard');
+  const viewSimulator = document.getElementById('view-simulator');
 
   // Simulator Elements
   const simBtnExit = document.getElementById('sim-btn-exit');
@@ -108,7 +175,7 @@
   const simBtnPrev = document.getElementById('sim-btn-prev');
   const simBtnNext = document.getElementById('sim-btn-next');
 
-  // Vitals elements
+  // Vitals
   const vitBp = document.getElementById('vit-bp');
   const vitHr = document.getElementById('vit-hr');
   const vitRr = document.getElementById('vit-rr');
@@ -120,6 +187,7 @@
   const cmdResults = document.getElementById('cmd-results');
   const topbarSearchBox = document.getElementById('topbar-search-box');
   const sidebarCmdTrigger = document.getElementById('sidebar-cmd-trigger');
+  const footerCmdBtn = document.getElementById('footer-cmd-btn');
   const toastContainer = document.getElementById('toast-container');
 
   // Toast System
@@ -134,51 +202,73 @@
     }, 2400);
   }
 
-  // Theme Switcher (1:1 Dual-Theme Parity)
+  // Theme Engine (1:1 Light / Dark Mode Parity)
   function applyTheme(theme) {
     state.theme = theme;
     htmlEl.setAttribute('data-theme', theme);
     localStorage.setItem('boardify_theme', theme);
   }
 
-  // Language Switcher (EN / AR)
+  // Language Engine (EN / AR)
   function applyLang(lang) {
     state.lang = lang;
     htmlEl.setAttribute('lang', lang);
     htmlEl.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
     localStorage.setItem('boardify_lang', lang);
+    
     if (langBtnText) langBtnText.textContent = lang === 'ar' ? 'EN' : 'AR';
+    if (landingLangText) landingLangText.textContent = lang === 'ar' ? 'EN' : 'AR';
 
     const t = I18N[lang] || I18N.en;
-    
-    // Update text labels
-    const txtDashboard = document.getElementById('txt-nav-dashboard');
-    const txtAnalytics = document.getElementById('txt-nav-analytics');
-    const txtFlagged = document.getElementById('txt-nav-flagged');
-    const txtTimed = document.getElementById('txt-nav-timed');
-    const txtTutor = document.getElementById('txt-nav-tutor');
+
+    // Landing Page i18n
+    const elMap = {
+      'lnk-landing-features': t.navFeatures,
+      'lnk-landing-curriculum': t.navCurriculum,
+      'lnk-landing-compare': t.navCompare,
+      'lnk-landing-pricing': t.navPricing,
+      'hero-badge': t.heroBadge,
+      'hero-heading': t.heroHeading,
+      'hero-subtext': t.heroSubtext,
+      'lbl-metric-q': t.metricQ,
+      'lbl-metric-pass': t.metricPass,
+      'lbl-metric-score': t.metricScore,
+      'lbl-metric-lat': t.metricLat,
+      'tag-features': t.tagFeatures,
+      'title-features': t.titleFeatures,
+      'sub-features': t.subFeatures,
+      'tag-curriculum': t.tagCurriculum,
+      'title-curriculum': t.titleCurriculum,
+      'sub-curriculum': t.subCurriculum,
+      'tag-compare': t.tagCompare,
+      'title-compare': t.titleCompare,
+      'sub-compare': t.subCompare,
+      'tag-pricing': t.tagPricing,
+      'title-pricing': t.titlePricing,
+      'sub-pricing': t.subPricing,
+      'txt-nav-dashboard': t.dashboard,
+      'txt-nav-flagged': t.flagged,
+      'txt-nav-timed': t.timedBlock,
+      'txt-nav-tutor': t.tutorMode,
+      'lbl-stat-solved': t.questionsSolved,
+      'lbl-stat-accuracy': t.averageAccuracy,
+      'lbl-stat-countdown': t.examCountdown,
+      'lbl-stat-flagged': t.flagged,
+      'lbl-modules-title': t.activeModules,
+      'lbl-performance-title': t.performance
+    };
+
+    for (const [id, text] of Object.entries(elMap)) {
+      const el = document.getElementById(id);
+      if (el) el.textContent = text;
+    }
+
+    if (landingBtnLaunchApp) landingBtnLaunchApp.querySelector('span').textContent = t.launchApp;
+    if (heroBtnStartSimulator) heroBtnStartSimulator.querySelector('span').textContent = t.heroStartBtn;
+    if (heroBtnExploreCurriculum) heroBtnExploreCurriculum.querySelector('span').textContent = t.heroExploreBtn;
+
     const globalSearchInput = document.getElementById('global-search-input');
-
-    if (txtDashboard) txtDashboard.textContent = t.dashboard;
-    if (txtAnalytics) txtAnalytics.textContent = t.performance;
-    if (txtFlagged) txtFlagged.textContent = t.flagged;
-    if (txtTimed) txtTimed.textContent = t.timedBlock;
-    if (txtTutor) txtTutor.textContent = t.tutorMode;
     if (globalSearchInput) globalSearchInput.placeholder = t.searchPlaceholder;
-
-    const lblStatSolved = document.getElementById('lbl-stat-solved');
-    const lblStatAccuracy = document.getElementById('lbl-stat-accuracy');
-    const lblStatCountdown = document.getElementById('lbl-stat-countdown');
-    const lblStatFlagged = document.getElementById('lbl-stat-flagged');
-    const lblModulesTitle = document.getElementById('lbl-modules-title');
-    const lblPerformanceTitle = document.getElementById('lbl-performance-title');
-
-    if (lblStatSolved) lblStatSolved.textContent = t.questionsSolved;
-    if (lblStatAccuracy) lblStatAccuracy.textContent = t.averageAccuracy;
-    if (lblStatCountdown) lblStatCountdown.textContent = t.examCountdown;
-    if (lblStatFlagged) lblStatFlagged.textContent = t.flagged;
-    if (lblModulesTitle) lblModulesTitle.textContent = t.activeModules;
-    if (lblPerformanceTitle) lblPerformanceTitle.textContent = t.performance;
 
     if (btnQuickStartBlock) btnQuickStartBlock.querySelector('span').textContent = t.startBlock;
     if (simBtnExit) simBtnExit.querySelector('span').textContent = t.exitBlock;
@@ -188,9 +278,24 @@
     if (simBtnNext) simBtnNext.querySelector('span').textContent = t.nextQuestion;
   }
 
-  // View Switcher
-  function switchView(viewName) {
-    state.currentView = viewName;
+  // Stage Switcher: Landing vs App Shell
+  function showStage(stageName, appView) {
+    state.currentStage = stageName;
+    if (stageName === 'landing') {
+      if (viewLanding) viewLanding.style.display = 'block';
+      if (viewAppShell) viewAppShell.style.display = 'none';
+      clearInterval(state.timerInterval);
+      window.scrollTo(0, 0);
+    } else {
+      if (viewLanding) viewLanding.style.display = 'none';
+      if (viewAppShell) viewAppShell.style.display = 'block';
+      switchAppView(appView || 'dashboard');
+    }
+  }
+
+  // App View Switcher: Dashboard vs Simulator
+  function switchAppView(viewName) {
+    state.currentAppView = viewName;
     if (viewName === 'simulator') {
       if (appLayout) appLayout.classList.add('exam-mode');
       if (viewDashboard) viewDashboard.style.display = 'none';
@@ -204,7 +309,31 @@
     }
   }
 
-  // Exam Simulator Controller
+  // Hero Interactive Question Preview Widget
+  function initHeroPreviewWidget() {
+    const opts = document.querySelectorAll('#hero-options .hero-opt-btn');
+    const rationale = document.getElementById('hero-rationale');
+
+    opts.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const isCorrect = btn.getAttribute('data-correct') === 'true';
+        opts.forEach(b => {
+          b.style.pointerEvents = 'none';
+          if (b.getAttribute('data-correct') === 'true') {
+            b.classList.add('correct');
+          }
+        });
+
+        if (!isCorrect) {
+          btn.classList.add('incorrect');
+        }
+
+        if (rationale) rationale.classList.add('visible');
+      });
+    });
+  }
+
+  // Exam Simulator Engine
   function startBlock(examName, count) {
     state.activeExam = examName || 'USMLE Step 2 CK';
     state.userAnswers = {};
@@ -242,8 +371,8 @@
     startTimer();
     renderMatrix();
     loadQuestion(0);
-    switchView('simulator');
-    showToast(state.lang === 'ar' ? `بدأت كتلة اختبارية من ${questionCount} أسئلة.` : `Started ${questionCount}-question practice block.`);
+    showStage('app', 'simulator');
+    showToast(state.lang === 'ar' ? `بدأت جلسة محاكاة اختبار: ${state.activeExam}` : `Started exam block: ${state.activeExam}`);
   }
 
   function startTimer() {
@@ -297,7 +426,7 @@
       if (vitSpo2) vitSpo2.textContent = q.vitals.spo2 || '98% Room Air';
     }
 
-    // MCQ Options
+    // Options
     simOptionsContainer.innerHTML = '';
     simExplanationPanel.className = 'explanation-panel';
     simExplanationBody.innerHTML = '';
@@ -312,15 +441,9 @@
 
       if (answeredId !== undefined) {
         row.style.pointerEvents = 'none';
-        if (opt.isCorrect) {
-          row.classList.add('correct');
-        }
-        if (answeredId === opt.id && !opt.isCorrect) {
-          row.classList.add('incorrect');
-        }
-        if (answeredId === opt.id) {
-          row.classList.add('selected');
-        }
+        if (opt.isCorrect) row.classList.add('correct');
+        if (answeredId === opt.id && !opt.isCorrect) row.classList.add('incorrect');
+        if (answeredId === opt.id) row.classList.add('selected');
       }
 
       row.addEventListener('click', () => {
@@ -333,7 +456,6 @@
       simOptionsContainer.appendChild(row);
     });
 
-    // Explanation
     if (answeredId !== undefined) {
       simExplanationPanel.classList.add('visible');
       const correctOpt = q.options.find(o => o.isCorrect);
@@ -388,75 +510,57 @@
 
   // Event Listeners
   function initEvents() {
-    // Theme Toggle
-    if (btnThemeToggle) {
-      btnThemeToggle.addEventListener('click', () => {
-        applyTheme(state.theme === 'light' ? 'dark' : 'light');
-        showToast(state.theme === 'dark' ? 'Dark Mode Enabled' : 'Light Mode Enabled');
+    // Theme Toggles
+    const toggleThemeFn = () => {
+      applyTheme(state.theme === 'light' ? 'dark' : 'light');
+      showToast(state.theme === 'dark' ? 'Dark Mode' : 'Light Mode');
+    };
+    if (landingThemeToggle) landingThemeToggle.addEventListener('click', toggleThemeFn);
+    if (btnThemeToggle) btnThemeToggle.addEventListener('click', toggleThemeFn);
+
+    // Lang Toggles
+    const toggleLangFn = () => {
+      applyLang(state.lang === 'en' ? 'ar' : 'en');
+    };
+    if (landingLangToggle) landingLangToggle.addEventListener('click', toggleLangFn);
+    if (btnLangToggle) btnLangToggle.addEventListener('click', toggleLangFn);
+
+    // Stage Transitions
+    if (landingBtnLaunchApp) landingBtnLaunchApp.addEventListener('click', () => showStage('app', 'dashboard'));
+    if (heroBtnStartSimulator) heroBtnStartSimulator.addEventListener('click', () => startBlock('USMLE Step 2 CK', 10));
+    if (heroBtnExploreCurriculum) {
+      heroBtnExploreCurriculum.addEventListener('click', (e) => {
+        const curr = document.getElementById('curriculum');
+        if (curr) curr.scrollIntoView({ behavior: 'smooth' });
       });
     }
 
-    // Language Toggle
-    if (btnLangToggle) {
-      btnLangToggle.addEventListener('click', () => {
-        applyLang(state.lang === 'en' ? 'ar' : 'en');
+    // Curriculum direct block launchers
+    document.querySelectorAll('[data-exam-launch]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const exam = btn.getAttribute('data-exam-launch');
+        startBlock(exam, 10);
       });
-    }
+    });
 
-    // Nav Brand & Dashboard
-    if (brandLink) {
-      brandLink.addEventListener('click', (e) => {
-        e.preventDefault();
-        switchView('dashboard');
-      });
-    }
+    // Pricing Buttons
+    const btnPricingFree = document.getElementById('btn-pricing-free');
+    const btnPricingQuarterly = document.getElementById('btn-pricing-quarterly');
+    const btnPricingAnnual = document.getElementById('btn-pricing-annual');
 
-    if (navBtnDashboard) {
-      navBtnDashboard.addEventListener('click', () => {
-        document.querySelectorAll('.nav-item-btn').forEach(b => b.classList.remove('active'));
-        navBtnDashboard.classList.add('active');
-        switchView('dashboard');
-      });
-    }
+    if (btnPricingFree) btnPricingFree.addEventListener('click', () => startBlock('USMLE Step 2 CK', 5));
+    if (btnPricingQuarterly) btnPricingQuarterly.addEventListener('click', () => startBlock('USMLE Step 2 CK', 10));
+    if (btnPricingAnnual) btnPricingAnnual.addEventListener('click', () => startBlock('USMLE Step 2 CK', 20));
 
-    if (navBtnAnalytics) {
-      navBtnAnalytics.addEventListener('click', () => {
-        document.querySelectorAll('.nav-item-btn').forEach(b => b.classList.remove('active'));
-        navBtnAnalytics.classList.add('active');
-        switchView('dashboard');
-        showToast('Analytics synchronized.');
-      });
-    }
+    // App Sidebar Navigation
+    if (brandLink) brandLink.addEventListener('click', (e) => { e.preventDefault(); showStage('landing'); });
+    if (navBtnDashboard) navBtnDashboard.addEventListener('click', () => switchAppView('dashboard'));
+    if (navBtnLandingReturn) navBtnLandingReturn.addEventListener('click', () => showStage('landing'));
 
-    // Module Launchers
-    if (navBtnStep2) {
-      navBtnStep2.addEventListener('click', () => {
-        document.querySelectorAll('.nav-item-btn').forEach(b => b.classList.remove('active'));
-        navBtnStep2.classList.add('active');
-        startBlock('USMLE Step 2 CK', 10);
-      });
-    }
-    if (navBtnStep1) {
-      navBtnStep1.addEventListener('click', () => {
-        document.querySelectorAll('.nav-item-btn').forEach(b => b.classList.remove('active'));
-        navBtnStep1.classList.add('active');
-        startBlock('USMLE Step 1', 10);
-      });
-    }
-    if (navBtnMrcp) {
-      navBtnMrcp.addEventListener('click', () => {
-        document.querySelectorAll('.nav-item-btn').forEach(b => b.classList.remove('active'));
-        navBtnMrcp.classList.add('active');
-        startBlock('MRCP Part 1', 10);
-      });
-    }
-    if (navBtnFlagged) {
-      navBtnFlagged.addEventListener('click', () => {
-        document.querySelectorAll('.nav-item-btn').forEach(b => b.classList.remove('active'));
-        navBtnFlagged.classList.add('active');
-        startBlock('Flagged Review', 5);
-      });
-    }
+    if (navBtnStep2) navBtnStep2.addEventListener('click', () => startBlock('USMLE Step 2 CK', 10));
+    if (navBtnStep1) navBtnStep1.addEventListener('click', () => startBlock('USMLE Step 1', 10));
+    if (navBtnMrcp) navBtnMrcp.addEventListener('click', () => startBlock('MRCP Part 1', 10));
+    if (navBtnFlagged) navBtnFlagged.addEventListener('click', () => startBlock('Flagged Review', 5));
     if (navBtnSimTimed) navBtnSimTimed.addEventListener('click', () => startBlock('USMLE Step 2 CK', 10));
     if (navBtnSimTutor) navBtnSimTutor.addEventListener('click', () => startBlock('USMLE Step 2 CK', 10));
 
@@ -464,7 +568,7 @@
     if (btnCustomTestModal) btnCustomTestModal.addEventListener('click', () => startBlock('USMLE Step 2 CK', 10));
 
     // Simulator Buttons
-    if (simBtnExit) simBtnExit.addEventListener('click', () => switchView('dashboard'));
+    if (simBtnExit) simBtnExit.addEventListener('click', () => switchAppView('dashboard'));
     if (simBtnPrev) {
       simBtnPrev.addEventListener('click', () => {
         if (state.currentIndex > 0) loadQuestion(state.currentIndex - 1);
@@ -501,6 +605,7 @@
     // Command Palette Triggers
     if (topbarSearchBox) topbarSearchBox.addEventListener('click', openCommandPalette);
     if (sidebarCmdTrigger) sidebarCmdTrigger.addEventListener('click', openCommandPalette);
+    if (footerCmdBtn) footerCmdBtn.addEventListener('click', openCommandPalette);
 
     if (cmdPaletteModal) {
       cmdPaletteModal.addEventListener('click', (e) => {
@@ -508,27 +613,22 @@
       });
     }
 
-    // Command palette item actions
     if (cmdResults) {
       cmdResults.querySelectorAll('.cmd-result-item').forEach(item => {
         item.addEventListener('click', () => {
           const action = item.getAttribute('data-action');
           closeCommandPalette();
           if (action === 'start-block') startBlock('USMLE Step 2 CK', 10);
-          else if (action === 'toggle-theme') {
-            applyTheme(state.theme === 'light' ? 'dark' : 'light');
-          }
-          else if (action === 'toggle-lang') {
-            applyLang(state.lang === 'en' ? 'ar' : 'en');
-          }
+          else if (action === 'toggle-theme') toggleThemeFn();
+          else if (action === 'toggle-lang') toggleLangFn();
           else if (action === 'filter-step2') startBlock('USMLE Step 2 CK', 10);
           else if (action === 'filter-mrcp') startBlock('MRCP Part 1', 10);
-          else if (action === 'view-dashboard') switchView('dashboard');
+          else if (action === 'view-dashboard') showStage('app', 'dashboard');
+          else if (action === 'view-landing') showStage('landing');
         });
       });
     }
 
-    // Global Keyboard Shortcuts (Ctrl + K / Cmd + K, Esc)
     window.addEventListener('keydown', (e) => {
       if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
         e.preventDefault();
@@ -543,6 +643,7 @@
   function init() {
     applyTheme(state.theme);
     applyLang(state.lang);
+    initHeroPreviewWidget();
     initEvents();
   }
 

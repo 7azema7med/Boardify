@@ -1,5 +1,5 @@
 /* ==========================================================================
-   BOARDIFY MAIN STYLESHEET (Technical SaaS / Command Center UI Architecture)
+   BOARDIFY MAIN STYLESHEET (Landing Page + SaaS QBank App + Simulator)
    ========================================================================== */
 
 @import url('./tokens.css');
@@ -11,7 +11,7 @@
 }
 
 html, body {
-  height: 100%;
+  min-height: 100%;
   font-family: var(--font-sans);
   background-color: var(--bg-app);
   color: var(--text-primary);
@@ -45,16 +45,21 @@ button {
 }
 
 /* Typography elements */
-h1, h2, h3, h4 {
+h1, h2, h3, h4, h5 {
   color: var(--text-primary);
   font-weight: 700;
   line-height: var(--leading-tight);
 }
 
-h1 { font-size: var(--text-2xl); }
-h2 { font-size: var(--text-xl); }
-h3 { font-size: var(--text-lg); }
-h4 { font-size: var(--text-md); }
+h1 { font-size: 38px; letter-spacing: -0.02em; }
+h2 { font-size: 26px; letter-spacing: -0.01em; }
+h3 { font-size: 18px; }
+h4 { font-size: 15px; }
+
+@media (max-width: 768px) {
+  h1 { font-size: 28px; }
+  h2 { font-size: 22px; }
+}
 
 .mono {
   font-family: var(--font-mono);
@@ -78,6 +83,12 @@ h4 { font-size: var(--text-md); }
   white-space: nowrap;
 }
 
+.key-badge.accent {
+  background-color: var(--bg-surface-active);
+  border-color: var(--border-accent);
+  color: var(--accent-primary);
+}
+
 .status-dot {
   width: 6px;
   height: 6px;
@@ -99,19 +110,488 @@ h4 { font-size: var(--text-md); }
   flex-shrink: 0;
 }
 
-/* ==========================================================================
-   APP SHELL LAYOUT (Sidebar + Topbar + Viewport Canvas)
-   ========================================================================== */
-.app-layout {
+/* Common Layout Containers */
+.container {
+  width: 100%;
+  max-width: 1240px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 24px;
+  padding-right: 24px;
+}
+
+/* Primary Action Buttons */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 38px;
+  padding: 0 16px;
+  background-color: var(--accent-primary);
+  color: var(--text-on-accent);
+  border-radius: var(--radius-md);
+  font-size: 13px;
+  font-weight: 600;
+  transition: background-color var(--transition-fast);
+  white-space: nowrap;
+}
+
+.btn-primary:hover {
+  background-color: var(--accent-hover);
+}
+
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 38px;
+  padding: 0 16px;
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-primary);
+  transition: background-color var(--transition-fast), border-color var(--transition-fast);
+  white-space: nowrap;
+}
+
+.btn-secondary:hover {
+  background-color: var(--bg-hover);
+  border-color: var(--border-strong);
+}
+
+.btn-icon {
+  width: 34px;
+  height: 34px;
   display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  color: var(--text-secondary);
+  transition: background-color var(--transition-fast), border-color var(--transition-fast), color var(--transition-fast);
+}
+
+.btn-icon:hover {
+  background-color: var(--bg-hover);
+  border-color: var(--border-strong);
+  color: var(--text-primary);
+}
+
+/* ==========================================================================
+   LANDING PAGE VIEW
+   ========================================================================== */
+#view-landing {
+  display: block;
+}
+
+/* Sticky Landing Header */
+.landing-header {
+  height: 60px;
+  background-color: var(--bg-surface);
+  border-bottom: 1px solid var(--border-subtle);
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+
+.landing-nav-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 100%;
+}
+
+.landing-brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-mono);
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: var(--text-primary);
+}
+
+.landing-brand .brand-accent {
+  color: var(--accent-primary);
+}
+
+.landing-nav-links {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  list-style: none;
+}
+
+.landing-nav-links a {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  transition: color var(--transition-fast);
+}
+
+.landing-nav-links a:hover {
+  color: var(--text-primary);
+}
+
+.landing-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* Hero Section */
+.landing-hero {
+  padding: 64px 0 56px 0;
+  border-bottom: 1px solid var(--border-subtle);
+  background-color: var(--bg-surface);
+}
+
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: 40px;
+  align-items: start;
+}
+
+.hero-title {
+  margin-bottom: 16px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.hero-subtitle {
+  font-size: 15px;
+  line-height: 1.65;
+  color: var(--text-secondary);
+  margin-bottom: 24px;
+  max-width: 580px;
+}
+
+.hero-cta-group {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 40px;
+  flex-wrap: wrap;
+}
+
+/* 4-Column Proof Metrics Strip */
+.metrics-strip {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border-subtle);
+}
+
+.metric-strip-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.metric-strip-val {
+  font-family: var(--font-mono);
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.metric-strip-lbl {
+  font-size: 11px;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-top: 2px;
+}
+
+/* Hero Interactive Question Preview Card */
+.hero-qbank-card {
+  background-color: var(--bg-app);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 20px;
+}
+
+.card-header-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.hero-vitals-strip {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 6px;
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  padding: 8px 10px;
+  margin-bottom: 14px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  direction: ltr;
+}
+
+.hero-vitals-strip span {
+  display: block;
+  font-size: 9px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+}
+
+.hero-vignette-stem {
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--text-primary);
+  margin-bottom: 14px;
+}
+
+.hero-lead-prompt {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 12px;
+}
+
+.hero-options-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.hero-opt-btn {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 10px 12px;
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  font-size: 12px;
+  color: var(--text-primary);
+  text-align: left;
+  transition: border-color var(--transition-fast), background-color var(--transition-fast);
+}
+
+[dir="rtl"] .hero-opt-btn {
+  text-align: right;
+}
+
+.hero-opt-btn:hover {
+  background-color: var(--bg-hover);
+  border-color: var(--border-strong);
+}
+
+.hero-opt-btn.correct {
+  border-color: var(--status-success);
+  background-color: rgba(16, 185, 129, 0.08);
+}
+
+.hero-opt-btn.incorrect {
+  border-color: var(--status-danger);
+  background-color: rgba(239, 68, 68, 0.08);
+}
+
+.hero-rationale-box {
+  display: none;
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-accent);
+  border-radius: var(--radius-md);
+  padding: 14px;
+  font-size: 12px;
+  line-height: 1.6;
+  color: var(--text-secondary);
+}
+
+.hero-rationale-box.visible {
+  display: block;
+}
+
+/* Sections */
+.landing-section {
+  padding: 72px 0;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.section-head {
+  text-align: left;
+  margin-bottom: 40px;
+}
+
+[dir="rtl"] .section-head {
+  text-align: right;
+}
+
+.section-tag {
+  font-size: var(--text-caption);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--accent-primary);
+  margin-bottom: 8px;
+}
+
+.section-title {
+  margin-bottom: 10px;
+}
+
+.section-subtitle {
+  font-size: 15px;
+  color: var(--text-secondary);
+  max-width: 620px;
+}
+
+/* Feature Grid 3-Columns */
+.features-grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.feature-box {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 24px;
+}
+
+.feature-box-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+
+.feature-box-title {
+  font-size: 15px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.feature-box-desc {
+  font-size: 13px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+/* Curriculum Grid */
+.curriculum-grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.curriculum-card {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.curriculum-card.featured {
+  border-color: var(--border-accent);
+  background-color: var(--bg-surface-active);
+}
+
+.curriculum-items-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 16px 0 24px 0;
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+.curriculum-items-list li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Pricing Grid */
+.pricing-grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.pricing-card {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 28px 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.pricing-card.popular {
+  border-color: var(--border-accent);
+  background-color: var(--bg-surface-active);
+}
+
+.price-val {
+  font-family: var(--font-mono);
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 14px 0 6px 0;
+}
+
+.price-sub {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-bottom: 20px;
+}
+
+/* Landing Footer */
+.landing-footer {
+  padding: 48px 0;
+  background-color: var(--bg-surface);
+  border-top: 1px solid var(--border-subtle);
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+.footer-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+/* ==========================================================================
+   QBANK APP & SIMULATOR VIEWPORT STYLES
+   ========================================================================== */
+#view-app-shell {
+  display: none;
   height: 100vh;
   width: 100vw;
   overflow: hidden;
 }
 
-/* --------------------------------------------------------------------------
-   SIDEBAR (240px Fixed)
-   -------------------------------------------------------------------------- */
+.app-layout {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+
 .sidebar {
   width: var(--sidebar-width);
   min-width: var(--sidebar-width);
@@ -121,7 +601,6 @@ h4 { font-size: var(--text-md); }
   flex-direction: column;
   height: 100%;
   z-index: 30;
-  transition: transform var(--transition-fast), width var(--transition-fast);
 }
 
 [dir="rtl"] .sidebar {
@@ -237,9 +716,6 @@ h4 { font-size: var(--text-md); }
   color: var(--text-primary);
 }
 
-/* --------------------------------------------------------------------------
-   MAIN VIEWPORT & TOPBAR (56px Sticky)
-   -------------------------------------------------------------------------- */
 .main-wrapper {
   flex: 1;
   display: flex;
@@ -271,7 +747,7 @@ h4 { font-size: var(--text-md); }
   display: flex;
   align-items: center;
   gap: 10px;
-  width: 320px;
+  width: 300px;
   height: 36px;
   padding: 0 12px;
   background-color: var(--bg-app);
@@ -316,25 +792,6 @@ h4 { font-size: var(--text-md); }
   white-space: nowrap;
 }
 
-.btn-icon {
-  width: 34px;
-  height: 34px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: var(--bg-surface);
-  border: 1px solid var(--border-subtle);
-  border-radius: var(--radius-md);
-  color: var(--text-secondary);
-  transition: background-color var(--transition-fast), border-color var(--transition-fast), color var(--transition-fast);
-}
-
-.btn-icon:hover {
-  background-color: var(--bg-hover);
-  border-color: var(--border-strong);
-  color: var(--text-primary);
-}
-
 .user-avatar {
   width: 32px;
   height: 32px;
@@ -350,54 +807,7 @@ h4 { font-size: var(--text-md); }
   justify-content: center;
 }
 
-/* --------------------------------------------------------------------------
-   PRIMARY ACTION BUTTONS
-   -------------------------------------------------------------------------- */
-.btn-primary {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  height: 36px;
-  padding: 0 14px;
-  background-color: var(--accent-primary);
-  color: var(--text-on-accent);
-  border-radius: var(--radius-md);
-  font-size: 13px;
-  font-weight: 600;
-  transition: background-color var(--transition-fast);
-  white-space: nowrap;
-}
-
-.btn-primary:hover {
-  background-color: var(--accent-hover);
-}
-
-.btn-secondary {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  height: 36px;
-  padding: 0 14px;
-  background-color: var(--bg-surface);
-  border: 1px solid var(--border-subtle);
-  border-radius: var(--radius-md);
-  font-size: 13px;
-  font-weight: 500;
-  color: var(--text-primary);
-  transition: background-color var(--transition-fast), border-color var(--transition-fast);
-  white-space: nowrap;
-}
-
-.btn-secondary:hover {
-  background-color: var(--bg-hover);
-  border-color: var(--border-strong);
-}
-
-/* ==========================================================================
-   VIEW 1: DASHBOARD CANVAS
-   ========================================================================== */
+/* Dashboard View */
 .view-container {
   flex: 1;
   overflow-y: auto;
@@ -410,7 +820,6 @@ h4 { font-size: var(--text-md); }
   width: 100%;
 }
 
-/* Top 4-Metric Grid */
 .stat-grid-4 {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -474,14 +883,12 @@ h4 { font-size: var(--text-md); }
   gap: 6px;
 }
 
-/* Main Asymmetric Split: 60% Left / 40% Right */
 .dashboard-split-grid {
   display: grid;
   grid-template-columns: 1.4fr 1fr;
   gap: 16px;
 }
 
-/* Data List Card (60% Primary) */
 .data-panel-card {
   background-color: var(--bg-surface);
   border: 1px solid var(--border-subtle);
@@ -551,7 +958,6 @@ h4 { font-size: var(--text-md); }
   gap: 12px;
 }
 
-/* Progress bar */
 .mini-progress-bar {
   width: 90px;
   height: 4px;
@@ -566,7 +972,6 @@ h4 { font-size: var(--text-md); }
   border-radius: var(--radius-full);
 }
 
-/* Performance Breakdown List (40% Secondary) */
 .performance-metric-item {
   padding: 14px 18px;
   border-bottom: 1px solid var(--border-subtle);
@@ -587,9 +992,7 @@ h4 { font-size: var(--text-md); }
   margin-bottom: 8px;
 }
 
-/* ==========================================================================
-   VIEW 2: INTERACTIVE MEDICAL EXAM SIMULATOR (UWorld / NBME Technical Specs)
-   ========================================================================== */
+/* Simulator View */
 .simulator-view {
   display: none;
   flex: 1;
@@ -694,7 +1097,6 @@ h4 { font-size: var(--text-md); }
   border-top: 1px solid var(--border-subtle);
 }
 
-/* MCQ Options */
 .mcq-options-stack {
   display: flex;
   flex-direction: column;
@@ -739,7 +1141,6 @@ h4 { font-size: var(--text-md); }
   background-color: rgba(239, 68, 68, 0.08);
 }
 
-/* Structured Explanation Panel */
 .explanation-panel {
   display: none;
   background-color: var(--bg-surface);
@@ -788,7 +1189,6 @@ h4 { font-size: var(--text-md); }
   color: var(--text-secondary);
 }
 
-/* Simulator Sidebar Matrix */
 .sim-sidebar-matrix {
   background-color: var(--bg-surface);
   border-left: 1px solid var(--border-subtle);
@@ -839,7 +1239,6 @@ h4 { font-size: var(--text-md); }
   color: var(--text-primary);
 }
 
-/* Simulator Sticky Footer */
 .sim-footer-bar {
   height: 48px;
   min-height: 48px;
@@ -852,9 +1251,7 @@ h4 { font-size: var(--text-md); }
   z-index: 10;
 }
 
-/* ==========================================================================
-   COMMAND PALETTE & MODALS
-   ========================================================================== */
+/* Modals & Command Palette */
 .modal-backdrop {
   position: fixed;
   inset: 0;
@@ -923,7 +1320,6 @@ h4 { font-size: var(--text-md); }
   color: var(--accent-primary);
 }
 
-/* Toast Messages */
 .toast-container {
   position: fixed;
   bottom: 20px;
@@ -946,6 +1342,15 @@ h4 { font-size: var(--text-md); }
 
 /* Responsive adjustments */
 @media (max-width: 1024px) {
+  .hero-grid {
+    grid-template-columns: 1fr;
+  }
+  .features-grid-3, .curriculum-grid-3, .pricing-grid-3 {
+    grid-template-columns: 1fr;
+  }
+  .metrics-strip {
+    grid-template-columns: repeat(2, 1fr);
+  }
   .stat-grid-4 {
     grid-template-columns: repeat(2, 1fr);
   }
@@ -958,8 +1363,14 @@ h4 { font-size: var(--text-md); }
 }
 
 @media (max-width: 768px) {
+  .landing-nav-links {
+    display: none;
+  }
   .sidebar {
     display: none;
+  }
+  .metrics-strip {
+    grid-template-columns: 1fr 1fr;
   }
   .stat-grid-4 {
     grid-template-columns: 1fr;
