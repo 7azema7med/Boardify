@@ -1,223 +1,406 @@
-/* ==========================================================================
-   BOARDFY MAIN APPLICATION CONTROLLER
-   View Navigation, Sidebar Management, Test Creation & Interactive Hero
-   ========================================================================== */
+// TASK OS - Core Application Engine
+(function () {
+  'use strict';
 
-class AppController {
-  constructor() {
-    this.currentView = 'landing';
-    this.sidebarCollapsed = false;
-    this.selectedExam = 'USMLE Step 1';
-    this.init();
+  // Initial State matching the user's screenshots exactly
+  const state = {
+    theme: localStorage.getItem('task_os_theme') || 'light', // light or dark
+    lang: localStorage.getItem('task_os_lang') || 'en',      // en or ar
+    balance: 0.00,
+    currency: 'EGP',
+    activeNav: 'dashboard',
+    tasks: [
+      { id: 1, name: 'qwdwqd', priority: 'P1', completed: false, workspace: 'Production', date: 'today' },
+      { id: 2, name: 'لنر', priority: 'P3', completed: false, workspace: 'Content', date: 'today' },
+      { id: 3, name: 'ويسوسيو', priority: 'P3', completed: false, workspace: 'Content', date: 'today' },
+      { id: 4, name: 'sdfsdf', priority: 'P3', completed: false, workspace: 'Production', date: 'today' },
+      { id: 5, name: 'sdf', priority: 'P3', completed: false, workspace: 'Management', date: 'today' },
+      { id: 6, name: 'ddfsdf', priority: 'P3', completed: false, workspace: 'Personal', date: 'today' },
+      { id: 7, name: 'gggf', priority: 'P3', completed: false, workspace: 'Production', date: 'today' }
+    ]
+  };
+
+  // UI Element References
+  const htmlEl = document.documentElement;
+  const themeToggleBtn = document.getElementById('theme-toggle-btn');
+  const langToggleBtn = document.getElementById('lang-toggle-btn');
+  const taskListEl = document.getElementById('task-list');
+  const newTaskBtn = document.getElementById('new-task-btn');
+  const newTaskModal = document.getElementById('new-task-modal');
+  const closeModalBtn = document.getElementById('modal-close-btn');
+  const cancelModalBtn = document.getElementById('modal-cancel-btn');
+  const taskForm = document.getElementById('task-form');
+  const searchTrigger = document.getElementById('search-trigger');
+  const cmdPaletteBtn = document.getElementById('cmd-palette-btn');
+  const cmdModal = document.getElementById('cmd-modal');
+  const closeCmdModalBtn = document.getElementById('cmd-modal-close');
+  const cmdInput = document.getElementById('cmd-input');
+  const cmdList = document.getElementById('cmd-list');
+  const toastContainer = document.getElementById('toast-container');
+
+  // Stat elements
+  const statTodayTasks = document.getElementById('stat-today-tasks');
+  const statTotalActive = document.getElementById('stat-total-active');
+  const statPendingReview = document.getElementById('stat-pending-review');
+  const statWalletBalance = document.getElementById('stat-wallet-balance');
+  const statTopBalance = document.getElementById('stat-top-balance');
+  const statCompletedWeek = document.getElementById('stat-completed-week');
+
+  // Translations Dictionary
+  const translations = {
+    en: {
+      search: '>_ SEARCH',
+      currBalance: 'CURRENT BALANCE',
+      greeting: 'Good morning,',
+      dashboard: 'Dashboard',
+      newTask: '+ New Task',
+      overview: 'OVERVIEW',
+      inbox: 'Inbox',
+      todayAll: 'TODAY / ALL TASKS',
+      today: 'Today',
+      tomorrow: 'Tomorrow',
+      thisWeek: 'This Week',
+      overdue: 'Overdue',
+      allTasks: 'All Tasks',
+      workspaces: 'WORKSPACES',
+      production: 'Production',
+      content: 'Content',
+      management: 'Management',
+      personal: 'Personal',
+      cmdPalette: 'COMMAND PALETTE',
+      todayTasksTitle: "TODAY'S TASKS",
+      pendingReviewTitle: 'PENDING REVIEW',
+      walletBalanceTitle: 'WALLET BALANCE',
+      completedWeekTitle: 'COMPLETED THIS WEEK',
+      totalActiveSub: 'total active',
+      awaitingApproval: 'Awaiting your approval',
+      tasksPaidWeek: 'tasks paid this week',
+      tasksCompletedSub: 'tasks completed',
+      mostImportantTasks: 'MOST IMPORTANT TASKS',
+      approachingDeadlines: 'APPROACHING DEADLINES',
+      noDeadlines: 'No deadlines approaching',
+      taskAddedSuccess: 'Task created successfully',
+      taskCompleted: 'Task marked as completed',
+      taskUncompleted: 'Task moved back to active'
+    },
+    ar: {
+      search: '>_ بحث',
+      currBalance: 'الرصيد الحالي',
+      greeting: 'صباح الخير،',
+      dashboard: 'لوحة التحكم',
+      newTask: '+ مهمة جديدة',
+      overview: 'نظرة عامة',
+      inbox: 'الوارد',
+      todayAll: 'اليوم / كل المهام',
+      today: 'اليوم',
+      tomorrow: 'غداً',
+      thisWeek: 'هذا الأسبوع',
+      overdue: 'متأخرة',
+      allTasks: 'كل المهام',
+      workspaces: 'مساحات العمل',
+      production: 'الإنتاج',
+      content: 'المحتوى',
+      management: 'الإدارة',
+      personal: 'شخصي',
+      cmdPalette: 'لوحة الأوامر',
+      todayTasksTitle: 'مهام اليوم',
+      pendingReviewTitle: 'قيد المراجعة',
+      walletBalanceTitle: 'رصيد المحفظة',
+      completedWeekTitle: 'المكتمل هذا الأسبوع',
+      totalActiveSub: 'إجمالي النشط',
+      awaitingApproval: 'بانتظار موافقتك',
+      tasksPaidWeek: 'مهام مدفوعة هذا الأسبوع',
+      tasksCompletedSub: 'مهام مكتملة',
+      mostImportantTasks: 'أهم المهام',
+      approachingDeadlines: 'المواعيد النهائية القادمة',
+      noDeadlines: 'لا توجد مواعيد نهائية قريبة',
+      taskAddedSuccess: 'تمت إضافة المهمة بنجاح',
+      taskCompleted: 'تم إكمال المهمة',
+      taskUncompleted: 'تمت إعادة المهمة للنشطة'
+    }
+  };
+
+  // Toast System
+  function showToast(message) {
+    const toast = document.createElement('div');
+    toast.className = 'toast';
+    toast.textContent = message;
+    toastContainer.appendChild(toast);
+    setTimeout(() => {
+      toast.style.opacity = '0';
+      setTimeout(() => toast.remove(), 300);
+    }, 2500);
   }
 
-  init() {
-    this.setupNavigation();
-    this.setupSidebar();
-    this.setupHeroWidget();
-    this.setupTestCreator();
-    this.setupAnalytics();
-  }
+  // Theme Engine
+  function applyTheme(theme) {
+    state.theme = theme;
+    htmlEl.setAttribute('data-theme', theme);
+    localStorage.setItem('task_os_theme', theme);
 
-  navigateTo(viewId) {
-    this.currentView = viewId;
-
-    // Handle full landing page vs simulator views
-    const landingView = document.getElementById('view-landing');
-    const uworldAppView = document.getElementById('view-uworld-app');
-
-    if (viewId === 'landing') {
-      if (landingView) landingView.style.display = 'flex';
-      if (uworldAppView) uworldAppView.style.display = 'none';
-      window.scrollTo(0, 0);
-      return;
-    }
-
-    if (landingView) landingView.style.display = 'none';
-    if (uworldAppView) uworldAppView.style.display = 'flex';
-
-    // Toggle sub-stages inside the UWorld shell
-    document.querySelectorAll('.stage-view-section').forEach(section => {
-      section.style.display = 'none';
-    });
-
-    const targetStage = document.getElementById(`stage-${viewId}`);
-    if (targetStage) {
-      targetStage.style.display = 'block';
-    }
-
-    // Update active nav item
-    document.querySelectorAll('.sidebar-nav-item').forEach(item => {
-      if (item.getAttribute('data-view') === viewId) {
-        item.classList.add('active');
+    if (themeToggleBtn) {
+      if (theme === 'dark') {
+        // Sun Icon for Dark Mode
+        themeToggleBtn.innerHTML = `
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="4"></circle>
+            <path d="M12 2v2"></path>
+            <path d="M12 20v2"></path>
+            <path d="m4.93 4.93 1.41 1.41"></path>
+            <path d="m17.66 17.66 1.41 1.41"></path>
+            <path d="M2 12h2"></path>
+            <path d="M20 12h2"></path>
+            <path d="m6.34 17.66-1.41 1.41"></path>
+            <path d="m19.07 4.93-1.41 1.41"></path>
+          </svg>`;
       } else {
-        item.classList.remove('active');
-      }
-    });
-
-    // If entering test simulator, make sure a test is running
-    if (viewId === 'simulator') {
-      if (!window.examSim.questions || window.examSim.questions.length === 0) {
-        window.examSim.startTest();
+        // Moon Icon for Light Mode
+        themeToggleBtn.innerHTML = `
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path>
+          </svg>`;
       }
     }
   }
 
-  setupNavigation() {
-    // Top nav & CTA buttons
-    document.querySelectorAll('[data-action="start-demo"]').forEach(btn => {
-      btn.addEventListener('click', (e) => {
-        e.preventDefault();
-        window.examSim.startTest(QUESTION_BANK, true, false);
-        this.navigateTo('simulator');
-      });
+  // Language Engine
+  function applyLang(lang) {
+    state.lang = lang;
+    htmlEl.setAttribute('lang', lang);
+    htmlEl.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
+    localStorage.setItem('task_os_lang', lang);
+
+    if (langToggleBtn) {
+      langToggleBtn.innerHTML = `
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="10"></circle>
+          <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path>
+          <path d="M2 12h20"></path>
+        </svg>
+        <span>${lang === 'ar' ? 'EN' : 'AR'}</span>
+      `;
+    }
+
+    // Apply translations
+    const t = translations[lang];
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+      const key = el.getAttribute('data-i18n');
+      if (t[key]) {
+        el.textContent = t[key];
+      }
     });
 
-    document.querySelectorAll('[data-action="open-creator"]').forEach(btn => {
-      btn.addEventListener('click', (e) => {
-        e.preventDefault();
-        this.navigateTo('create-test');
-      });
-    });
+    renderStats();
+  }
 
-    document.querySelectorAll('[data-action="go-landing"]').forEach(btn => {
-      btn.addEventListener('click', (e) => {
-        e.preventDefault();
-        this.navigateTo('landing');
-      });
-    });
+  // Render Stats Counters
+  function renderStats() {
+    const activeTasks = state.tasks.filter(t => !t.completed);
+    const completedTasks = state.tasks.filter(t => t.completed);
 
-    // Sidebar navigation clicks
-    document.querySelectorAll('.sidebar-nav-item').forEach(item => {
-      item.addEventListener('click', (e) => {
-        e.preventDefault();
-        const view = item.getAttribute('data-view');
-        if (view) this.navigateTo(view);
-      });
-    });
+    if (statTodayTasks) statTodayTasks.textContent = '0';
+    if (statTotalActive) statTotalActive.textContent = `${activeTasks.length} ${translations[state.lang].totalActiveSub}`;
+    if (statPendingReview) statPendingReview.textContent = '0';
+    if (statWalletBalance) statWalletBalance.textContent = `${state.currency} ${state.balance.toFixed(2)}`;
+    if (statTopBalance) statTopBalance.textContent = `${state.currency} ${state.balance.toFixed(2)}`;
+    if (statCompletedWeek) statCompletedWeek.textContent = `${completedTasks.length}`;
+  }
 
-    // Exam Chip selector on landing page
-    document.querySelectorAll('.exam-chip').forEach(chip => {
-      chip.addEventListener('click', () => {
-        document.querySelectorAll('.exam-chip').forEach(c => c.classList.remove('active'));
-        chip.classList.add('active');
-        this.selectedExam = chip.textContent.trim();
-        const badge = document.getElementById('selected-exam-badge');
-        if (badge) badge.textContent = this.selectedExam;
+  // Render Tasks List
+  function renderTasks() {
+    if (!taskListEl) return;
+    taskListEl.innerHTML = '';
+
+    state.tasks.forEach(task => {
+      const row = document.createElement('div');
+      row.className = 'task-item-row';
+      row.setAttribute('data-task-id', task.id);
+
+      const priorityClass = (task.priority || 'p3').toLowerCase();
+
+      row.innerHTML = `
+        <div class="task-item-left">
+          <span class="priority-dot ${priorityClass}"></span>
+          <span class="task-name" style="${task.completed ? 'text-decoration: line-through; opacity: 0.6;' : ''}">${task.name}</span>
+        </div>
+        <span class="priority-badge">${task.priority}</span>
+      `;
+
+      row.addEventListener('click', () => {
+        task.completed = !task.completed;
+        renderTasks();
+        renderStats();
+        showToast(task.completed ? translations[state.lang].taskCompleted : translations[state.lang].taskUncompleted);
       });
+
+      taskListEl.appendChild(row);
     });
   }
 
-  setupSidebar() {
-    const toggleBtn = document.getElementById('sidebar-toggle-btn');
-    const sidebar = document.getElementById('uworld-sidebar');
+  // Setup Event Listeners
+  function initEvents() {
+    // Theme Toggle
+    if (themeToggleBtn) {
+      themeToggleBtn.addEventListener('click', () => {
+        applyTheme(state.theme === 'light' ? 'dark' : 'light');
+      });
+    }
 
-    if (toggleBtn && sidebar) {
-      toggleBtn.addEventListener('click', () => {
-        this.sidebarCollapsed = !this.sidebarCollapsed;
-        if (this.sidebarCollapsed) {
-          sidebar.classList.add('collapsed');
-        } else {
-          sidebar.classList.remove('collapsed');
+    // Language Toggle
+    if (langToggleBtn) {
+      langToggleBtn.addEventListener('click', () => {
+        applyLang(state.lang === 'en' ? 'ar' : 'en');
+      });
+    }
+
+    // Modal Opening & Closing
+    if (newTaskBtn) {
+      newTaskBtn.addEventListener('click', () => {
+        newTaskModal.classList.add('active');
+        document.getElementById('task-title-input').focus();
+      });
+    }
+
+    function closeModal() {
+      if (newTaskModal) newTaskModal.classList.remove('active');
+      if (taskForm) taskForm.reset();
+    }
+
+    if (closeModalBtn) closeModalBtn.addEventListener('click', closeModal);
+    if (cancelModalBtn) cancelModalBtn.addEventListener('click', closeModal);
+    if (newTaskModal) {
+      newTaskModal.addEventListener('click', (e) => {
+        if (e.target === newTaskModal) closeModal();
+      });
+    }
+
+    // Form Submission
+    if (taskForm) {
+      taskForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const title = document.getElementById('task-title-input').value.trim();
+        const priority = document.getElementById('task-priority-select').value;
+        const workspace = document.getElementById('task-workspace-select').value;
+
+        if (title) {
+          const newTask = {
+            id: Date.now(),
+            name: title,
+            priority: priority,
+            completed: false,
+            workspace: workspace,
+            date: 'today'
+          };
+          state.tasks.unshift(newTask);
+          renderTasks();
+          renderStats();
+          closeModal();
+          showToast(translations[state.lang].taskAddedSuccess);
         }
       });
     }
-  }
 
-  setupHeroWidget() {
-    const heroQuestion = QUESTION_BANK[0];
-    const heroWidget = document.getElementById('hero-interactive-widget');
-    if (!heroWidget || !heroQuestion) return;
+    // Command Palette Trigger
+    function openCommandPalette() {
+      if (cmdModal) {
+        cmdModal.classList.add('active');
+        if (cmdInput) {
+          cmdInput.value = '';
+          cmdInput.focus();
+        }
+        renderCmdList('');
+      }
+    }
 
-    const optionsContainer = document.getElementById('hero-widget-options');
-    const explanationBox = document.getElementById('hero-widget-explanation');
+    function closeCommandPalette() {
+      if (cmdModal) cmdModal.classList.remove('active');
+    }
 
-    if (optionsContainer) {
-      optionsContainer.innerHTML = heroQuestion.options.slice(0, 4).map(opt => `
-        <button class="widget-option-btn" data-opt-id="${opt.id}" data-correct="${opt.isCorrect || false}">
-          <span class="widget-option-letter">${opt.id}</span>
-          <span>${opt.text}</span>
-        </button>
-      `).join('');
-
-      optionsContainer.querySelectorAll('.widget-option-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
-          const isCorrect = btn.getAttribute('data-correct') === 'true';
-          const optId = btn.getAttribute('data-opt-id');
-
-          // Highlight selection
-          optionsContainer.querySelectorAll('.widget-option-btn').forEach(b => {
-            b.disabled = true;
-            if (b.getAttribute('data-correct') === 'true') {
-              b.classList.add('selected-correct');
-            } else if (b === btn) {
-              b.classList.add('selected-incorrect');
-            }
-          });
-
-          // Show explanation preview
-          if (explanationBox) {
-            explanationBox.style.display = 'block';
-            explanationBox.innerHTML = `
-              <strong>${isCorrect ? '✓ High-Yield Mastered!' : 'Diagnostic Note:'}</strong> 
-              ${heroQuestion.options.find(o => o.id === optId)?.explanation || heroQuestion.educationalObjective}
-              <div style="margin-top: 10px;">
-                <button class="btn btn-sm btn-primary" onclick="window.app.navigateTo('simulator')">
-                  Practice Full Test Block →
-                </button>
-              </div>
-            `;
-          }
-        });
+    if (searchTrigger) searchTrigger.addEventListener('click', openCommandPalette);
+    if (cmdPaletteBtn) cmdPaletteBtn.addEventListener('click', openCommandPalette);
+    if (closeCmdModalBtn) closeCmdModalBtn.addEventListener('click', closeCommandPalette);
+    if (cmdModal) {
+      cmdModal.addEventListener('click', (e) => {
+        if (e.target === cmdModal) closeCommandPalette();
       });
     }
-  }
 
-  setupTestCreator() {
-    // Mode toggles (Tutor vs Timed)
-    let isTutor = true;
-    let isTimed = false;
-
-    const tutorChips = document.querySelectorAll('[data-creator-mode]');
-    tutorChips.forEach(chip => {
-      chip.addEventListener('click', () => {
-        tutorChips.forEach(c => c.classList.remove('active'));
-        chip.classList.add('active');
-        const mode = chip.getAttribute('data-creator-mode');
-        isTutor = mode === 'tutor';
-        isTimed = mode === 'timed';
-      });
+    // Global Keybindings (Ctrl+K or Cmd+K)
+    window.addEventListener('keydown', (e) => {
+      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
+        e.preventDefault();
+        if (cmdModal && cmdModal.classList.contains('active')) {
+          closeCommandPalette();
+        } else {
+          openCommandPalette();
+        }
+      }
+      if (e.key === 'Escape') {
+        closeModal();
+        closeCommandPalette();
+      }
     });
 
-    const startCustomBtn = document.getElementById('btn-start-custom-block');
-    if (startCustomBtn) {
-      startCustomBtn.addEventListener('click', () => {
-        // Collect selected systems
-        const checkedSystems = [];
-        document.querySelectorAll('.system-checkbox:checked').forEach(cb => {
-          checkedSystems.push(cb.value);
-        });
-
-        // Filter question bank or fallback to all
-        let filtered = QUESTION_BANK.filter(q => {
-          if (checkedSystems.length === 0) return true;
-          return checkedSystems.some(sys => q.system.includes(sys));
-        });
-
-        if (filtered.length === 0) filtered = [...QUESTION_BANK];
-
-        window.examSim.startTest(filtered, isTutor, isTimed);
-        this.navigateTo('simulator');
+    // Command Palette Filter & Actions
+    if (cmdInput) {
+      cmdInput.addEventListener('input', (e) => {
+        renderCmdList(e.target.value.toLowerCase());
       });
     }
+
+    function renderCmdList(query) {
+      if (!cmdList) return;
+      const commands = [
+        { label: '➕ Create New Task', action: () => { closeCommandPalette(); newTaskBtn.click(); } },
+        { label: '🌓 Toggle Dark/Light Theme', action: () => { themeToggleBtn.click(); closeCommandPalette(); } },
+        { label: '🌐 Switch Language (AR / EN)', action: () => { langToggleBtn.click(); closeCommandPalette(); } },
+        ...state.tasks.map(t => ({
+          label: `Task: ${t.name} (${t.priority})`,
+          action: () => {
+            t.completed = !t.completed;
+            renderTasks();
+            renderStats();
+            closeCommandPalette();
+            showToast(`Toggled: ${t.name}`);
+          }
+        }))
+      ];
+
+      const filtered = commands.filter(c => c.label.toLowerCase().includes(query));
+      cmdList.innerHTML = '';
+      if (filtered.length === 0) {
+        cmdList.innerHTML = '<div style="padding:12px;color:var(--text-muted);font-size:13px;">No commands found</div>';
+        return;
+      }
+      filtered.forEach(item => {
+        const div = document.createElement('div');
+        div.className = 'task-item-row';
+        div.style.borderRadius = '6px';
+        div.style.padding = '10px 14px';
+        div.innerHTML = `<span style="font-size:13px;font-weight:500;">${item.label}</span>`;
+        div.addEventListener('click', item.action);
+        cmdList.appendChild(div);
+      });
+    }
+
+    // Sidebar navigation active state toggle
+    document.querySelectorAll('.nav-item').forEach(item => {
+      item.addEventListener('click', (e) => {
+        e.preventDefault();
+        document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+        item.classList.add('active');
+      });
+    });
   }
 
-  setupAnalytics() {
-    // Dynamic analytics preview calculation
-    const totalQEl = document.getElementById('analytics-total-q');
-    if (totalQEl) totalQEl.textContent = '10,480+';
+  // Initialize App
+  function init() {
+    applyTheme(state.theme);
+    applyLang(state.lang);
+    renderStats();
+    renderTasks();
+    initEvents();
   }
-}
 
-// Global App controller
-window.app = new AppController();
+  document.addEventListener('DOMContentLoaded', init);
+})();
