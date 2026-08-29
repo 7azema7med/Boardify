@@ -67,6 +67,7 @@
 
   // DOM Elements
   const htmlEl = document.documentElement;
+  const appLayout = document.querySelector('.app-layout');
   const btnThemeToggle = document.getElementById('btn-theme-toggle');
   const btnLangToggle = document.getElementById('btn-lang-toggle');
   const langBtnText = document.getElementById('lang-btn-text');
@@ -179,6 +180,7 @@
     if (lblModulesTitle) lblModulesTitle.textContent = t.activeModules;
     if (lblPerformanceTitle) lblPerformanceTitle.textContent = t.performance;
 
+    if (btnQuickStartBlock) btnQuickStartBlock.querySelector('span').textContent = t.startBlock;
     if (simBtnExit) simBtnExit.querySelector('span').textContent = t.exitBlock;
     if (simBtnLabs) simBtnLabs.querySelector('span').textContent = t.labValues;
     if (simBtnCalc) simBtnCalc.querySelector('span').textContent = t.calculator;
@@ -190,10 +192,12 @@
   function switchView(viewName) {
     state.currentView = viewName;
     if (viewName === 'simulator') {
+      if (appLayout) appLayout.classList.add('exam-mode');
       if (viewDashboard) viewDashboard.style.display = 'none';
       if (viewSimulator) viewSimulator.style.display = 'flex';
       window.scrollTo(0, 0);
     } else {
+      if (appLayout) appLayout.classList.remove('exam-mode');
       if (viewDashboard) viewDashboard.style.display = 'block';
       if (viewSimulator) viewSimulator.style.display = 'none';
       clearInterval(state.timerInterval);
@@ -287,10 +291,10 @@
 
     // Vitals
     if (q.vitals) {
-      if (vitBp) vitBp.textContent = q.vitals.bp || '120/80 mm Hg';
-      if (vitHr) vitHr.textContent = q.vitals.hr || '76 bpm';
-      if (vitRr) vitRr.textContent = q.vitals.rr || '16 /min';
-      if (vitSpo2) vitSpo2.textContent = q.vitals.spo2 || '99% Room Air';
+      if (vitBp) vitBp.textContent = q.vitals.bp || '184/102 mm Hg';
+      if (vitHr) vitHr.textContent = q.vitals.hr || '108 bpm';
+      if (vitRr) vitRr.textContent = q.vitals.rr || '22 /min';
+      if (vitSpo2) vitSpo2.textContent = q.vitals.spo2 || '98% Room Air';
     }
 
     // MCQ Options
@@ -408,21 +412,51 @@
     }
 
     if (navBtnDashboard) {
-      navBtnDashboard.addEventListener('click', () => switchView('dashboard'));
+      navBtnDashboard.addEventListener('click', () => {
+        document.querySelectorAll('.nav-item-btn').forEach(b => b.classList.remove('active'));
+        navBtnDashboard.classList.add('active');
+        switchView('dashboard');
+      });
     }
 
     if (navBtnAnalytics) {
       navBtnAnalytics.addEventListener('click', () => {
+        document.querySelectorAll('.nav-item-btn').forEach(b => b.classList.remove('active'));
+        navBtnAnalytics.classList.add('active');
         switchView('dashboard');
         showToast('Analytics synchronized.');
       });
     }
 
     // Module Launchers
-    if (navBtnStep2) navBtnStep2.addEventListener('click', () => startBlock('USMLE Step 2 CK', 10));
-    if (navBtnStep1) navBtnStep1.addEventListener('click', () => startBlock('USMLE Step 1', 10));
-    if (navBtnMrcp) navBtnMrcp.addEventListener('click', () => startBlock('MRCP Part 1', 10));
-    if (navBtnFlagged) navBtnFlagged.addEventListener('click', () => startBlock('Flagged Review', 5));
+    if (navBtnStep2) {
+      navBtnStep2.addEventListener('click', () => {
+        document.querySelectorAll('.nav-item-btn').forEach(b => b.classList.remove('active'));
+        navBtnStep2.classList.add('active');
+        startBlock('USMLE Step 2 CK', 10);
+      });
+    }
+    if (navBtnStep1) {
+      navBtnStep1.addEventListener('click', () => {
+        document.querySelectorAll('.nav-item-btn').forEach(b => b.classList.remove('active'));
+        navBtnStep1.classList.add('active');
+        startBlock('USMLE Step 1', 10);
+      });
+    }
+    if (navBtnMrcp) {
+      navBtnMrcp.addEventListener('click', () => {
+        document.querySelectorAll('.nav-item-btn').forEach(b => b.classList.remove('active'));
+        navBtnMrcp.classList.add('active');
+        startBlock('MRCP Part 1', 10);
+      });
+    }
+    if (navBtnFlagged) {
+      navBtnFlagged.addEventListener('click', () => {
+        document.querySelectorAll('.nav-item-btn').forEach(b => b.classList.remove('active'));
+        navBtnFlagged.classList.add('active');
+        startBlock('Flagged Review', 5);
+      });
+    }
     if (navBtnSimTimed) navBtnSimTimed.addEventListener('click', () => startBlock('USMLE Step 2 CK', 10));
     if (navBtnSimTutor) navBtnSimTutor.addEventListener('click', () => startBlock('USMLE Step 2 CK', 10));
 
