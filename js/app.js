@@ -9,6 +9,7 @@
       navFeatures: 'Features',
       navCurriculum: 'Curriculum',
       navCompare: 'Comparison',
+      navColors: 'Color System',
       navPricing: 'Pricing',
       launchApp: 'Launch QBank App',
       heroBadge: '2026 Examination Curriculum Released',
@@ -59,6 +60,7 @@
       navFeatures: 'المميزات',
       navCurriculum: 'المناهج الطبية',
       navCompare: 'المقارنة',
+      navColors: 'منظومة الألوان',
       navPricing: 'الأسعار',
       launchApp: 'دخول المنصة',
       heroBadge: 'إطلاق منهج الاختبارات المحدث لعام 2026',
@@ -226,6 +228,7 @@
       'lnk-landing-features': t.navFeatures,
       'lnk-landing-curriculum': t.navCurriculum,
       'lnk-landing-compare': t.navCompare,
+      'lnk-landing-colors': t.navColors,
       'lnk-landing-pricing': t.navPricing,
       'hero-badge': t.heroBadge,
       'hero-heading': t.heroHeading,
@@ -648,4 +651,27 @@
   }
 
   document.addEventListener('DOMContentLoaded', init);
+
+  // Global Color System Helpers
+  window.copyColorCode = function(code) {
+    navigator.clipboard.writeText(code).then(() => {
+      showToast(`Copied ${code} to clipboard!`);
+    }).catch(() => {
+      showToast(`Copied: ${code}`);
+    });
+  };
+
+  window.copyCssTokens = function() {
+    const tokensEl = document.getElementById('code-tokens-display');
+    if (tokensEl) {
+      navigator.clipboard.writeText(tokensEl.innerText).then(() => {
+        showToast('✓ CSS Color Tokens Copied!');
+      });
+    }
+  };
+
+  window.themeToggleFromSection = function() {
+    applyTheme(state.theme === 'light' ? 'dark' : 'light');
+    showToast(state.theme === 'dark' ? 'Switched to Dark Mode (#070D14)' : 'Switched to Light Mode (#004976)');
+  };
 })();

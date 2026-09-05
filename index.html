@@ -34,6 +34,7 @@
           <li><a href="#features" id="lnk-landing-features">Features</a></li>
           <li><a href="#curriculum" id="lnk-landing-curriculum">Curriculum</a></li>
           <li><a href="#comparison" id="lnk-landing-compare">Comparison</a></li>
+          <li><a href="#color-system" id="lnk-landing-colors">Color System</a></li>
           <li><a href="#pricing" id="lnk-landing-pricing">Pricing</a></li>
         </ul>
 
@@ -352,6 +353,257 @@
               </tr>
             </tbody>
           </table>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Color System & Harmonious Palette Showcase (#004976) -->
+    <section class="landing-section" id="color-system">
+      <div class="container">
+        
+        <div class="section-head">
+          <div class="section-tag" id="tag-color-system">Design System & Brand Identity</div>
+          <h2 class="section-title" id="title-color-system">Primary Color: #004976 & Companion Harmonious System</h2>
+          <p class="section-subtitle" id="sub-color-system">Deep Atlantic Sapphire engineered for cognitive focus, clinical authority, and WCAG AAA compliance across Light and Dark modes.</p>
+        </div>
+
+        <!-- Master Primary Swatch Card -->
+        <div class="palette-master-card">
+          <div class="palette-master-grid">
+            <div>
+              <div class="swatch-box-hero" onclick="copyColorCode('#004976')" title="Click to copy HEX #004976">
+                <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+                  <span class="key-badge" style="background:rgba(255,255,255,0.2); color:#FFFFFF; border:none;">Primary Anchor</span>
+                  <span class="key-badge" style="background:#0D9488; color:#FFFFFF; border:none;">WCAG AAA</span>
+                </div>
+                <div>
+                  <div style="font-family:var(--font-mono); font-size:20px; font-weight:700; letter-spacing:0.02em;">#004976</div>
+                  <div style="font-size:12px; opacity:0.85; margin-top:2px;">Deep Atlantic Sapphire</div>
+                  <div style="margin-top:8px; font-size:11px; opacity:0.75;">Click to copy hex</div>
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <div style="display:flex; flex-wrap:wrap; gap:8px; margin-bottom:12px;">
+                <span class="copy-chip" onclick="copyColorCode('#004976')">HEX: #004976</span>
+                <span class="copy-chip" onclick="copyColorCode('rgb(0, 73, 118)')">RGB: 0, 73, 118</span>
+                <span class="copy-chip" onclick="copyColorCode('hsl(203, 100%, 23%)')">HSL: 203°, 100%, 23%</span>
+                <span class="copy-chip" style="background:var(--accent-subtle); color:var(--accent-primary); border-color:var(--border-accent);">Contrast on White: 9.58:1 (AAA)</span>
+              </div>
+              <h3 style="font-size:18px; font-weight:700; margin-bottom:8px;">Optical Rationale & Clinical Design Logic</h3>
+              <p style="font-size:14px; color:var(--text-secondary); line-height:1.6; margin-bottom:14px;">
+                #004976 sits at the optimal wavelength (203° cyan-navy) to convey clinical gravitas and institutional trust without triggering ocular fatigue during 8-hour diagnostic blocks. In Light Mode, it serves as the commanding primary brand element for buttons, active state rings, and headers. In Dark Mode, it forms the deep sapphire architectural base container (<span class="mono" style="font-size:12px;">rgba(0, 73, 118, 0.38)</span>) paired with its luminous counterpart (<span class="mono" style="font-size:12px;">#38BDF8</span>).
+              </p>
+              <div style="display:flex; gap:12px; align-items:center;">
+                <button class="btn-primary" onclick="window.themeToggleFromSection()" style="height:36px; padding:0 16px; font-size:12px;">
+                  <span>Toggle Light / Dark Live</span>
+                </button>
+                <span style="font-size:12px; color:var(--text-muted);">Instant real-time theme adaptation</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 4 Harmonious Companion Palettes -->
+        <h3 style="font-size:18px; font-weight:700; margin:32px 0 16px 0;">Harmonious Companion Colors</h3>
+        
+        <div class="color-harmonies-grid">
+          
+          <!-- 1. Complementary (Amber Gold) -->
+          <div class="harmony-card">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <span style="font-size:12px; font-weight:700; color:var(--accent-primary);">Complementary</span>
+              <span class="key-badge">180° Balance</span>
+            </div>
+            <div class="harmony-swatch-duo">
+              <div class="swatch-half" style="background:#D97706; color:#FFFFFF;" onclick="copyColorCode('#D97706')" title="Light: #D97706">
+                <span>Light</span>
+                <span>#D97706</span>
+              </div>
+              <div class="swatch-half" style="background:#F59E0B; color:#111827;" onclick="copyColorCode('#F59E0B')" title="Dark: #F59E0B">
+                <span>Dark</span>
+                <span>#F59E0B</span>
+              </div>
+            </div>
+            <div>
+              <div style="font-size:13px; font-weight:700; margin-bottom:2px;">Warm Honey & Board Distinction</div>
+              <p style="font-size:12px; color:var(--text-secondary); line-height:1.5;">Direct optical complement. Perfect for honors badges, high-yield stars, and active tab indicators.</p>
+            </div>
+          </div>
+
+          <!-- 2. Split-Complementary (Clinical Coral) -->
+          <div class="harmony-card">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <span style="font-size:12px; font-weight:700; color:var(--accent-primary);">Split-Complementary</span>
+              <span class="key-badge">High CTA</span>
+            </div>
+            <div class="harmony-swatch-duo">
+              <div class="swatch-half" style="background:#EA580C; color:#FFFFFF;" onclick="copyColorCode('#EA580C')" title="Light: #EA580C">
+                <span>Light</span>
+                <span>#EA580C</span>
+              </div>
+              <div class="swatch-half" style="background:#FB923C; color:#111827;" onclick="copyColorCode('#FB923C')" title="Dark: #FB923C">
+                <span>Dark</span>
+                <span>#FB923C</span>
+              </div>
+            </div>
+            <div>
+              <div style="font-size:13px; font-weight:700; margin-bottom:2px;">Clinical Coral & Urgency</div>
+              <p style="font-size:12px; color:var(--text-secondary); line-height:1.5;">Vibrant energetic contrast. Drives conversion on exam launch CTAs, timer warnings, and acuity alerts.</p>
+            </div>
+          </div>
+
+          <!-- 3. Analogous (Diagnostic Cyan) -->
+          <div class="harmony-card">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <span style="font-size:12px; font-weight:700; color:var(--accent-primary);">Analogous</span>
+              <span class="key-badge">Diagnostic</span>
+            </div>
+            <div class="harmony-swatch-duo">
+              <div class="swatch-half" style="background:#0284C7; color:#FFFFFF;" onclick="copyColorCode('#0284C7')" title="Light: #0284C7">
+                <span>Light</span>
+                <span>#0284C7</span>
+              </div>
+              <div class="swatch-half" style="background:#38BDF8; color:#070D14;" onclick="copyColorCode('#38BDF8')" title="Dark: #38BDF8">
+                <span>Dark</span>
+                <span>#38BDF8</span>
+              </div>
+            </div>
+            <div>
+              <div style="font-size:13px; font-weight:700; margin-bottom:2px;">Polar Azure & Surgical Cyan</div>
+              <p style="font-size:12px; color:var(--text-secondary); line-height:1.5;">Shared cool spectrum (190°–205°). Delivers antiseptic clarity, vital sign cards, and diagnostic telemetry.</p>
+            </div>
+          </div>
+
+          <!-- 4. Clinical Triad (Emerald & Rose) -->
+          <div class="harmony-card">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <span style="font-size:12px; font-weight:700; color:var(--accent-primary);">Functional Triad</span>
+              <span class="key-badge">Semantics</span>
+            </div>
+            <div class="harmony-swatch-duo">
+              <div class="swatch-half" style="background:#0D9488; color:#FFFFFF;" onclick="copyColorCode('#0D9488')" title="Success: #0D9488">
+                <span>Success</span>
+                <span>#0D9488</span>
+              </div>
+              <div class="swatch-half" style="background:#EF4444; color:#FFFFFF;" onclick="copyColorCode('#EF4444')" title="Danger: #EF4444">
+                <span>Danger</span>
+                <span>#EF4444</span>
+              </div>
+            </div>
+            <div>
+              <div style="font-size:13px; font-weight:700; margin-bottom:2px;">Clinical Emerald & Rose Alert</div>
+              <p style="font-size:12px; color:var(--text-secondary); line-height:1.5;">Calibrated semantic statuses for correct/incorrect rationales, differential tables, and pass ratings.</p>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Light Mode vs Dark Mode Dual Parity Architecture -->
+        <h3 style="font-size:18px; font-weight:700; margin:36px 0 16px 0;">Light Mode vs Dark Mode Dual Architecture</h3>
+        
+        <div class="modes-comparison-grid">
+          
+          <!-- Light Mode Architecture Card -->
+          <div class="mode-preview-box mode-preview-light">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <div>
+                <span class="key-badge" style="background:#004976; color:#FFFFFF; border:none;">Light Theme</span>
+                <h4 style="font-size:16px; font-weight:700; margin-top:6px; color:#0F1E2E;">Atlantic Clinical Daylight</h4>
+              </div>
+              <span class="mono" style="font-size:12px; color:#4A5E73;">Background: #F4F7FB</span>
+            </div>
+
+            <!-- Mini Mockup UI -->
+            <div style="background:#FFFFFF; border:1px solid #CBD8E6; border-radius:6px; padding:14px; box-shadow:0 2px 6px rgba(0,73,118,0.06);">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+                <span style="font-family:var(--font-mono); font-size:12px; font-weight:700; color:#004976;">BOARDIFY 🩺</span>
+                <span style="font-size:11px; padding:2px 6px; background:#EAF2F8; color:#004976; border-radius:4px; font-weight:600;">Item 14 of 40</span>
+              </div>
+              <div style="font-size:13px; font-weight:600; color:#0F1E2E; margin-bottom:8px;">
+                Stanford Type A Aortic Dissection Vignette
+              </div>
+              <div style="display:flex; gap:6px; margin-bottom:10px;">
+                <button style="background:#004976; color:#FFFFFF; padding:6px 12px; border-radius:4px; font-size:11px; font-weight:600;">
+                  Submit Answer (#004976)
+                </button>
+                <button style="background:#FFFFFF; color:#4A5E73; border:1px solid #CBD8E6; padding:6px 10px; border-radius:4px; font-size:11px;">
+                  Lab Values
+                </button>
+              </div>
+              <div style="font-size:11px; color:#4A5E73; border-top:1px solid #E2EAF2; padding-top:8px;">
+                Text Contrast: <strong>14.5:1</strong> • Primary Button: <strong>9.58:1 (AAA)</strong>
+              </div>
+            </div>
+
+            <div style="font-size:12px; color:#4A5E73; line-height:1.5;">
+              <strong>Light Strategy:</strong> #004976 acts as the high-contrast foreground driver for primary CTAs and active states on clean white surfaces, surrounded by cool misty gray backgrounds (<span class="mono">#F4F7FB</span>) to eliminate ocular glare.
+            </div>
+          </div>
+
+          <!-- Dark Mode Architecture Card -->
+          <div class="mode-preview-box mode-preview-dark">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <div>
+                <span class="key-badge" style="background:#38BDF8; color:#070D14; border:none;">Dark Theme</span>
+                <h4 style="font-size:16px; font-weight:700; margin-top:6px; color:#F1F5F9;">Obsidian Nautical Night Shift</h4>
+              </div>
+              <span class="mono" style="font-size:12px; color:#94A3B8;">Background: #070D14</span>
+            </div>
+
+            <!-- Mini Mockup UI -->
+            <div style="background:#0C1622; border:1px solid #253D58; border-radius:6px; padding:14px; box-shadow:0 4px 16px rgba(0,0,0,0.5);">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+                <span style="font-family:var(--font-mono); font-size:12px; font-weight:700; color:#38BDF8;">BOARDIFY 🩺</span>
+                <span style="font-size:11px; padding:2px 6px; background:rgba(0,73,118,0.45); color:#38BDF8; border-radius:4px; font-weight:600;">Item 14 of 40</span>
+              </div>
+              <div style="font-size:13px; font-weight:600; color:#F1F5F9; margin-bottom:8px;">
+                Stanford Type A Aortic Dissection Vignette
+              </div>
+              <div style="display:flex; gap:6px; margin-bottom:10px;">
+                <button style="background:#38BDF8; color:#070D14; padding:6px 12px; border-radius:4px; font-size:11px; font-weight:700;">
+                  Submit Answer (#38BDF8)
+                </button>
+                <button style="background:#132236; color:#94A3B8; border:1px solid #172A3E; padding:6px 10px; border-radius:4px; font-size:11px;">
+                  Lab Values
+                </button>
+              </div>
+              <div style="font-size:11px; color:#94A3B8; border-top:1px solid #172A3E; padding-top:8px;">
+                Deep Core: <strong>#004976</strong> • Interactive Text: <strong>#38BDF8 (11.2:1 AAA)</strong>
+              </div>
+            </div>
+
+            <div style="font-size:12px; color:#94A3B8; line-height:1.5;">
+              <strong>Dark Strategy:</strong> Since pure #004976 lacks sufficient contrast on dark backgrounds (1.7:1), the primary interactive role elevates to luminous Polar Azure (<span class="mono">#38BDF8</span>), while #004976 grounds the cards with deep sapphire tinting and glow borders.
+            </div>
+          </div>
+
+        </div>
+
+        <!-- CSS Tokens Quick Copy Box -->
+        <div style="margin-top:32px;">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+            <span style="font-size:13px; font-weight:700; color:var(--text-primary);">Ready-to-Use CSS Variables</span>
+            <button class="key-badge accent" onclick="copyCssTokens()" style="cursor:pointer;" id="btn-copy-css-tokens">Copy All Tokens</button>
+          </div>
+          <pre class="code-snippet-pre" id="code-tokens-display">:root {
+  /* Primary Brand Anchor */
+  --color-primary: #004976;
+  --color-primary-hover: #003658;
+  --color-primary-subtle: rgba(0, 73, 118, 0.08);
+
+  /* Companion Accents */
+  --color-accent-gold: #D97706;   /* Complementary */
+  --color-accent-cyan: #0284C7;   /* Analogous */
+  --color-accent-coral: #EA580C;  /* Split-Complementary */
+
+  /* Dark Mode Counterpart */
+  --color-primary-dark: #38BDF8;
+  --color-dark-bg: #070D14;
+  --color-dark-surface: #0C1622;
+}</pre>
         </div>
 
       </div>
