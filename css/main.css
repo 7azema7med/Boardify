@@ -1945,7 +1945,7 @@ h4 { font-size: 16px; }
     color: #FFFFFF !important;
   }
 
-  /* Clear luminous subtitles, descriptions, and secondary content (Slate 300) */
+  /* Clear luminous subtitles, descriptions, and secondary content (Slate 200) */
   .hero-subtitle,
   .section-subtitle,
   .feature-box-desc,
@@ -1957,7 +1957,73 @@ h4 { font-size: 16px; }
   .hero-opt-btn,
   .mcq-option-row,
   .high-yield-table td {
-    color: #CBD5E1 !important;
+    color: #E2E8F0 !important;
+  }
+
+  /* Specifically guarantee hero subtext has high contrast and comfortable weight */
+  .hero-subtitle {
+    color: #E2E8F0 !important;
+    font-weight: 450 !important;
+    line-height: 1.7 !important;
+  }
+
+  /* SVG Icons & Icon Buttons: Ensure high visibility */
+  .icon {
+    color: #E2E8F0 !important;
+  }
+
+  .btn-icon {
+    background-color: #18202A !important;
+    border-color: #334358 !important;
+    color: #F1F5F9 !important;
+  }
+  .btn-icon:hover {
+    background-color: #243242 !important;
+    border-color: #4D9DE0 !important;
+    color: #FFFFFF !important;
+  }
+  .btn-icon .icon {
+    color: #F1F5F9 !important;
+  }
+  .btn-icon:hover .icon {
+    color: #FFFFFF !important;
+  }
+
+  /* Topbar Controls: Readiness Pill & User Avatar */
+  .readiness-pill {
+    background-color: #18202A !important;
+    border-color: #38BDF8 !important;
+    color: #38BDF8 !important;
+    font-weight: 700 !important;
+  }
+  .readiness-pill span {
+    color: #38BDF8 !important;
+  }
+
+  .user-avatar {
+    background-color: #18202A !important;
+    border-color: #4D9DE0 !important;
+    color: #FFFFFF !important;
+    font-weight: 800 !important;
+  }
+  .user-avatar span {
+    color: #FFFFFF !important;
+  }
+
+  /* Search box input in topbar */
+  .search-input-box {
+    background-color: #18202A !important;
+    border-color: #334358 !important;
+    color: #E2E8F0 !important;
+  }
+  .search-input-box input {
+    color: #FFFFFF !important;
+  }
+  .search-input-box input::placeholder {
+    color: #94A3B8 !important;
+  }
+  .search-input-box .icon {
+    color: #94A3B8 !important;
   }
 
   /* Distinct labels, badges, and uppercase category tags (Slate 400) */
@@ -1981,6 +2047,12 @@ h4 { font-size: 16px; }
     color: #FFFFFF !important;
   }
 
+  /* Feature & Stat Icons */
+  .feature-box-header .icon,
+  .stat-card-header .icon {
+    color: #38BDF8 !important;
+  }
+
   /* Badges & Pills */
   .key-badge {
     background-color: #202B38 !important;
@@ -1996,14 +2068,14 @@ h4 { font-size: 16px; }
 
   /* Navigation & links */
   .landing-nav-links a {
-    color: #CBD5E1 !important;
+    color: #E2E8F0 !important;
   }
   .landing-nav-links a:hover {
     color: #FFFFFF !important;
   }
 
   .nav-item-btn {
-    color: #CBD5E1 !important;
+    color: #E2E8F0 !important;
   }
   .nav-item-btn:hover {
     color: #FFFFFF !important;
@@ -2013,6 +2085,12 @@ h4 { font-size: 16px; }
     color: #FFFFFF !important;
     background-color: #064191 !important;
     border: 1px solid rgba(77, 157, 224, 0.4) !important;
+  }
+  .nav-item-btn .icon {
+    color: #E2E8F0 !important;
+  }
+  .nav-item-btn.active .icon {
+    color: #FFFFFF !important;
   }
 
   /* Option rows */
@@ -2083,14 +2161,14 @@ h4 { font-size: 16px; }
   }
   .high-yield-table td {
     border-color: #334358 !important;
-    color: #CBD5E1 !important;
+    color: #E2E8F0 !important;
   }
 
   /* Footer */
   .landing-footer {
     background-color: #18202A !important;
     border-top-color: #334358 !important;
-    color: #CBD5E1 !important;
+    color: #E2E8F0 !important;
   }
 }
 

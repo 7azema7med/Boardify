@@ -138,9 +138,10 @@ html:not([data-theme="dark"]) {
   
   /* NBME Clinical Typography: High-clarity, non-fatiguing, crisp visibility */
   --text-primary: #FFFFFF;        /* Pure crisp white for primary text, question stems, and headings */
-  --text-secondary: #CBD5E1;      /* Bright slate (Slate 300) for clear secondary text, eliminating dark muddy gray */
+  --text-secondary: #E2E8F0;      /* Bright luminous slate (Slate 200) for crystal clear secondary text */
   --text-muted: #94A3B8;          /* Clear silver-slate (Slate 400) for labels and metadata, never dark gray */
   --text-on-accent: #FFFFFF;
+  --icon-color: #E2E8F0;          /* High-visibility icon stroke in dark mode */
 
   /* Primary Brand: #064191 (Royal Cobalt) with NBME Examination Calibration */
   --accent-primary: #064191;
