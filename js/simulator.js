@@ -372,14 +372,12 @@ class ExamSimulator {
       const selection = window.getSelection();
       if (!selection || selection.isCollapsed) return;
 
-      const stemEl = document.getElementById('exam-vignette-stem');
+      const stemEl = document.getElementById('exam-vignette-stem') || document.getElementById('sim-stem-text') || document.getElementById('hero-vignette-stem');
       if (!stemEl || !stemEl.contains(selection.anchorNode)) return;
 
       const range = selection.getRangeAt(0);
       const span = document.createElement('span');
-      span.style.backgroundColor = 'var(--highlight-yellow)';
-      span.style.borderRadius = '2px';
-      span.style.padding = '0 2px';
+      span.className = 'q-hl q-hl-yellow';
 
       try {
         range.surroundContents(span);

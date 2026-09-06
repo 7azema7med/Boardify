@@ -17,26 +17,27 @@
   --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
   --font-arabic: 'IBM Plex Sans Arabic', var(--font-sans);
 
-  /* Typography Scale */
-  --text-micro: 10px;
-  --text-caption: 11px;
-  --text-sm: 12px;
-  --text-base: 14px;
-  --text-md: 16px;
-  --text-lg: 18px;
-  --text-xl: 22px;
-  --text-2xl: 24px;
-  --text-stat: 26px;
+  /* Typography Scale - Enhanced for Professional Medical Readability */
+  --text-micro: 11px;
+  --text-caption: 12px;
+  --text-sm: 13px;
+  --text-base: 15px;       /* Upgraded baseline for clinical clarity */
+  --text-md: 17px;
+  --text-lg: 19px;
+  --text-xl: 23px;
+  --text-2xl: 26px;
+  --text-stat: 30px;
 
-  --leading-tight: 1.2;
-  --leading-normal: 1.5;
+  --leading-tight: 1.25;
+  --leading-normal: 1.6;
 
   /* Layout dimensions */
-  --sidebar-width: 240px;
-  --header-height: 56px;
+  --sidebar-width: 250px;
+  --header-height: 60px;
 
   /* Transitions */
-  --transition-fast: 120ms ease-out;
+  --transition-fast: 140ms cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-smooth: 260ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 /* --------------------------------------------------------------------------
@@ -49,8 +50,8 @@ html:not([data-theme="dark"]) {
   --bg-surface-active: #EAF2F8;
   --bg-hover: #EEF4F9;
   --text-primary: #0F1E2E;
-  --text-secondary: #4A5E73;
-  --text-muted: #7E94A9;
+  --text-secondary: #42586E;
+  --text-muted: #6C8297;
   --text-on-accent: #FFFFFF;
 
   /* Primary Brand: #004976 */
@@ -59,22 +60,54 @@ html:not([data-theme="dark"]) {
   --accent-active: #002842;
   --accent-subtle: rgba(0, 73, 118, 0.08);
   --accent-subtle-strong: rgba(0, 73, 118, 0.16);
+  --accent-glow: rgba(0, 73, 118, 0.20);
 
   /* Harmonious Companion Accents */
-  --accent-gold: #D97706;        /* Complementary Warm Honey / Distinction */
+  --accent-gold: #D97706;        /* Warm Honey / Distinction */
   --accent-gold-subtle: #FEF3C7;
-  --accent-cyan: #0284C7;        /* Analogous Diagnostic Cyan */
-  --accent-coral: #EA580C;       /* Split-Complementary High-Yield Urgency */
+  --accent-cyan: #0284C7;        /* Diagnostic Cyan */
+  --accent-coral: #EA580C;       /* High-Yield Urgency */
 
   --border-subtle: #E2EAF2;
   --border-strong: #CBD8E6;
   --border-accent: #004976;
   --badge-bg: #EAF0F6;
 
-  --status-danger: #EF4444;
-  --status-info: #0284C7;
+  /* Functional Triad (High-Definition Clinical Semantics) */
   --status-success: #0D9488;
+  --status-success-bg: #E6F7F5;
+  --status-success-border: #99F6E4;
+  --status-success-text: #065F46;
+
   --status-warning: #D97706;
+  --status-warning-bg: #FFFBEB;
+  --status-warning-border: #FDE68A;
+  --status-warning-text: #92400E;
+
+  --status-danger: #EF4444;
+  --status-danger-bg: #FEF2F2;
+  --status-danger-border: #FECACA;
+  --status-danger-text: #991B1B;
+
+  --status-info: #0284C7;
+  --status-info-bg: #F0F9FF;
+  --status-info-border: #BAE6FD;
+  --status-info-text: #0369A1;
+
+  /* Clinical Question Highlighter Tints */
+  --hl-yellow: #FEF08A;
+  --hl-yellow-border: #FACC15;
+  --hl-green: #BBF7D0;
+  --hl-green-border: #4ADE80;
+  --hl-cyan: #BAE6FD;
+  --hl-cyan-border: #38BDF8;
+
+  /* Logo Palette */
+  --logo-mark-primary: #004976;
+  --logo-mark-accent: #0284C7;
+  --logo-text-primary: #0F1E2E;
+  --logo-text-accent: #004976;
+  --logo-glow: rgba(0, 73, 118, 0.25);
 
   /* Universal Aliases for Landing & Simulator UI */
   --surface: var(--bg-surface);
@@ -92,40 +125,74 @@ html:not([data-theme="dark"]) {
 }
 
 /* --------------------------------------------------------------------------
-   DARK MODE - Obsidian Nautical Slate with Luminous #38BDF8 / Deep #004976 Base
+   DARK MODE - Primary Brand: #064191 (Royal Cobalt Navy)
+   Deep Midnight Obsidian with Vibrant Functional Triad & Glowing Accents
    -------------------------------------------------------------------------- */
 [data-theme="dark"] {
-  --bg-app: #070D14;
-  --bg-surface: #0C1622;
-  --bg-surface-active: #132236;
-  --bg-hover: #16273C;
-  --text-primary: #F1F5F9;
-  --text-secondary: #94A3B8;
-  --text-muted: #64748B;
-  --text-on-accent: #070D14;
+  --bg-app: #030C19;              /* Deep Aegean Obsidian Canvas */
+  --bg-surface: #071528;          /* Midnight Slate Primary Surface */
+  --bg-surface-active: #0D223E;   /* Elevated Card Fill */
+  --bg-hover: #122B4D;            /* Interactive Row Hover */
+  --text-primary: #F3F7FC;        /* High-contrast crisp clinical white */
+  --text-secondary: #98ABBE;      /* Readable slate */
+  --text-muted: #647B91;
+  --text-on-accent: #FFFFFF;
 
-  /* Primary Brand: Luminous Azure for contrast + Deep #004976 Core */
-  --accent-primary: #38BDF8;
-  --accent-hover: #60C8FF;
-  --accent-active: #0284C7;
-  --accent-subtle: rgba(0, 73, 118, 0.38);
-  --accent-subtle-strong: rgba(0, 73, 118, 0.65);
+  /* Primary Brand: #064191 (Royal Cobalt) */
+  --accent-primary: #064191;
+  --accent-primary-luminous: #38BDF8; /* High-contrast foreground for text/icons */
+  --accent-hover: #0852B3;
+  --accent-active: #05377D;
+  --accent-subtle: rgba(6, 65, 145, 0.35);
+  --accent-subtle-strong: rgba(6, 65, 145, 0.68);
+  --accent-glow: rgba(6, 65, 145, 0.55);
 
   /* Harmonious Companion Accents */
   --accent-gold: #F59E0B;        /* Complementary Warm Honey / Distinction */
-  --accent-gold-subtle: rgba(245, 158, 11, 0.15);
-  --accent-cyan: #38BDF8;        /* Analogous Diagnostic Cyan */
-  --accent-coral: #FB923C;       /* Split-Complementary High-Yield Urgency */
+  --accent-gold-subtle: rgba(245, 158, 11, 0.20);
+  --accent-cyan: #38BDF8;        /* Diagnostic Azure */
+  --accent-coral: #FB923C;       /* High-Yield Urgency */
 
-  --border-subtle: #172A3E;
-  --border-strong: #253D58;
-  --border-accent: #0284C7;
-  --badge-bg: #101F30;
+  --border-subtle: #12263F;
+  --border-strong: #1E3D66;
+  --border-accent: #064191;
+  --badge-bg: #091A2E;
+
+  /* Functional Triad (Vibrant, high-distinction clinical semantics) */
+  --status-success: #2DD4BF;
+  --status-success-bg: rgba(45, 212, 191, 0.18);
+  --status-success-border: rgba(45, 212, 191, 0.45);
+  --status-success-text: #5EEAD4;
+
+  --status-warning: #F59E0B;
+  --status-warning-bg: rgba(245, 158, 11, 0.20);
+  --status-warning-border: rgba(245, 158, 11, 0.45);
+  --status-warning-text: #FCD34D;
 
   --status-danger: #F87171;
+  --status-danger-bg: rgba(248, 113, 113, 0.20);
+  --status-danger-border: rgba(248, 113, 113, 0.45);
+  --status-danger-text: #FCA5A5;
+
   --status-info: #38BDF8;
-  --status-success: #2DD4BF;
-  --status-warning: #F59E0B;
+  --status-info-bg: rgba(56, 189, 248, 0.18);
+  --status-info-border: rgba(56, 189, 248, 0.45);
+  --status-info-text: #7DD3FC;
+
+  /* Clinical Question Highlighter Tints (Luminous dark mode markers) */
+  --hl-yellow: rgba(250, 204, 21, 0.35);
+  --hl-yellow-border: #EAB308;
+  --hl-green: rgba(74, 222, 128, 0.30);
+  --hl-green-border: #22C55E;
+  --hl-cyan: rgba(56, 189, 248, 0.30);
+  --hl-cyan-border: #0EA5E9;
+
+  /* Logo Palette */
+  --logo-mark-primary: #064191;
+  --logo-mark-accent: #38BDF8;
+  --logo-text-primary: #F3F7FC;
+  --logo-text-accent: #38BDF8;
+  --logo-glow: rgba(6, 65, 145, 0.65);
 
   /* Universal Aliases for Landing & Simulator UI */
   --surface: var(--bg-surface);
@@ -136,10 +203,10 @@ html:not([data-theme="dark"]) {
   --primary: var(--accent-primary);
   --primary-hover: var(--accent-hover);
   --primary-subtle: var(--accent-subtle);
-  --primary-light: #132236;
+  --primary-light: #0D223E;
   --accent: var(--accent-gold);
 
-  --shadow-overlay: 0 1px 2px 0 rgba(0, 0, 0, 0.5), 0 12px 32px rgba(0, 0, 0, 0.7);
+  --shadow-overlay: 0 1px 2px 0 rgba(0, 0, 0, 0.6), 0 14px 36px rgba(6, 65, 145, 0.32);
 }
 
 /* Arabic override */

@@ -312,7 +312,7 @@
     }
   }
 
-  // Hero Interactive Question Preview Widget
+  // Hero Interactive Question Preview Widget & Highlighter
   function initHeroPreviewWidget() {
     const opts = document.querySelectorAll('#hero-options .hero-opt-btn');
     const rationale = document.getElementById('hero-rationale');
@@ -334,6 +334,153 @@
         if (rationale) rationale.classList.add('visible');
       });
     });
+
+    // Hero Highlighter Engine
+    let heroCurrentHl = 'yellow';
+    const heroToolBtns = document.querySelectorAll('#hero-highlighter-toolbar .hl-tool-btn[data-hl-color]');
+    const heroClearBtn = document.getElementById('hero-hl-clear');
+    const heroAutoBtn = document.getElementById('btn-hero-auto-hl');
+    const heroStem = document.getElementById('hero-vignette-stem');
+
+    const originalHeroStemHTML = heroStem ? heroStem.innerHTML : '';
+
+    heroToolBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        heroToolBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        heroCurrentHl = btn.getAttribute('data-hl-color') || 'yellow';
+        showToast(`Selected ${heroCurrentHl.toUpperCase()} highlighter`);
+      });
+    });
+
+    if (heroClearBtn && heroStem) {
+      heroClearBtn.addEventListener('click', () => {
+        // Strip all highlight spans
+        heroStem.querySelectorAll('.q-hl').forEach(span => {
+          const parent = span.parentNode;
+          while (span.firstChild) parent.insertBefore(span.firstChild, span);
+          parent.removeChild(span);
+        });
+        showToast('All highlights cleared.');
+      });
+    }
+
+    if (heroAutoBtn && heroStem) {
+      heroAutoBtn.addEventListener('click', () => {
+        // Restore original with pulse animation
+        heroStem.innerHTML = originalHeroStemHTML;
+        const spans = heroStem.querySelectorAll('.q-hl');
+        spans.forEach(s => s.classList.add('q-hl-pulse'));
+        showToast('✨ Auto-highlighted high-yield diagnostic clues!');
+        setTimeout(() => {
+          spans.forEach(s => s.classList.remove('q-hl-pulse'));
+        }, 2800);
+      });
+    }
+
+    // Interactive mouse text selection highlighting on hero stem
+    if (heroStem) {
+      heroStem.addEventListener('mouseup', () => {
+        const selection = window.getSelection();
+        if (!selection || selection.isCollapsed) return;
+        if (!heroStem.contains(selection.anchorNode)) return;
+
+        try {
+          const range = selection.getRangeAt(0);
+          const selectedText = range.toString().trim();
+          if (selectedText.length === 0) return;
+
+          const span = document.createElement('span');
+          span.className = `q-hl q-hl-${heroCurrentHl}`;
+          span.title = `Highlighted clue (${heroCurrentHl})`;
+          range.surroundContents(span);
+          selection.removeAllRanges();
+          showToast(`Highlighted "${selectedText.slice(0, 24)}..." in ${heroCurrentHl}`);
+        } catch (e) {
+          // Cross-boundary selection fallback
+        }
+      });
+    }
+
+    // In-App Simulator Highlighter Engine
+    let simCurrentHl = 'yellow';
+    const simToolBtns = document.querySelectorAll('#sim-highlighter-toolbar .hl-tool-btn[data-hl-color]');
+    const simClearBtn = document.getElementById('sim-hl-clear');
+    const simAutoBtn = document.getElementById('btn-sim-auto-hl');
+    const simStem = document.getElementById('sim-stem-text');
+
+    simToolBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        simToolBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        simCurrentHl = btn.getAttribute('data-hl-color') || 'yellow';
+        showToast(`Simulator: ${simCurrentHl.toUpperCase()} highlighter active`);
+      });
+    });
+
+    if (simClearBtn && simStem) {
+      simClearBtn.addEventListener('click', () => {
+        simStem.querySelectorAll('.q-hl').forEach(span => {
+          const parent = span.parentNode;
+          while (span.firstChild) parent.insertBefore(span.firstChild, span);
+          parent.removeChild(span);
+        });
+        showToast('Question highlights cleared.');
+      });
+    }
+
+    if (simAutoBtn && simStem) {
+      simAutoBtn.addEventListener('click', () => {
+        // High-yield clues dictionary for question stems
+        const clues = [
+          'sudden-onset, severe tearing chest pain',
+          'radiating directly to his back between the scapulae',
+          '184/102 mm Hg in the right arm and 142/86 mm Hg in the left arm',
+          'grade 2/6 early diastolic decrescendo murmur',
+          'persistent dry cough',
+          'bilateral hilar lymphadenopathy',
+          'non-caseating granulomas',
+          'erythema nodosum',
+          'maculopapular rash',
+          'elevated creatinine'
+        ];
+
+        let html = simStem.innerHTML;
+        clues.forEach((clue, idx) => {
+          const color = idx % 3 === 0 ? 'yellow' : (idx % 3 === 1 ? 'green' : 'cyan');
+          const regex = new RegExp(`(${clue})`, 'gi');
+          html = html.replace(regex, `<span class="q-hl q-hl-${color} q-hl-pulse" title="High-yield finding">$1</span>`);
+        });
+        simStem.innerHTML = html;
+        showToast('✨ Auto-highlighted high-yield clues in question!');
+        setTimeout(() => {
+          simStem.querySelectorAll('.q-hl').forEach(s => s.classList.remove('q-hl-pulse'));
+        }, 2800);
+      });
+    }
+
+    if (simStem) {
+      simStem.addEventListener('mouseup', () => {
+        const selection = window.getSelection();
+        if (!selection || selection.isCollapsed) return;
+        if (!simStem.contains(selection.anchorNode)) return;
+
+        try {
+          const range = selection.getRangeAt(0);
+          const selectedText = range.toString().trim();
+          if (selectedText.length === 0) return;
+
+          const span = document.createElement('span');
+          span.className = `q-hl q-hl-${simCurrentHl}`;
+          span.title = `Highlighted clue (${simCurrentHl})`;
+          range.surroundContents(span);
+          selection.removeAllRanges();
+          showToast(`Highlighted: "${selectedText.slice(0, 20)}..."`);
+        } catch (e) {
+          // Cross-boundary selection fallback
+        }
+      });
+    }
   }
 
   // Exam Simulator Engine
@@ -672,6 +819,6 @@
 
   window.themeToggleFromSection = function() {
     applyTheme(state.theme === 'light' ? 'dark' : 'light');
-    showToast(state.theme === 'dark' ? 'Switched to Dark Mode (#070D14)' : 'Switched to Light Mode (#004976)');
+    showToast(state.theme === 'dark' ? 'Switched to Dark Mode (#064191 Royal Cobalt)' : 'Switched to Light Mode (#004976 Atlantic Sapphire)');
   };
 })();
