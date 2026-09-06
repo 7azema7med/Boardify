@@ -819,6 +819,6 @@
 
   window.themeToggleFromSection = function() {
     applyTheme(state.theme === 'light' ? 'dark' : 'light');
-    showToast(state.theme === 'dark' ? 'Switched to Dark Mode (#064191 Royal Cobalt)' : 'Switched to Light Mode (#004976 Atlantic Sapphire)');
+    showToast(state.theme === 'dark' ? 'Switched to NBME USMLE Dark Mode (#064191 Royal Cobalt)' : 'Switched to Light Mode (#004976 Atlantic Sapphire)');
   };
 })();

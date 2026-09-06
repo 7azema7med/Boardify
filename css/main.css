@@ -149,14 +149,14 @@ h4 { font-size: 16px; }
 [data-theme="dark"] .btn-primary {
   background-color: #064191;
   color: #FFFFFF;
-  border: 1px solid rgba(56, 189, 248, 0.35);
-  box-shadow: 0 0 16px rgba(6, 65, 145, 0.55);
+  border: 1px solid rgba(77, 157, 224, 0.35);
+  box-shadow: 0 2px 8px rgba(6, 65, 145, 0.4);
 }
 
 [data-theme="dark"] .btn-primary:hover {
   background-color: #0852B3;
-  border-color: rgba(56, 189, 248, 0.6);
-  box-shadow: 0 0 24px rgba(6, 65, 145, 0.85);
+  border-color: rgba(77, 157, 224, 0.6);
+  box-shadow: 0 4px 14px rgba(6, 65, 145, 0.55);
 }
 
 .btn-secondary {
@@ -331,8 +331,8 @@ h4 { font-size: 16px; }
 }
 
 [data-theme="dark"] .brand-title-text .brand-suffix {
-  color: var(--accent-primary-luminous, #38BDF8);
-  text-shadow: 0 0 12px rgba(56, 189, 248, 0.45);
+  color: var(--accent-primary-luminous, #4D9DE0);
+  text-shadow: 0 0 8px rgba(77, 157, 224, 0.25);
 }
 
 .landing-brand:hover .brand-title-text .brand-suffix {

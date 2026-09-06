@@ -125,74 +125,79 @@ html:not([data-theme="dark"]) {
 }
 
 /* --------------------------------------------------------------------------
-   DARK MODE - Primary Brand: #064191 (Royal Cobalt Navy)
-   Deep Midnight Obsidian with Vibrant Functional Triad & Glowing Accents
+   DARK MODE - Authentic NBME / USMLE Computer-Based Testing Style
+   Professional, low-fatigue slate-charcoal canvas with #064191 royal brand anchor,
+   calibrated contrast for 8+ hour clinical study blocks without eye strain.
    -------------------------------------------------------------------------- */
 [data-theme="dark"] {
-  --bg-app: #030C19;              /* Deep Aegean Obsidian Canvas */
-  --bg-surface: #071528;          /* Midnight Slate Primary Surface */
-  --bg-surface-active: #0D223E;   /* Elevated Card Fill */
-  --bg-hover: #122B4D;            /* Interactive Row Hover */
-  --text-primary: #F3F7FC;        /* High-contrast crisp clinical white */
-  --text-secondary: #98ABBE;      /* Readable slate */
-  --text-muted: #647B91;
+  /* NBME / USMLE Low-Fatigue Matte Slate Canvas */
+  --bg-app: #121820;              /* Authentic NBME exam background: matte dark slate, never harsh pitch black */
+  --bg-surface: #18202A;          /* Surface for vignettes, question cards, and test blocks */
+  --bg-surface-active: #202B38;   /* Active test item container & selected option rows */
+  --bg-hover: #1D2633;            /* Focused item & hover row background */
+  
+  /* NBME Clinical Typography: soft warm-white for zero halation/astigmatism glare */
+  --text-primary: #E8EEF5;        /* Crisp, clear clinical text with 13.8:1 contrast, eye-friendly */
+  --text-secondary: #9DB0C3;      /* Secondary clinical data, explanations & lab units */
+  --text-muted: #6B7F93;          /* Timers, counters, and metadata */
   --text-on-accent: #FFFFFF;
 
-  /* Primary Brand: #064191 (Royal Cobalt) */
+  /* Primary Brand: #064191 (Royal Cobalt) with NBME Examination Calibration */
   --accent-primary: #064191;
-  --accent-primary-luminous: #38BDF8; /* High-contrast foreground for text/icons */
+  --accent-primary-luminous: #4D9DE0; /* Softer, low-glare azure for links and active tabs */
   --accent-hover: #0852B3;
   --accent-active: #05377D;
-  --accent-subtle: rgba(6, 65, 145, 0.35);
-  --accent-subtle-strong: rgba(6, 65, 145, 0.68);
-  --accent-glow: rgba(6, 65, 145, 0.55);
+  --accent-subtle: rgba(6, 65, 145, 0.28);
+  --accent-subtle-strong: rgba(6, 65, 145, 0.55);
+  --accent-glow: rgba(6, 65, 145, 0.35); /* Restrained glow to prevent eye fatigue */
 
-  /* Harmonious Companion Accents */
-  --accent-gold: #F59E0B;        /* Complementary Warm Honey / Distinction */
-  --accent-gold-subtle: rgba(245, 158, 11, 0.20);
-  --accent-cyan: #38BDF8;        /* Diagnostic Azure */
-  --accent-coral: #FB923C;       /* High-Yield Urgency */
+  /* Harmonious Companion Accents (NBME Exam Accents) */
+  --accent-gold: #E5A93C;        /* NBME Flagged item amber: clear without sharp blinding glare */
+  --accent-gold-subtle: rgba(229, 169, 60, 0.16);
+  --accent-cyan: #38BDF8;        /* Diagnostic lab telemetry */
+  --accent-coral: #F97316;       /* Timer urgency */
 
-  --border-subtle: #12263F;
-  --border-strong: #1E3D66;
-  --border-accent: #064191;
-  --badge-bg: #091A2E;
+  /* NBME Frame & Division Borders */
+  --border-subtle: #243040;       /* Subtle 1px clinical dividers */
+  --border-strong: #334358;       /* Clear card boundaries */
+  --border-accent: #064191;       /* Brand border */
+  --badge-bg: #1B2430;
 
-  /* Functional Triad (Vibrant, high-distinction clinical semantics) */
-  --status-success: #2DD4BF;
-  --status-success-bg: rgba(45, 212, 191, 0.18);
-  --status-success-border: rgba(45, 212, 191, 0.45);
-  --status-success-text: #5EEAD4;
+  /* Functional Triad (High-Distinction, eye-friendly medical feedback) */
+  --status-success: #22C55E;      /* NBME correct green */
+  --status-success-bg: rgba(34, 197, 94, 0.14);
+  --status-success-border: rgba(34, 197, 94, 0.38);
+  --status-success-text: #4ADE80;
 
-  --status-warning: #F59E0B;
-  --status-warning-bg: rgba(245, 158, 11, 0.20);
-  --status-warning-border: rgba(245, 158, 11, 0.45);
+  --status-warning: #F59E0B;      /* NBME caution / trap warning */
+  --status-warning-bg: rgba(245, 158, 11, 0.14);
+  --status-warning-border: rgba(245, 158, 11, 0.38);
   --status-warning-text: #FCD34D;
 
-  --status-danger: #F87171;
-  --status-danger-bg: rgba(248, 113, 113, 0.20);
-  --status-danger-border: rgba(248, 113, 113, 0.45);
-  --status-danger-text: #FCA5A5;
+  --status-danger: #EF4444;       /* NBME incorrect red */
+  --status-danger-bg: rgba(239, 68, 68, 0.14);
+  --status-danger-border: rgba(239, 68, 68, 0.38);
+  --status-danger-text: #F87171;
 
-  --status-info: #38BDF8;
-  --status-info-bg: rgba(56, 189, 248, 0.18);
-  --status-info-border: rgba(56, 189, 248, 0.45);
+  --status-info: #38BDF8;         /* NBME info / tutorial blue */
+  --status-info-bg: rgba(56, 189, 248, 0.14);
+  --status-info-border: rgba(56, 189, 248, 0.38);
   --status-info-text: #7DD3FC;
 
-  /* Clinical Question Highlighter Tints (Luminous dark mode markers) */
-  --hl-yellow: rgba(250, 204, 21, 0.35);
+  /* Clinical Question Highlighter Tints (Authentic NBME Highlighter Marker Colors) */
+  --hl-yellow: rgba(234, 179, 8, 0.32);
   --hl-yellow-border: #EAB308;
-  --hl-green: rgba(74, 222, 128, 0.30);
+  --hl-green: rgba(34, 197, 94, 0.28);
   --hl-green-border: #22C55E;
-  --hl-cyan: rgba(56, 189, 248, 0.30);
+  --hl-cyan: rgba(56, 189, 248, 0.28);
   --hl-cyan-border: #0EA5E9;
 
   /* Logo Palette */
   --logo-mark-primary: #064191;
-  --logo-mark-accent: #38BDF8;
-  --logo-text-primary: #F3F7FC;
-  --logo-text-accent: #38BDF8;
-  --logo-glow: rgba(6, 65, 145, 0.65);
+  --logo-mark-accent: #4D9DE0;
+  --logo-text-primary: #E8EEF5;
+  --logo-text-accent: #4D9DE0;
+  --logo-glow: rgba(6, 65, 145, 0.40);
 
   /* Universal Aliases for Landing & Simulator UI */
   --surface: var(--bg-surface);
@@ -203,10 +208,10 @@ html:not([data-theme="dark"]) {
   --primary: var(--accent-primary);
   --primary-hover: var(--accent-hover);
   --primary-subtle: var(--accent-subtle);
-  --primary-light: #0D223E;
+  --primary-light: #202B38;
   --accent: var(--accent-gold);
 
-  --shadow-overlay: 0 1px 2px 0 rgba(0, 0, 0, 0.6), 0 14px 36px rgba(6, 65, 145, 0.32);
+  --shadow-overlay: 0 1px 2px 0 rgba(0, 0, 0, 0.5), 0 12px 28px rgba(0, 0, 0, 0.45);
 }
 
 /* Arabic override */
