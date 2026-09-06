@@ -1926,3 +1926,142 @@ h4 { font-size: 16px; }
     display: none;
   }
 }
+
+/* ==========================================================================
+   HIGH-CLARITY DARK MODE TYPOGRAPHY & VISIBILITY SPECIFICATION
+   Ensures zero muddy grays, high contrast on dark slate canvas (#121820 / #18202A)
+   ========================================================================== */
+[data-theme="dark"] {
+  /* Crisp readable headings & primary text */
+  h1, h2, h3, h4, h5,
+  .hero-title,
+  .hero-vignette-stem,
+  .vignette-text,
+  .hero-lead-prompt,
+  .lead-prompt,
+  .stat-card-value,
+  .data-row-name,
+  .metric-strip-val {
+    color: #FFFFFF !important;
+  }
+
+  /* Clear luminous subtitles, descriptions, and secondary content (Slate 300) */
+  .hero-subtitle,
+  .section-subtitle,
+  .feature-box-desc,
+  .curriculum-items-list,
+  .curriculum-items-list li,
+  .perf-sub,
+  .data-row-meta,
+  .stat-card-footer,
+  .hero-opt-btn,
+  .mcq-option-row,
+  .high-yield-table td {
+    color: #CBD5E1 !important;
+  }
+
+  /* Distinct labels, badges, and uppercase category tags (Slate 400) */
+  .section-tag {
+    color: #38BDF8 !important;
+  }
+
+  .metric-strip-lbl,
+  .stat-card-title,
+  .panel-title,
+  .hl-label,
+  .nav-group-title,
+  .hero-vitals-strip span,
+  .vitals-item span {
+    color: #94A3B8 !important;
+  }
+
+  /* Vitals values: crisp, unambiguous clinical telemetry */
+  .hero-vitals-strip strong,
+  .vitals-item strong {
+    color: #FFFFFF !important;
+  }
+
+  /* Badges & Pills */
+  .key-badge {
+    background-color: #202B38 !important;
+    border-color: #334358 !important;
+    color: #E2E8F0 !important;
+  }
+
+  .key-badge.accent {
+    background-color: rgba(6, 65, 145, 0.45) !important;
+    border-color: #4D9DE0 !important;
+    color: #7DD3FC !important;
+  }
+
+  /* Navigation & links */
+  .landing-nav-links a {
+    color: #CBD5E1 !important;
+  }
+  .landing-nav-links a:hover {
+    color: #FFFFFF !important;
+  }
+
+  .nav-item-btn {
+    color: #CBD5E1 !important;
+  }
+  .nav-item-btn:hover {
+    color: #FFFFFF !important;
+    background-color: #202B38 !important;
+  }
+  .nav-item-btn.active {
+    color: #FFFFFF !important;
+    background-color: #064191 !important;
+    border: 1px solid rgba(77, 157, 224, 0.4) !important;
+  }
+
+  /* Option rows */
+  .hero-opt-btn,
+  .mcq-option-row {
+    background-color: #18202A !important;
+    border-color: #334358 !important;
+    color: #F1F5F9 !important;
+  }
+  .hero-opt-btn:hover,
+  .mcq-option-row:hover {
+    background-color: #243242 !important;
+    border-color: #4D9DE0 !important;
+    color: #FFFFFF !important;
+  }
+  .mcq-option-row.selected {
+    background-color: rgba(6, 65, 145, 0.35) !important;
+    border-color: #38BDF8 !important;
+    color: #FFFFFF !important;
+  }
+
+  /* Secondary action buttons */
+  .btn-secondary {
+    background-color: #18202A !important;
+    border-color: #334358 !important;
+    color: #E2E8F0 !important;
+  }
+  .btn-secondary:hover {
+    background-color: #243242 !important;
+    border-color: #4D9DE0 !important;
+    color: #FFFFFF !important;
+  }
+
+  /* Tables */
+  .high-yield-table th {
+    background-color: #202B38 !important;
+    color: #F1F5F9 !important;
+    border-color: #334358 !important;
+  }
+  .high-yield-table td {
+    border-color: #334358 !important;
+    color: #CBD5E1 !important;
+  }
+
+  /* Footer */
+  .landing-footer {
+    background-color: #18202A !important;
+    border-top-color: #334358 !important;
+    color: #CBD5E1 !important;
+  }
+}
+

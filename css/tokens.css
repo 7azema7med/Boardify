@@ -136,10 +136,10 @@ html:not([data-theme="dark"]) {
   --bg-surface-active: #202B38;   /* Active test item container & selected option rows */
   --bg-hover: #1D2633;            /* Focused item & hover row background */
   
-  /* NBME Clinical Typography: soft warm-white for zero halation/astigmatism glare */
-  --text-primary: #E8EEF5;        /* Crisp, clear clinical text with 13.8:1 contrast, eye-friendly */
-  --text-secondary: #9DB0C3;      /* Secondary clinical data, explanations & lab units */
-  --text-muted: #6B7F93;          /* Timers, counters, and metadata */
+  /* NBME Clinical Typography: High-clarity, non-fatiguing, crisp visibility */
+  --text-primary: #FFFFFF;        /* Pure crisp white for primary text, question stems, and headings */
+  --text-secondary: #CBD5E1;      /* Bright slate (Slate 300) for clear secondary text, eliminating dark muddy gray */
+  --text-muted: #94A3B8;          /* Clear silver-slate (Slate 400) for labels and metadata, never dark gray */
   --text-on-accent: #FFFFFF;
 
   /* Primary Brand: #064191 (Royal Cobalt) with NBME Examination Calibration */
