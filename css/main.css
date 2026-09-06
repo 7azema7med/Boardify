@@ -1969,7 +1969,8 @@ h4 { font-size: 16px; }
 
   /* SVG Icons & Icon Buttons: Ensure high visibility */
   .icon {
-    color: #E2E8F0 !important;
+    color: #FFFFFF !important;
+    stroke-width: 1.9px !important;
   }
 
   .btn-icon {
