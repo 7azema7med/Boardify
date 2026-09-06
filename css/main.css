@@ -2046,6 +2046,35 @@ h4 { font-size: 16px; }
     color: #FFFFFF !important;
   }
 
+  /* Correct & Incorrect feedback states in dark mode */
+  .hero-opt-btn.correct,
+  .mcq-option-row.correct {
+    background-color: rgba(34, 197, 94, 0.2) !important;
+    border-color: #22C55E !important;
+    color: #FFFFFF !important;
+  }
+  .hero-opt-btn.incorrect,
+  .mcq-option-row.incorrect {
+    background-color: rgba(239, 68, 68, 0.2) !important;
+    border-color: #EF4444 !important;
+    color: #FFFFFF !important;
+  }
+
+  /* Explanation panel in dark mode */
+  .explanation-panel {
+    background-color: #18202A !important;
+    border-color: #334358 !important;
+    color: #E2E8F0 !important;
+  }
+  .explanation-header {
+    color: #4D9DE0 !important;
+  }
+  .hero-rationale-box {
+    background-color: #18202A !important;
+    border-color: #334358 !important;
+    color: #E2E8F0 !important;
+  }
+
   /* Tables */
   .high-yield-table th {
     background-color: #202B38 !important;
